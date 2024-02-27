@@ -5,6 +5,7 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote;
@@ -20,6 +21,11 @@ public class Tables {
      * The table <code>public.flyway_schema_history</code>.
      */
     public static final FlywaySchemaHistory FLYWAY_SCHEMA_HISTORY = FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY;
+
+    /**
+     * The table <code>public.insecure_user</code>.
+     */
+    public static final InsecureUser INSECURE_USER = InsecureUser.INSECURE_USER;
 
     /**
      * The table <code>public.poker</code>.

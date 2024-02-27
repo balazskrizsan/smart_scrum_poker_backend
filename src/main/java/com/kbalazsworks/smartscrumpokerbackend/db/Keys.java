@@ -5,10 +5,12 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.FlywaySchemaHistoryRecord;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.InsecureUserRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.TicketRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.VoteRecord;
@@ -31,6 +33,7 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<InsecureUserRecord, Long> IDENTITY_INSECURE_USER = Identities0.IDENTITY_INSECURE_USER;
     public static final Identity<PokerRecord, Long> IDENTITY_POKER = Identities0.IDENTITY_POKER;
     public static final Identity<TicketRecord, Long> IDENTITY_TICKET = Identities0.IDENTITY_TICKET;
     public static final Identity<VoteRecord, Long> IDENTITY_VOTE = Identities0.IDENTITY_VOTE;
@@ -40,6 +43,8 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = UniqueKeys0.FLYWAY_SCHEMA_HISTORY_PK;
+    public static final UniqueKey<InsecureUserRecord> INSECURE_USER_PK = UniqueKeys0.INSECURE_USER_PK;
+    public static final UniqueKey<InsecureUserRecord> INSECURE_USER_UNIQUE = UniqueKeys0.INSECURE_USER_UNIQUE;
     public static final UniqueKey<PokerRecord> POKER_PK = UniqueKeys0.POKER_PK;
     public static final UniqueKey<PokerRecord> ID_SECURE_UNIQUE = UniqueKeys0.ID_SECURE_UNIQUE;
     public static final UniqueKey<TicketRecord> TICKET_PK = UniqueKeys0.TICKET_PK;
@@ -56,6 +61,7 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class Identities0 {
+        public static Identity<InsecureUserRecord, Long> IDENTITY_INSECURE_USER = Internal.createIdentity(InsecureUser.INSECURE_USER, InsecureUser.INSECURE_USER.ID);
         public static Identity<PokerRecord, Long> IDENTITY_POKER = Internal.createIdentity(Poker.POKER, Poker.POKER.ID);
         public static Identity<TicketRecord, Long> IDENTITY_TICKET = Internal.createIdentity(Ticket.TICKET, Ticket.TICKET.ID);
         public static Identity<VoteRecord, Long> IDENTITY_VOTE = Internal.createIdentity(Vote.VOTE, Vote.VOTE.ID);
@@ -63,6 +69,8 @@ public class Keys {
 
     private static class UniqueKeys0 {
         public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = Internal.createUniqueKey(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY, "flyway_schema_history_pk", new TableField[] { FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK }, true);
+        public static final UniqueKey<InsecureUserRecord> INSECURE_USER_PK = Internal.createUniqueKey(InsecureUser.INSECURE_USER, "insecure_user_pk", new TableField[] { InsecureUser.INSECURE_USER.ID }, true);
+        public static final UniqueKey<InsecureUserRecord> INSECURE_USER_UNIQUE = Internal.createUniqueKey(InsecureUser.INSECURE_USER, "insecure_user_unique", new TableField[] { InsecureUser.INSECURE_USER.ID_SECURE }, true);
         public static final UniqueKey<PokerRecord> POKER_PK = Internal.createUniqueKey(Poker.POKER, "poker_pk", new TableField[] { Poker.POKER.ID }, true);
         public static final UniqueKey<PokerRecord> ID_SECURE_UNIQUE = Internal.createUniqueKey(Poker.POKER, "id_secure_unique", new TableField[] { Poker.POKER.ID_SECURE }, true);
         public static final UniqueKey<TicketRecord> TICKET_PK = Internal.createUniqueKey(Ticket.TICKET, "ticket_pk", new TableField[] { Ticket.TICKET.ID }, true);
