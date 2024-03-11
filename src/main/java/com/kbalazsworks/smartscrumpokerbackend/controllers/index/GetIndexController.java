@@ -12,6 +12,6 @@ public class GetIndexController
     @GetMapping("/")
     public String action()
     {
-        return "lofasz";
+        return "hello";
     }
 }
