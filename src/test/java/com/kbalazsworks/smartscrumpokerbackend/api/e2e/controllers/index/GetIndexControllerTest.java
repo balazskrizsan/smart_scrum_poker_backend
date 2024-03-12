@@ -1,4 +1,4 @@
-package com.kbalazsworks.smartscrumpokerbackend.e2e.controllers.index;
+package com.kbalazsworks.smartscrumpokerbackend.api.e2e.controllers.index;
 
 import com.kbalazsworks.smartscrumpokerbackend.SmartScrumPokerApplication;
 import org.junit.jupiter.api.Test;
@@ -10,11 +10,13 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -35,6 +37,9 @@ public class GetIndexControllerTest
     {
         // Arrange
         String testedUri = "/";
+        String path_data = "$.data";
+        String expectedPathData = "hello";
+        ResultMatcher expectedStatusCode = status().isOk();
 
         // Act
         ResultActions result = getMockMvc().perform(
@@ -42,6 +47,8 @@ public class GetIndexControllerTest
         );
 
         // Assert
-        result.andExpect(content().bytes("hello".getBytes()));
+        result
+            .andExpect(jsonPath(path_data).value(expectedPathData))
+            .andExpect(expectedStatusCode);
     }
 }
