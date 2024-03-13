@@ -22,6 +22,10 @@ dependencies {
     implementation 'org.springframework:spring-messaging:6.1.4'
     implementation 'org.springframework.security:spring-security-web:6.2.2'
     implementation 'org.springframework.security:spring-security-config:6.2.2'
+    implementation 'org.springframework.boot:spring-boot-starter-jooq:3.2.3'
+    implementation 'org.flywaydb:flyway-core:10.10.0'
+    implementation 'org.flywaydb:flyway-database-postgresql:10.10.0'
+    implementation 'org.postgresql:postgresql:42.7.3'
 
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
