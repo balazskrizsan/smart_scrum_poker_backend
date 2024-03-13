@@ -3,7 +3,7 @@ package com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.PokerService;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.StartRoundService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoundService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.StartService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,15 +84,15 @@ public class PokerModuleServiceFactory
         );
     }
 
-    public StartRoundService getStartRoundService()
+    public RoundService getRoundService()
     {
-        return getStartRoundService(null);
+        return getRoundService(null);
     }
 
-    public StartRoundService getStartRoundService(TicketService TicketServiceMock)
+    public RoundService getRoundService(TicketService TicketServiceMock)
     {
-        return new StartRoundService(
-            getDependency(StartRoundService.class, TicketService.class, TicketServiceMock, getTicketService())
+        return new RoundService(
+            getDependency(RoundService.class, TicketService.class, TicketServiceMock, getTicketService())
         );
     }
 }

@@ -4,7 +4,7 @@ import com.kbalazsworks.smartscrumpokerbackend.api.builders.ResponseEntityBuilde
 import com.kbalazsworks.smartscrumpokerbackend.api.exceptions.ApiException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.RoundStartResponse;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.StartRoundService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoundService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -21,7 +21,7 @@ import java.util.UUID;
 public class RoundStartListener
 {
     private final SimpMessagingTemplate template;
-    private final StartRoundService startRoundService;
+    private final RoundService roundService;
 
     @MessageMapping("/poker.round.start/{pokerIdSecure}/{ticketId}")
     public void roundStartHandler(
@@ -33,7 +33,7 @@ public class RoundStartListener
     {
         log.info("SocketListener:/poker.round.start/{}/{}", pokerIdSecure, ticketId);
 
-        startRoundService.start(pokerIdSecure, ticketId);
+        roundService.start(pokerIdSecure, ticketId);
 
         template.convertAndSend(
             "/queue/reply-" + pokerIdSecure,

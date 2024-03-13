@@ -36,6 +36,17 @@ public class TicketFakeBuilder
         }};
     }
 
+    public List<Ticket> build1to3AsList()
+    {
+        return new ArrayList<>()
+        {{
+            add(new TicketFakeBuilder().build());
+            add(new TicketFakeBuilder().build2());
+            add(new TicketFakeBuilder().build3());
+        }};
+    }
+
+
     public Ticket build()
     {
         return new Ticket(id, pokerId, name, isActive);

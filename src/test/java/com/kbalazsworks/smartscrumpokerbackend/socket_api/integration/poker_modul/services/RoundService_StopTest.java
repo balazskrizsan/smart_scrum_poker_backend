@@ -12,7 +12,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
-public class StartRoundService_StartTest extends AbstractIntegrationTest
+public class RoundService_StopTest extends AbstractIntegrationTest
 {
     @Autowired
     private PokerModuleServiceFactory pokerModuleServiceFactory;
@@ -46,20 +45,15 @@ public class StartRoundService_StartTest extends AbstractIntegrationTest
         }
     )
     @SneakyThrows
-    public void startAStartAbleRound_broadcastToRoom()
+    public void stopAStopableRound_broadcastToRoom()
     {
         // Arrange
         UUID testedPokerIdSecret = PokerFakeBuilder.defaultIdSecure1;
         long testedTicketId = TicketFakeBuilder.defaultId2;
-        var expectedTickets = new ArrayList<>()
-        {{
-            add(new TicketFakeBuilder().build());
-            add(new TicketFakeBuilder().isActive2(true).build2());
-            add(new TicketFakeBuilder().build3());
-        }};
+        var expectedTickets = new TicketFakeBuilder().build1to3AsList();
 
         // Act
-        pokerModuleServiceFactory.getStartRoundService().start(testedPokerIdSecret, testedTicketId);
+        pokerModuleServiceFactory.getRoundService().stop(testedPokerIdSecret, testedTicketId);
 
         // Assert
         List<Ticket> actualTicket = getDslContext().selectFrom(ticketTable).orderBy(ticketTable.ID.asc()).fetch().into(Ticket.class);
