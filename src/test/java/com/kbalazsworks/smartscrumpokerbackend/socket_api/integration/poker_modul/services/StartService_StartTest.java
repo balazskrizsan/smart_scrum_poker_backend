@@ -1,6 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_modul.services;
 
-import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokersRecord;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
@@ -58,7 +58,7 @@ public class StartService_StartTest extends AbstractIntegrationTest
         pokerModuleServiceFactory.getStartService().start(testedPoker, testedTickets);
 
         // Assert
-        PokersRecord actual = getDslContext().selectFrom(pokerTable).fetchOne();
+        PokerRecord actual = getDslContext().selectFrom(pokerTable).fetchOne();
         actual.setId(testedId);
         Poker actualRow = actual.into(Poker.class);
 

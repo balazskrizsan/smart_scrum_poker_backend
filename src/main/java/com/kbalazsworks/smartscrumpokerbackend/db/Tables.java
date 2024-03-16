@@ -5,7 +5,7 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
-import com.kbalazsworks.smartscrumpokerbackend.db.tables.Pokers;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
 
 
 /**
@@ -20,7 +20,7 @@ public class Tables {
     public static final FlywaySchemaHistory FLYWAY_SCHEMA_HISTORY = FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY;
 
     /**
-     * The table <code>public.pokers</code>.
+     * The table <code>public.poker</code>.
      */
-    public static final Pokers POKERS = Pokers.POKERS;
+    public static final Poker POKER = Poker.POKER;
 }

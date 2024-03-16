@@ -1,3 +1,3 @@
 TRUNCATE TABLE
-    "pokers"
+    "poker"
     RESTART IDENTITY;

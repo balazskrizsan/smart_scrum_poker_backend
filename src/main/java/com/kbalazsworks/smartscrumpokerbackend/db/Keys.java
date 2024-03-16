@@ -5,9 +5,9 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
-import com.kbalazsworks.smartscrumpokerbackend.db.tables.Pokers;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.FlywaySchemaHistoryRecord;
-import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokersRecord;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
 
 import org.jooq.Identity;
 import org.jooq.TableField;
@@ -26,14 +26,15 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
-    public static final Identity<PokersRecord, Long> IDENTITY_POKERS = Identities0.IDENTITY_POKERS;
+    public static final Identity<PokerRecord, Long> IDENTITY_POKER = Identities0.IDENTITY_POKER;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = UniqueKeys0.FLYWAY_SCHEMA_HISTORY_PK;
-    public static final UniqueKey<PokersRecord> POKERS_PK = UniqueKeys0.POKERS_PK;
+    public static final UniqueKey<PokerRecord> POKERS_PK = UniqueKeys0.POKERS_PK;
+    public static final UniqueKey<PokerRecord> ID_SECURE_UNIQUE = UniqueKeys0.ID_SECURE_UNIQUE;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -45,11 +46,12 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class Identities0 {
-        public static Identity<PokersRecord, Long> IDENTITY_POKERS = Internal.createIdentity(Pokers.POKERS, Pokers.POKERS.ID);
+        public static Identity<PokerRecord, Long> IDENTITY_POKER = Internal.createIdentity(Poker.POKER, Poker.POKER.ID);
     }
 
     private static class UniqueKeys0 {
         public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = Internal.createUniqueKey(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY, "flyway_schema_history_pk", new TableField[] { FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK }, true);
-        public static final UniqueKey<PokersRecord> POKERS_PK = Internal.createUniqueKey(Pokers.POKERS, "pokers_pk", new TableField[] { Pokers.POKERS.ID }, true);
+        public static final UniqueKey<PokerRecord> POKERS_PK = Internal.createUniqueKey(Poker.POKER, "pokers_pk", new TableField[] { Poker.POKER.ID }, true);
+        public static final UniqueKey<PokerRecord> ID_SECURE_UNIQUE = Internal.createUniqueKey(Poker.POKER, "id_secure_unique", new TableField[] { Poker.POKER.ID_SECURE }, true);
     }
 }

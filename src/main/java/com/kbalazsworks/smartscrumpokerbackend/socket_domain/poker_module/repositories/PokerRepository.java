@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PokerRepository extends AbstractRepository
 {
-    private final com.kbalazsworks.smartscrumpokerbackend.db.tables.Pokers pokersTable =
-        com.kbalazsworks.smartscrumpokerbackend.db.tables.Pokers.POKERS;
+    private final com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker pokersTable =
+        com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker.POKER;
 
     public void create(@NonNull Poker poker)
     {
