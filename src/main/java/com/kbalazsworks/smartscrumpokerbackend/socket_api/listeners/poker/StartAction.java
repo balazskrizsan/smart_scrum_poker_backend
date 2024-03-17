@@ -2,6 +2,7 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.listeners.poker;
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.poker.StartRequest;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.RequestMapperService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.StartPoker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.StartService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class StartAction
 
     @MessageMapping("/poker.start")
     @SendTo("/topic/public")
-    public StartRequest sendMessage(@Payload StartRequest request)
+    public StartRequest sendMessage(@Payload StartRequest request) throws PokerException
     {
         StartPoker startPoker = RequestMapperService.mapToEntity(request);
 

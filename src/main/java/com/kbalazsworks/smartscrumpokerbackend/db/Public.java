@@ -6,6 +6,7 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = 1468559442;
+    private static final long serialVersionUID = 1382083364;
 
     /**
      * The reference instance of <code>public</code>
@@ -37,6 +38,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.poker</code>.
      */
     public final Poker POKER = Poker.POKER;
+
+    /**
+     * The table <code>public.ticket</code>.
+     */
+    public final Ticket TICKET = Ticket.TICKET;
 
     /**
      * No further instances allowed
@@ -55,6 +61,7 @@ public class Public extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
             FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY,
-            Poker.POKER);
+            Poker.POKER,
+            Ticket.TICKET);
     }
 }

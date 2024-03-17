@@ -1,12 +1,14 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_modul.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.TicketRecord;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -44,30 +46,38 @@ public class StartService_StartTest extends AbstractIntegrationTest
             )
         }
     )
-    public void insertValidStartData_createsPokerInDb()
+    public void insertValidStartData_createsPokerInDb() throws PokerException
     {
         // Arrange
-        long testedId = 123;
         Poker testedPoker = new PokerFakeBuilder().buildNoId();
         List<Ticket> testedTickets = new TicketFakeBuilder().buildNoIdAsList();
 
-        long expectedId = 123;
+        long expectedPokerId = 1L;
+        long expectedTicketId = 1L;
+        long expectedTicketPokerId = 1L;
         Poker expectedPoker = new PokerFakeBuilder().buildNoId();
+        Ticket expectedTicket = new TicketFakeBuilder().buildNoId();
 
         // Act
         pokerModuleServiceFactory.getStartService().start(testedPoker, testedTickets);
 
         // Assert
-        PokerRecord actual = getDslContext().selectFrom(pokerTable).fetchOne();
-        actual.setId(testedId);
-        Poker actualRow = actual.into(Poker.class);
+        PokerRecord actualPoker = getDslContext().selectFrom(pokerTable).fetchOne();
+        Poker actualPokerRow = actualPoker.into(Poker.class);
+
+        TicketRecord actualTicket = getDslContext().selectFrom(ticketTable).fetchOne();
+        Ticket actualTicketRow = actualTicket.into(Ticket.class);
 
         assertAll(
-            () -> assertThat(actualRow.id()).isEqualTo(expectedId),
-            () -> assertThat(actualRow.name()).isEqualTo(expectedPoker.name()),
-            () -> assertTrue(actualRow.idSecure().toString().matches(UuidPattern)),
-            () -> assertThat(actualRow.createdAt()).isEqualTo(expectedPoker.createdAt()),
-            () -> assertThat(actualRow.createdBy()).isEqualTo(expectedPoker.createdBy())
+            () -> assertThat(actualPokerRow.id()).isEqualTo(expectedPokerId),
+            () -> assertThat(actualPokerRow.name()).isEqualTo(expectedPoker.name()),
+            () -> assertTrue(actualPokerRow.idSecure().toString().matches(UuidPattern)),
+            () -> assertThat(actualPokerRow.createdAt()).isEqualTo(expectedPoker.createdAt()),
+            () -> assertThat(actualPokerRow.createdBy()).isEqualTo(expectedPoker.createdBy()),
+
+            () -> assertThat(actualTicketRow.id()).isEqualTo(expectedTicketId),
+            () -> assertThat(actualTicketRow.pokerId()).isEqualTo(expectedTicketPokerId),
+            () -> assertThat(actualTicketRow.name()).isEqualTo(expectedTicket.name())
         );
     }
 }

@@ -2,7 +2,9 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repos
 
 import com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories.AbstractRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import lombok.NonNull;
+import org.jooq.Record1;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -11,9 +13,9 @@ public class PokerRepository extends AbstractRepository
     private final com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker pokersTable =
         com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker.POKER;
 
-    public void create(@NonNull Poker poker)
+    public Long create(@NonNull Poker poker) throws PokerException
     {
-        getDSLContext()
+        Record1<Long> newIdRecord = getDSLContext()
             .insertInto(
                 pokersTable,
                 pokersTable.ID_SECURE,
@@ -27,6 +29,14 @@ public class PokerRepository extends AbstractRepository
                 poker.createdAt(),
                 poker.createdBy()
             )
-            .execute();
+            .returningResult(pokersTable.ID)
+            .fetchOne();
+
+        if (null == newIdRecord)
+        {
+            throw new PokerException("Poker creation failed.");
+        }
+
+        return newIdRecord.getValue(pokersTable.ID);
     }
 }

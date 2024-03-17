@@ -6,9 +6,12 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.FlywaySchemaHistoryRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.TicketRecord;
 
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -27,19 +30,22 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final Identity<PokerRecord, Long> IDENTITY_POKER = Identities0.IDENTITY_POKER;
+    public static final Identity<TicketRecord, Long> IDENTITY_TICKET = Identities0.IDENTITY_TICKET;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = UniqueKeys0.FLYWAY_SCHEMA_HISTORY_PK;
-    public static final UniqueKey<PokerRecord> POKERS_PK = UniqueKeys0.POKERS_PK;
+    public static final UniqueKey<PokerRecord> POKER_PK = UniqueKeys0.POKER_PK;
     public static final UniqueKey<PokerRecord> ID_SECURE_UNIQUE = UniqueKeys0.ID_SECURE_UNIQUE;
+    public static final UniqueKey<TicketRecord> TICKET_PK = UniqueKeys0.TICKET_PK;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final ForeignKey<TicketRecord, PokerRecord> TICKET__FK___TICKET__POKER_ID___POKER__ID___ON_DELETE_CASCADE = ForeignKeys0.TICKET__FK___TICKET__POKER_ID___POKER__ID___ON_DELETE_CASCADE;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -47,11 +53,17 @@ public class Keys {
 
     private static class Identities0 {
         public static Identity<PokerRecord, Long> IDENTITY_POKER = Internal.createIdentity(Poker.POKER, Poker.POKER.ID);
+        public static Identity<TicketRecord, Long> IDENTITY_TICKET = Internal.createIdentity(Ticket.TICKET, Ticket.TICKET.ID);
     }
 
     private static class UniqueKeys0 {
         public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = Internal.createUniqueKey(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY, "flyway_schema_history_pk", new TableField[] { FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK }, true);
-        public static final UniqueKey<PokerRecord> POKERS_PK = Internal.createUniqueKey(Poker.POKER, "pokers_pk", new TableField[] { Poker.POKER.ID }, true);
+        public static final UniqueKey<PokerRecord> POKER_PK = Internal.createUniqueKey(Poker.POKER, "poker_pk", new TableField[] { Poker.POKER.ID }, true);
         public static final UniqueKey<PokerRecord> ID_SECURE_UNIQUE = Internal.createUniqueKey(Poker.POKER, "id_secure_unique", new TableField[] { Poker.POKER.ID_SECURE }, true);
+        public static final UniqueKey<TicketRecord> TICKET_PK = Internal.createUniqueKey(Ticket.TICKET, "ticket_pk", new TableField[] { Ticket.TICKET.ID }, true);
+    }
+
+    private static class ForeignKeys0 {
+        public static final ForeignKey<TicketRecord, PokerRecord> TICKET__FK___TICKET__POKER_ID___POKER__ID___ON_DELETE_CASCADE = Internal.createForeignKey(Keys.POKER_PK, Ticket.TICKET, "fk___ticket__poker_id___poker__id___on_delete_cascade", new TableField[] { Ticket.TICKET.POKER_ID }, true);
     }
 }

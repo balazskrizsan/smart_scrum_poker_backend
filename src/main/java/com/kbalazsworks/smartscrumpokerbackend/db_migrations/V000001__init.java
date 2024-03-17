@@ -21,8 +21,23 @@ public class V000001__init extends AbstractBaseJooqMigration
             .column("name", VARCHAR.nullable(false))
             .column("created_at", TIMESTAMP.nullable(false))
             .column("created_by", VARCHAR.nullable(true))
-            .constraint(constraint("pokers_pk").primaryKey("id"))
-            .constraint(constraint("id_secure_unique").unique("id_secure"))
+            .constraints(
+                constraint("poker_pk").primaryKey("id"),
+                constraint("id_secure_unique").unique("id_secure")
+            )
+            .execute();
+
+        dslContext.createTable("ticket")
+            .column("id", BIGINT.nullable(false).identity(true))
+            .column("poker_id", BIGINT.nullable(false))
+            .column("name", VARCHAR.nullable(false))
+            .constraints(
+                constraint("ticket_pk").primaryKey("id"),
+                constraint("fk___ticket__poker_id___poker__id___on_delete_cascade")
+                    .foreignKey("poker_id")
+                    .references("poker", "id")
+                    .onDeleteCascade()
+            )
             .execute();
     }
 }

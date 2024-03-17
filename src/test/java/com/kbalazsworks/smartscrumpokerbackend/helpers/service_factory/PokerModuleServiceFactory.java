@@ -1,6 +1,7 @@
 package com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory;
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.StartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ public class PokerModuleServiceFactory
 {
     @Autowired
     private PokerRepository pokerRepository;
+    @Autowired
+    private TicketRepository ticketRepository;
 
     Map<String, Map<String, Object>> oneTimeMocks = new HashMap<>();
 
@@ -36,13 +39,17 @@ public class PokerModuleServiceFactory
 
     public StartService getStartService()
     {
-        return getStartService(null);
+        return getStartService(null, null);
     }
 
-    public StartService getStartService(PokerRepository pokerRepositoryMock)
+    public StartService getStartService(
+        PokerRepository pokerRepositoryMock,
+        TicketRepository ticketRepositoryMock
+    )
     {
         return new StartService(
-            getDependency(StartService.class, PokerRepository.class, pokerRepositoryMock, pokerRepository)
+            getDependency(StartService.class, PokerRepository.class, pokerRepositoryMock, pokerRepository),
+            getDependency(TicketRepository.class, TicketRepository.class, ticketRepositoryMock, ticketRepository)
         );
     }
 }

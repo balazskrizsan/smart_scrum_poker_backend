@@ -2,6 +2,6 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entit
 
 import lombok.NonNull;
 
-public record Ticket(Long id, @NonNull String name)
+public record Ticket(Long id, Long pokerId, @NonNull String name)
 {
 }

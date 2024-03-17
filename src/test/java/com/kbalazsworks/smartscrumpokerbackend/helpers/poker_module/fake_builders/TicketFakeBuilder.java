@@ -8,6 +8,7 @@ import java.util.List;
 public class TicketFakeBuilder
 {
     private static final Long id = 101001L;
+    private static final Long idSecure = 100001L;
     private static final String name = "sprint #1";
 
     public List<Ticket> buildNoIdAsList()
@@ -20,6 +21,6 @@ public class TicketFakeBuilder
 
     public Ticket buildNoId()
     {
-        return new Ticket(null, name);
+        return new Ticket(null, null, name);
     }
 }
