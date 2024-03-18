@@ -40,5 +40,18 @@ public class V000001__init extends AbstractBaseJooqMigration
                     .onDeleteCascade()
             )
             .execute();
+
+        dslContext.createTable("vote")
+            .column("id", BIGINT.nullable(false).identity(true))
+            .column("uncertainty", SMALLINT.nullable(false))
+            .column("complexity", SMALLINT.nullable(false))
+            .column("effort", SMALLINT.nullable(false))
+            .column("calculated_point", SMALLINT.nullable(false))
+            .column("created_at", TIMESTAMP.nullable(false))
+            .column("created_by", VARCHAR.nullable(true))
+            .constraints(
+                constraint("vote_pk").primaryKey("id")
+            )
+            .execute();
     }
 }

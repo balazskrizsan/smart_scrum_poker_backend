@@ -7,9 +7,11 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.FlywaySchemaHistoryRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.TicketRecord;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.VoteRecord;
 
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
@@ -31,6 +33,7 @@ public class Keys {
 
     public static final Identity<PokerRecord, Long> IDENTITY_POKER = Identities0.IDENTITY_POKER;
     public static final Identity<TicketRecord, Long> IDENTITY_TICKET = Identities0.IDENTITY_TICKET;
+    public static final Identity<VoteRecord, Long> IDENTITY_VOTE = Identities0.IDENTITY_VOTE;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
@@ -40,6 +43,7 @@ public class Keys {
     public static final UniqueKey<PokerRecord> POKER_PK = UniqueKeys0.POKER_PK;
     public static final UniqueKey<PokerRecord> ID_SECURE_UNIQUE = UniqueKeys0.ID_SECURE_UNIQUE;
     public static final UniqueKey<TicketRecord> TICKET_PK = UniqueKeys0.TICKET_PK;
+    public static final UniqueKey<VoteRecord> VOTE_PK = UniqueKeys0.VOTE_PK;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -54,6 +58,7 @@ public class Keys {
     private static class Identities0 {
         public static Identity<PokerRecord, Long> IDENTITY_POKER = Internal.createIdentity(Poker.POKER, Poker.POKER.ID);
         public static Identity<TicketRecord, Long> IDENTITY_TICKET = Internal.createIdentity(Ticket.TICKET, Ticket.TICKET.ID);
+        public static Identity<VoteRecord, Long> IDENTITY_VOTE = Internal.createIdentity(Vote.VOTE, Vote.VOTE.ID);
     }
 
     private static class UniqueKeys0 {
@@ -61,6 +66,7 @@ public class Keys {
         public static final UniqueKey<PokerRecord> POKER_PK = Internal.createUniqueKey(Poker.POKER, "poker_pk", new TableField[] { Poker.POKER.ID }, true);
         public static final UniqueKey<PokerRecord> ID_SECURE_UNIQUE = Internal.createUniqueKey(Poker.POKER, "id_secure_unique", new TableField[] { Poker.POKER.ID_SECURE }, true);
         public static final UniqueKey<TicketRecord> TICKET_PK = Internal.createUniqueKey(Ticket.TICKET, "ticket_pk", new TableField[] { Ticket.TICKET.ID }, true);
+        public static final UniqueKey<VoteRecord> VOTE_PK = Internal.createUniqueKey(Vote.VOTE, "vote_pk", new TableField[] { Vote.VOTE.ID }, true);
     }
 
     private static class ForeignKeys0 {

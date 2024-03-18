@@ -7,6 +7,7 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote;
 
 
 /**
@@ -29,4 +30,9 @@ public class Tables {
      * The table <code>public.ticket</code>.
      */
     public static final Ticket TICKET = Ticket.TICKET;
+
+    /**
+     * The table <code>public.vote</code>.
+     */
+    public static final Vote VOTE = Vote.VOTE;
 }
