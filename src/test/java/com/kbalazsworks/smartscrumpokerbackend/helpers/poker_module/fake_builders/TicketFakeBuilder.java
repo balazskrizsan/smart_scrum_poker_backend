@@ -10,6 +10,7 @@ public class TicketFakeBuilder
     private static final Long id = 101001L;
     private static final Long idSecure = 100001L;
     private static final String name = "sprint #1";
+    private static final boolean isActive = false;
 
     public List<Ticket> buildNoIdAsList()
     {
@@ -21,6 +22,6 @@ public class TicketFakeBuilder
 
     public Ticket buildNoId()
     {
-        return new Ticket(null, null, name);
+        return new Ticket(null, null, name, isActive);
     }
 }

@@ -16,7 +16,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row3;
+import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ticket extends TableImpl<TicketRecord> {
 
-    private static final long serialVersionUID = -270506544;
+    private static final long serialVersionUID = -1573797435;
 
     /**
      * The reference instance of <code>public.ticket</code>
@@ -61,6 +61,11 @@ public class Ticket extends TableImpl<TicketRecord> {
      * The column <code>public.ticket.name</code>.
      */
     public final TableField<TicketRecord, String> NAME = createField(DSL.name("name"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+
+    /**
+     * The column <code>public.ticket.active</code>.
+     */
+    public final TableField<TicketRecord, Boolean> ACTIVE = createField(DSL.name("active"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.field("false", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
 
     /**
      * Create a <code>public.ticket</code> table reference
@@ -151,11 +156,11 @@ public class Ticket extends TableImpl<TicketRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row3 type methods
+    // Row4 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row3<Long, Long, String> fieldsRow() {
-        return (Row3) super.fieldsRow();
+    public Row4<Long, Long, String, Boolean> fieldsRow() {
+        return (Row4) super.fieldsRow();
     }
 }

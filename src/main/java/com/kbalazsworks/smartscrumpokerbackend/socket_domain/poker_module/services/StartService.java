@@ -3,8 +3,6 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.servi
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +30,7 @@ public class StartService
         ));
 
         ticketService.createAll(
-            tickets.stream().map(t -> new Ticket(null, newPoker.id(), t.name())).toList()
+            tickets.stream().map(t -> new Ticket(null, newPoker.id(), t.name(), t.isActive())).toList()
         );
 
         return newPoker;

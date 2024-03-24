@@ -20,7 +20,7 @@ public class RequestMapperService
                 new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
                 ""
             ),
-            request.ticketNames().stream().map(tn -> new Ticket(null, null, tn)).toList()
+            request.ticketNames().stream().map(tn -> new Ticket(null, null, tn, false)).toList()
         );
     }
 }

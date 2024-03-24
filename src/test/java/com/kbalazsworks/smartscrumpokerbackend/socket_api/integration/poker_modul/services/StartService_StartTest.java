@@ -83,7 +83,8 @@ public class StartService_StartTest extends AbstractIntegrationTest
 
             () -> assertThat(actualTicketRow.id()).isEqualTo(expectedTicketId),
             () -> assertThat(actualTicketRow.pokerId()).isEqualTo(expectedTicketPokerId),
-            () -> assertThat(actualTicketRow.name()).isEqualTo(expectedTicket.name())
+            () -> assertThat(actualTicketRow.name()).isEqualTo(expectedTicket.name()),
+            () -> assertThat(actualTicketRow.isActive()).isEqualTo(expectedTicket.isActive())
         );
     }
 }
