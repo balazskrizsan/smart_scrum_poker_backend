@@ -22,4 +22,13 @@ public class TicketRepository extends AbstractRepository
             .valuesOfRows(tickets.stream().map(r -> row(r.pokerId(), r.name())).toList())
             .execute();
     }
+
+    public List<Ticket> searchByPokerId(@NonNull Long pokerId)
+    {
+        return getDSLContext()
+            .selectFrom(ticketTable)
+            .where(ticketTable.POKER_ID.eq(pokerId))
+            .fetch()
+            .into(Ticket.class);
+    }
 }

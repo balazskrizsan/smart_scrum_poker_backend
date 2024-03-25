@@ -59,7 +59,7 @@ public class StartService_StartTest extends AbstractIntegrationTest
         Ticket expectedTicket = new TicketFakeBuilder().buildNoId();
 
         // Act
-        pokerModuleServiceFactory.getStartService().start(testedPoker, testedTickets);
+        Poker actualPokerResponse = pokerModuleServiceFactory.getStartService().start(testedPoker, testedTickets);
 
         // Assert
         PokerRecord actualPoker = getDslContext().selectFrom(pokerTable).fetchOne();
@@ -69,6 +69,12 @@ public class StartService_StartTest extends AbstractIntegrationTest
         Ticket actualTicketRow = actualTicket.into(Ticket.class);
 
         assertAll(
+            () -> assertThat(actualPokerResponse.id()).isEqualTo(actualPokerRow.id()),
+            () -> assertThat(actualPokerResponse.name()).isEqualTo(actualPokerRow.name()),
+            () -> assertThat(actualPokerResponse.idSecure()).isEqualTo(actualPokerRow.idSecure()),
+            () -> assertThat(actualPokerResponse.createdAt()).isEqualTo(actualPokerRow.createdAt()),
+            () -> assertThat(actualPokerResponse.createdBy()).isEqualTo(actualPokerRow.createdBy()),
+
             () -> assertThat(actualPokerRow.id()).isEqualTo(expectedPokerId),
             () -> assertThat(actualPokerRow.name()).isEqualTo(expectedPoker.name()),
             () -> assertTrue(actualPokerRow.idSecure().toString().matches(UuidPattern)),

@@ -6,7 +6,6 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.except
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,14 +15,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class StartService
 {
-    private final PokerRepository pokerRepository;
-    private final TicketRepository ticketRepository;
+    private final PokerService pokerService;
+    private final TicketService ticketService;
 
-    public void start(Poker poker, List<Ticket> tickets) throws PokerException
+    public Poker start(Poker poker, List<Ticket> tickets) throws PokerException
     {
+        // @todo: double check if uuid is already used
         UUID secureId = UUID.randomUUID();
 
-        Long pokerId = pokerRepository.create(new Poker(
+        Poker newPoker = pokerService.create(new Poker(
             null,
             secureId,
             poker.name(),
@@ -31,8 +31,10 @@ public class StartService
             poker.createdBy()
         ));
 
-        ticketRepository.createAll(
-            tickets.stream().map(t -> new Ticket(null, pokerId, t.name())).toList()
+        ticketService.createAll(
+            tickets.stream().map(t -> new Ticket(null, newPoker.id(), t.name())).toList()
         );
+
+        return newPoker;
     }
 }

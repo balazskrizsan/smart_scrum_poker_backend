@@ -4,8 +4,10 @@ import com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories.Abstra
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import lombok.NonNull;
-import org.jooq.Record1;
+import org.jooq.Record;
 import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
 
 @Repository
 public class PokerRepository extends AbstractRepository
@@ -13,9 +15,9 @@ public class PokerRepository extends AbstractRepository
     private final com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker pokersTable =
         com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker.POKER;
 
-    public Long create(@NonNull Poker poker) throws PokerException
+    public Poker create(@NonNull Poker poker) throws PokerException
     {
-        Record1<Long> newIdRecord = getDSLContext()
+        Record newPoker = getDSLContext()
             .insertInto(
                 pokersTable,
                 pokersTable.ID_SECURE,
@@ -29,14 +31,24 @@ public class PokerRepository extends AbstractRepository
                 poker.createdAt(),
                 poker.createdBy()
             )
-            .returningResult(pokersTable.ID)
+            .returningResult(pokersTable.fields())
             .fetchOne();
 
-        if (null == newIdRecord)
+        if (null == newPoker)
         {
             throw new PokerException("Poker creation failed.");
         }
 
-        return newIdRecord.getValue(pokersTable.ID);
+        return newPoker.into(Poker.class);
+    }
+
+    public Poker findByIdSecure(UUID pokerIdSecure)
+    {
+        return getDSLContext()
+            .selectFrom(pokersTable)
+            .where(pokersTable.ID_SECURE.eq(pokerIdSecure))
+            .fetchOne()
+            .into(Poker.class);
+        // @todo: add null check with NotFoundException
     }
 }

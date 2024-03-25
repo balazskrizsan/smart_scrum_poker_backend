@@ -2,7 +2,9 @@ package com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory;
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.PokerService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.StartService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,13 +45,41 @@ public class PokerModuleServiceFactory
     }
 
     public StartService getStartService(
-        PokerRepository pokerRepositoryMock,
-        TicketRepository ticketRepositoryMock
+        PokerService pokerServiceMock,
+        TicketService ticketServiceMock
     )
     {
         return new StartService(
-            getDependency(StartService.class, PokerRepository.class, pokerRepositoryMock, pokerRepository),
-            getDependency(TicketRepository.class, TicketRepository.class, ticketRepositoryMock, ticketRepository)
+            getDependency(StartService.class, PokerService.class, pokerServiceMock, getPokerService()),
+            getDependency(TicketRepository.class, TicketService.class, ticketServiceMock, getTicketService())
+        );
+    }
+
+    public PokerService getPokerService()
+    {
+        return getPokerService(null);
+    }
+
+    public PokerService getPokerService(
+        PokerRepository pokerRepositoryMock
+    )
+    {
+        return new PokerService(
+            getDependency(PokerService.class, PokerRepository.class, pokerRepositoryMock, pokerRepository)
+        );
+    }
+
+    public TicketService getTicketService()
+    {
+        return getTicketService(null);
+    }
+
+    public TicketService getTicketService(
+        TicketRepository TicketRepositoryMock
+    )
+    {
+        return new TicketService(
+            getDependency(TicketService.class, TicketRepository.class, TicketRepositoryMock, ticketRepository)
         );
     }
 }
