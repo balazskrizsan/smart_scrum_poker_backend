@@ -25,4 +25,10 @@ public class TicketService
     {
         return ticketRepository.searchByPokerId(pokerId);
     }
+
+    // @todo: unit test
+    public void activate(long ticketId)
+    {
+        ticketRepository.activate(ticketId);
+    }
 }

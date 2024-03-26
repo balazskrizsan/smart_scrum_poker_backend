@@ -31,4 +31,13 @@ public class TicketRepository extends AbstractRepository
             .fetch()
             .into(Ticket.class);
     }
+
+    public void activate(long ticketId)
+    {
+        getDSLContext()
+            .update(ticketTable)
+            .set(ticketTable.ACTIVE, true)
+            .where(ticketTable.ID.eq(ticketId))
+            .execute();
+    }
 }

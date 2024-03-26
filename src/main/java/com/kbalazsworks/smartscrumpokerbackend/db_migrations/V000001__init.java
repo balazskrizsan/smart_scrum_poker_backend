@@ -31,7 +31,7 @@ public class V000001__init extends AbstractBaseJooqMigration
             .column("id", BIGINT.nullable(false).identity(true))
             .column("poker_id", BIGINT.nullable(false))
             .column("name", VARCHAR.nullable(false))
-            .column("isActive", BOOLEAN.nullable(false).defaultValue(false))
+            .column("active", BOOLEAN.nullable(false).defaultValue(false))
             .constraints(
                 constraint("ticket_pk").primaryKey("id"),
                 constraint("fk___ticket__poker_id___poker__id___on_delete_cascade")
