@@ -40,4 +40,13 @@ public class TicketRepository extends AbstractRepository
             .where(ticketTable.ID.eq(ticketId))
             .execute();
     }
+
+    public void deactivate(Long ticketId)
+    {
+        getDSLContext()
+            .update(ticketTable)
+            .set(ticketTable.ACTIVE, false)
+            .where(ticketTable.ID.eq(ticketId))
+            .execute();
+    }
 }

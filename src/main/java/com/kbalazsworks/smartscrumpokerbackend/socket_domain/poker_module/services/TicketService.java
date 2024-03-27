@@ -31,4 +31,10 @@ public class TicketService
     {
         ticketRepository.activate(ticketId);
     }
+
+    // @todo: unit test
+    public void deactivate(Long ticketId)
+    {
+        ticketRepository.deactivate(ticketId);
+    }
 }

@@ -16,4 +16,11 @@ public class StartRoundService
         // @todo: exception if pokerIdSecure not exists
         ticketService.activate(ticketId);
     }
+
+    // @todo: test
+    public void stop(UUID pokerIdSecure, Long ticketId)
+    {
+        // @todo: exception if pokerIdSecure not exists
+        ticketService.deactivate(ticketId);
+    }
 }
