@@ -1,4 +1,5 @@
 TRUNCATE TABLE
     "poker",
-    "ticket"
+    "ticket",
+    "vote"
     RESTART IDENTITY;

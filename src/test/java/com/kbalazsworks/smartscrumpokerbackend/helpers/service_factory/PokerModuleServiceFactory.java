@@ -2,10 +2,8 @@ package com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory;
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.PokerService;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoundService;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.StartService;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.TicketService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.VoteRepository;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +18,8 @@ public class PokerModuleServiceFactory
     private PokerRepository pokerRepository;
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private VoteRepository voteRepository;
 
     Map<String, Map<String, Object>> oneTimeMocks = new HashMap<>();
 
@@ -89,10 +89,22 @@ public class PokerModuleServiceFactory
         return getRoundService(null);
     }
 
-    public RoundService getRoundService(TicketService TicketServiceMock)
+    public RoundService getRoundService(TicketService ticketServiceMock)
     {
         return new RoundService(
-            getDependency(RoundService.class, TicketService.class, TicketServiceMock, getTicketService())
+            getDependency(RoundService.class, TicketService.class, ticketServiceMock, getTicketService())
+        );
+    }
+
+    public VoteService getVoteService()
+    {
+        return getVoteService(null);
+    }
+
+    public VoteService getVoteService(VoteRepository voteRepositoryMock)
+    {
+        return new VoteService(
+            getDependency(VoteService.class, VoteRepository.class, voteRepositoryMock, voteRepository)
         );
     }
 }
