@@ -8,7 +8,7 @@ group = 'com.kbalazsworks'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 repositories {
@@ -39,6 +39,15 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
+
+tasks.withType(JavaCompile).each {
+    it.options.compilerArgs.add('--enable-preview')
+}
+
+test {
+    jvmArgs(['--enable-preview'])
+}
+
 
 tasks.named('test') {
     useJUnitPlatform()
