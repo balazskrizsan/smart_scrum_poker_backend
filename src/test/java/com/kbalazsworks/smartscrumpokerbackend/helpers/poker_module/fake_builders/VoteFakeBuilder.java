@@ -18,7 +18,7 @@ public class VoteFakeBuilder
     private short uncertainty = 1;
     private short complexity = 2;
     private short effort = 3;
-    private short calculatedPoint = 12;
+    private short calculatedPoint = 5;
     private LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
     private String createdBy = "creator";
 
