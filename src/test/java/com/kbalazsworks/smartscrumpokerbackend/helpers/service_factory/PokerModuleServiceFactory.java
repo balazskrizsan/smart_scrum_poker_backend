@@ -98,13 +98,22 @@ public class PokerModuleServiceFactory
 
     public VoteService getVoteService()
     {
-        return getVoteService(null);
+        return getVoteService(null, null);
     }
 
-    public VoteService getVoteService(VoteRepository voteRepositoryMock)
+    public VoteService getVoteService(
+        VoteRepository voteRepositoryMock,
+        StoryPointCalculatorService storyPointCalculatorServiceMock
+    )
     {
         return new VoteService(
-            getDependency(VoteService.class, VoteRepository.class, voteRepositoryMock, voteRepository)
+            getDependency(VoteService.class, VoteRepository.class, voteRepositoryMock, voteRepository),
+            getDependency(VoteService.class, StoryPointCalculatorService.class, storyPointCalculatorServiceMock, getStoryPointCalculatorService())
         );
+    }
+
+    public StoryPointCalculatorService getStoryPointCalculatorService()
+    {
+        return new StoryPointCalculatorService();
     }
 }
