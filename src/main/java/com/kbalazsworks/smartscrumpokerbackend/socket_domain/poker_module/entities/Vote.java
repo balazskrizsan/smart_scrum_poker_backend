@@ -9,7 +9,7 @@ public record Vote(
     short uncertainty,
     short complexity,
     short effort,
-    short calculatedPoint,
+    Short calculatedPoint,
     @NonNull LocalDateTime createdAt,
     @NonNull String createdBy
 )
