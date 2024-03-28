@@ -1,14 +1,12 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_modul.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
-import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.TicketRecord;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
