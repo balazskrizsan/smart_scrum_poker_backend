@@ -18,7 +18,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row5;
+import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InsecureUser extends TableImpl<InsecureUserRecord> {
 
-    private static final long serialVersionUID = 2124994076;
+    private static final long serialVersionUID = 951473500;
 
     /**
      * The reference instance of <code>public.insecure_user</code>
@@ -68,11 +68,6 @@ public class InsecureUser extends TableImpl<InsecureUserRecord> {
      * The column <code>public.insecure_user.created_at</code>.
      */
     public final TableField<InsecureUserRecord, LocalDateTime> CREATED_AT = createField(DSL.name("created_at"), org.jooq.impl.SQLDataType.LOCALDATETIME.nullable(false), this, "");
-
-    /**
-     * The column <code>public.insecure_user.created_by</code>.
-     */
-    public final TableField<InsecureUserRecord, String> CREATED_BY = createField(DSL.name("created_by"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * Create a <code>public.insecure_user</code> table reference
@@ -154,11 +149,11 @@ public class InsecureUser extends TableImpl<InsecureUserRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row5 type methods
+    // Row4 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Long, UUID, String, LocalDateTime, String> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row4<Long, UUID, String, LocalDateTime> fieldsRow() {
+        return (Row4) super.fieldsRow();
     }
 }
