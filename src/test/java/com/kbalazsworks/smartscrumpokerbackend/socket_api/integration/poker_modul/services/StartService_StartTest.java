@@ -58,19 +58,19 @@ public class StartService_StartTest extends AbstractIntegrationTest
         Poker actualPokerResponse = pokerModuleServiceFactory.getStartService().start(testedPoker, testedTickets);
 
         // Assert
-        PokerRecord actualPoker = getDslContext().selectFrom(pokerTable).fetchOne();
-        Poker actualPokerRow = actualPoker.into(Poker.class);
-        UUID actualPokerIdSecure = actualPoker.getIdSecure();
-        actualPoker.setIdSecure(PokerFakeBuilder.defaultIdSecure1);
-        Poker actualPokerRowMocked = actualPoker.into(Poker.class);
+        PokerRecord actualPokerRecord = getDslContext().selectFrom(pokerTable).fetchOne();
+        Poker actualPoker = actualPokerRecord.into(Poker.class);
+        UUID actualPokerIdSecure = actualPokerRecord.getIdSecure();
+        actualPokerRecord.setIdSecure(PokerFakeBuilder.defaultIdSecure1);
+        Poker actualPokerMocked = actualPokerRecord.into(Poker.class);
 
         Ticket actualTicketRow = getDslContext().selectFrom(ticketTable).fetchOne().into(Ticket.class);
 
         assertAll(
-            () -> assertThat(actualPokerResponse).isEqualTo(actualPokerRow),
+            () -> assertThat(actualPokerResponse).isEqualTo(actualPoker),
 
             () -> assertTrue(actualPokerIdSecure.toString().matches(UuidPattern)),
-            () -> assertThat(actualPokerRowMocked).isEqualTo(expectedPoker),
+            () -> assertThat(actualPokerMocked).isEqualTo(expectedPoker),
 
             () -> assertThat(actualTicketRow).isEqualTo(expectedTicket)
         );
