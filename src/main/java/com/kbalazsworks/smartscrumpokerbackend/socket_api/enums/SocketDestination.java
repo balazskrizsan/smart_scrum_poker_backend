@@ -6,7 +6,8 @@ public enum SocketDestination
     POKER_ROOM_STATE("/app/poker.room.state"),
     POKER_ROUND_START("/app/poker.round.start"),
     POKER_ROUND_STOP("/app/poker.round.stop"),
-    SEND_POKER_VOTE("/app/poker.vote");
+    SEND_POKER_VOTE("/app/poker.vote"),
+    SEND_ACCOUNT_INSECURE_USER_CREATE("/app/account.insecure.user.create");
 
     private final String destination;
 

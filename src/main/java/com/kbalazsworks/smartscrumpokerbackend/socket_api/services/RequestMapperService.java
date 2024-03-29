@@ -1,7 +1,9 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.services;
 
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.account.InsecureUserCreateRequest;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.poker.StartRequest;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.poker.VoteRequest;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
@@ -36,6 +38,16 @@ public class RequestMapperService
             null,
             new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
             ""
+        );
+    }
+
+    public static InsecureUser mapToEntity(InsecureUserCreateRequest insecureUserCreateRequest)
+    {
+        return new InsecureUser(
+            null,
+            null,
+            insecureUserCreateRequest.userName(),
+            new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
         );
     }
 }
