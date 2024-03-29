@@ -59,7 +59,6 @@ public class V000001__init extends AbstractBaseJooqMigration
             .column("id_secure", UUID.nullable(false))
             .column("user_name", VARCHAR.nullable(false))
             .column("created_at", TIMESTAMP.nullable(false))
-            .column("created_by", VARCHAR.nullable(true))
             .constraints(
                 constraint("insecure_user_pk").primaryKey("id"),
                 constraint("insecure_user_unique").unique("id_secure")
