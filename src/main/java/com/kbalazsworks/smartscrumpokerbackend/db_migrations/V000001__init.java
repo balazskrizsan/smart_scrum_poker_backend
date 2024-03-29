@@ -53,5 +53,17 @@ public class V000001__init extends AbstractBaseJooqMigration
                 constraint("vote_pk").primaryKey("id")
             )
             .execute();
+
+        dslContext.createTable("insecure_user")
+            .column("id", BIGINT.nullable(false).identity(true))
+            .column("id_secure", UUID.nullable(false))
+            .column("user_name", VARCHAR.nullable(false))
+            .column("created_at", TIMESTAMP.nullable(false))
+            .column("created_by", VARCHAR.nullable(true))
+            .constraints(
+                constraint("insecure_user_pk").primaryKey("id"),
+                constraint("insecure_user_unique").unique("id_secure")
+            )
+            .execute();
     }
 }
