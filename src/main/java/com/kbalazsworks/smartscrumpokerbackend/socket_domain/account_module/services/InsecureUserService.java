@@ -14,11 +14,11 @@ public class InsecureUserService
 {
     private final InsecureUserRepository insecureUserRepository;
 
-    public void create(InsecureUser insecureUser) throws AccountException
+    public InsecureUser create(InsecureUser insecureUser) throws AccountException
     {
         var newUuid = UUID.randomUUID();
 
-        insecureUserRepository.create(new InsecureUser(
+        return insecureUserRepository.create(new InsecureUser(
             null,
             newUuid,
             insecureUser.userName(),

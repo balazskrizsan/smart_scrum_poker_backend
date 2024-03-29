@@ -51,7 +51,7 @@ public class InsecureUserService_CreateTest extends AbstractIntegrationTest
         InsecureUser expectedUser = new InsecureUserFakeBuilder().id(1L).build();
 
         // Act
-        accountServiceFactory.getInsecureUserService().create(insecureUser);
+        InsecureUser actualUserResponse = accountServiceFactory.getInsecureUserService().create(insecureUser);
 
         // Assert
         InsecureUserRecord actualUserRecord = getDslContext().selectFrom(insecureUserTable).fetchOne();
@@ -61,6 +61,7 @@ public class InsecureUserService_CreateTest extends AbstractIntegrationTest
         InsecureUser actualUserMocked = actualUserRecord.into(InsecureUser.class);
 
         assertAll(
+            () -> assertThat(actualUserResponse).isEqualTo(actualUser),
             () -> assertTrue(actualUserIdSecure.toString().matches(UuidPattern)),
             () -> assertThat(actualUserMocked).isEqualTo(expectedUser)
         );
