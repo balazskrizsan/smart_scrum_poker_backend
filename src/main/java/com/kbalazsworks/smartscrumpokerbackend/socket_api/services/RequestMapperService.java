@@ -37,7 +37,7 @@ public class RequestMapperService
             voteRequest.voteEffort(),
             null,
             new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-            ""
+            voteRequest.userIdSecure().toString()
         );
     }
 

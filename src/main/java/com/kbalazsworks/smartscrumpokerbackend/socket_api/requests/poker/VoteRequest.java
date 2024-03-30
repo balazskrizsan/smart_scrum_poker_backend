@@ -1,5 +1,7 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.poker;
 
-public record VoteRequest(short voteUncertainty, short voteComplexity, short voteEffort)
+import java.util.UUID;
+
+public record VoteRequest(UUID userIdSecure, short voteUncertainty, short voteComplexity, short voteEffort)
 {
 }
