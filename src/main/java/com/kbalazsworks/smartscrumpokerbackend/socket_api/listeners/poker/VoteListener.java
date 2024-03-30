@@ -6,6 +6,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestinatio
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.poker.VoteRequest;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.VoteResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.RequestMapperService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.StoryPointException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.VoteService;
@@ -37,13 +38,13 @@ public class VoteListener
     {
         log.info("SocketListener:/poker.vote/{}/{}: {}", pokerIdSecure, ticketId, voteRequest);
 
-        voteService.vote(RequestMapperService.mapToEntity(voteRequest));
+        InsecureUser insecureUser = voteService.vote(RequestMapperService.mapToEntity(voteRequest));
 
         template.convertAndSend(
             "/queue/reply-" + pokerIdSecure,
             new ResponseEntityBuilder<VoteResponse>()
                 .socketDestination(SocketDestination.SEND_POKER_VOTE)
-                .data(new VoteResponse())
+                .data(new VoteResponse(insecureUser))
                 .build()
         );
     }

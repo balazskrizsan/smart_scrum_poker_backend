@@ -1,5 +1,8 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker;
 
-public record VoteResponse()
+
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
+
+public record VoteResponse(InsecureUser voterInsecureUser)
 {
 }
