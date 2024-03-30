@@ -25,4 +25,9 @@ public class InsecureUserService
             insecureUser.createdAt()
         ));
     }
+
+    public InsecureUser findByIdSecure(String idSecure) throws AccountException
+    {
+        return insecureUserRepository.findByIdSecure(idSecure);
+    }
 }

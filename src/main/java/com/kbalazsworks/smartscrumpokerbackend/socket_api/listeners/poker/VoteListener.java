@@ -6,6 +6,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestinatio
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.poker.VoteRequest;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.VoteResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.RequestMapperService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.StoryPointException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.VoteService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class VoteListener
         @DestinationVariable UUID pokerIdSecure,
         @DestinationVariable Long ticketId
     )
-        throws ApiException, StoryPointException
+        throws ApiException, StoryPointException, AccountException
     {
         log.info("SocketListener:/poker.vote/{}/{}: {}", pokerIdSecure, ticketId, voteRequest);
 

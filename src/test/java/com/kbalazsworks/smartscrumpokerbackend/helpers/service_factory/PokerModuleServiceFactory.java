@@ -1,15 +1,12 @@
 package com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory;
 
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.VoteRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class PokerModuleServiceFactory extends AbstractServiceFactory
@@ -20,6 +17,8 @@ public class PokerModuleServiceFactory extends AbstractServiceFactory
     private TicketRepository ticketRepository;
     @Autowired
     private VoteRepository voteRepository;
+    @Autowired
+    private AccountServiceFactory accountServiceFactory;
 
     public StartService getStartService()
     {
@@ -79,17 +78,19 @@ public class PokerModuleServiceFactory extends AbstractServiceFactory
 
     public VoteService getVoteService()
     {
-        return getVoteService(null, null);
+        return getVoteService(null, null, null);
     }
 
     public VoteService getVoteService(
-        VoteRepository voteRepositoryMock,
-        StoryPointCalculatorService storyPointCalculatorServiceMock
+        InsecureUserService insecureUserServiceMock,
+        StoryPointCalculatorService storyPointCalculatorServiceMock,
+        VoteRepository voteRepositoryMock
     )
     {
         return new VoteService(
-            getDependency(VoteService.class, VoteRepository.class, voteRepositoryMock, voteRepository),
-            getDependency(VoteService.class, StoryPointCalculatorService.class, storyPointCalculatorServiceMock, getStoryPointCalculatorService())
+            getDependency(VoteService.class, InsecureUserService.class, insecureUserServiceMock, accountServiceFactory.getInsecureUserService()),
+            getDependency(VoteService.class, StoryPointCalculatorService.class, storyPointCalculatorServiceMock, getStoryPointCalculatorService()),
+            getDependency(VoteService.class, VoteRepository.class, voteRepositoryMock, voteRepository)
         );
     }
 

@@ -1,5 +1,8 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services;
 
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.StoryPointException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.VoteRepository;
@@ -12,12 +15,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VoteService
 {
-    private final VoteRepository voteRepository;
+    private final InsecureUserService insecureUserService;
     private final StoryPointCalculatorService storyPointCalculatorService;
+    private final VoteRepository voteRepository;
 
-    // @todo: unit test
-    public void vote(@NonNull Vote vote) throws StoryPointException
+    // @todo: test: check exception without valid user
+    public InsecureUser vote(@NonNull Vote vote) throws StoryPointException, AccountException
     {
+        InsecureUser insecureUser = insecureUserService.findByIdSecure(vote.createdBy());
+
         Vote calculatedVote = new Vote(
             vote.id(),
             vote.uncertainty(),
@@ -31,5 +37,7 @@ public class VoteService
         );
 
         voteRepository.create(calculatedVote);
+
+        return insecureUser;
     }
 }
