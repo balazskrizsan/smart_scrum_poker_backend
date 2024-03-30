@@ -1,7 +1,10 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.listeners.poker;
 
+import com.kbalazsworks.smartscrumpokerbackend.api.builders.ResponseEntityBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.api.exceptions.ApiException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.poker.VoteRequest;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.VoteResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.RequestMapperService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.StoryPointException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.VoteService;
@@ -35,12 +38,12 @@ public class VoteListener
 
         voteService.vote(RequestMapperService.mapToEntity(voteRequest));
 
-//        template.convertAndSend(
-//            "/queue/reply-" + pokerIdSecure,
-//            new ResponseEntityBuilder<StartRoundResponse>()
-//                .socketDestination(SocketDestination.POKER_ROUND_STOP)
-//                .data(new StartRoundResponse(ticketId))
-//                .build()
-//        );
+        template.convertAndSend(
+            "/queue/reply-" + pokerIdSecure,
+            new ResponseEntityBuilder<VoteResponse>()
+                .socketDestination(SocketDestination.SEND_POKER_VOTE)
+                .data(new VoteResponse())
+                .build()
+        );
     }
 }
