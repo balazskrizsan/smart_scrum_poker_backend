@@ -19,7 +19,6 @@ public class VoteService
     private final StoryPointCalculatorService storyPointCalculatorService;
     private final VoteRepository voteRepository;
 
-    // @todo: test: check exception without valid user
     public InsecureUser vote(@NonNull Vote vote) throws StoryPointException, AccountException
     {
         InsecureUser insecureUser = insecureUserService.findByIdSecure(vote.createdBy());

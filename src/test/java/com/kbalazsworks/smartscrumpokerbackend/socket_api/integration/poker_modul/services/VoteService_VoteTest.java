@@ -5,6 +5,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_build
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
@@ -60,5 +62,33 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
             () -> assertThat(actualVote).isEqualTo(expectedVote),
             () -> assertThat(actualInsecureUser).isEqualTo(expectedInsecureUser)
         );
+    }
+    @Test
+    @SqlGroup(
+        {
+            @Sql(
+                executionPhase = BEFORE_TEST_METHOD,
+                config = @SqlConfig(transactionMode = ISOLATED),
+                scripts = {
+                    "classpath:test/sqls/_truncate_tables.sql",
+                }
+            ),
+            @Sql(
+                executionPhase = AFTER_TEST_METHOD,
+                config = @SqlConfig(transactionMode = ISOLATED),
+                scripts = {"classpath:test/sqls/_truncate_tables.sql"}
+            )
+        }
+    )
+    @SneakyThrows
+    public void insertWithoutDbUser_ThrowsException()
+    {
+        // Arrange
+        Vote testedVote = new VoteFakeBuilder().build();
+
+        // Act - Assert
+        assertThatThrownBy(() -> pokerModuleServiceFactory.getVoteService().vote(testedVote))
+            .isInstanceOf(AccountException.class)
+            .hasMessage("User not found");
     }
 }
