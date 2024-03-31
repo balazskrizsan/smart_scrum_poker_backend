@@ -32,6 +32,11 @@ public class VoteRepository extends AbstractRepository
                 vote.createdAt(),
                 vote.createdBy()
             )
+            .onDuplicateKeyUpdate()
+            .set(voteTable.UNCERTAINTY, vote.uncertainty())
+            .set(voteTable.COMPLEXITY, vote.complexity())
+            .set(voteTable.EFFORT, vote.effort())
+            .set(voteTable.CALCULATED_POINT, vote.calculatedPoint())
             .execute();
     }
 }

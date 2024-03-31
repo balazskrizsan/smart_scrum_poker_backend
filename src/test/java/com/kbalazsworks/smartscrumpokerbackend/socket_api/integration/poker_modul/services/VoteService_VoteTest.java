@@ -14,6 +14,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -63,6 +65,7 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
             () -> assertThat(actualInsecureUser).isEqualTo(expectedInsecureUser)
         );
     }
+
     @Test
     @SqlGroup(
         {
@@ -90,5 +93,44 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
         assertThatThrownBy(() -> pokerModuleServiceFactory.getVoteService().vote(testedVote))
             .isInstanceOf(AccountException.class)
             .hasMessage("User not found");
+    }
+
+    @Test
+    @SqlGroup(
+        {
+            @Sql(
+                executionPhase = BEFORE_TEST_METHOD,
+                config = @SqlConfig(transactionMode = ISOLATED),
+                scripts = {
+                    "classpath:test/sqls/_truncate_tables.sql",
+                    "classpath:test/sqls/_preset_insert_1_insecure_user.sql",
+                }
+            ),
+            @Sql(
+                executionPhase = AFTER_TEST_METHOD,
+                config = @SqlConfig(transactionMode = ISOLATED),
+                scripts = {"classpath:test/sqls/_truncate_tables.sql"}
+            )
+        }
+    )
+    @SneakyThrows
+    public void sendVoteMultipleTimes_fromSecondTheFirstRowWillBeUpdated()
+    {
+        // Arrange
+        Vote testedVote1 = new VoteFakeBuilder().uncertainty((short) 1).complexity((short) 1).effort((short) 1).build();
+        Vote testedVote2 = new VoteFakeBuilder().uncertainty((short) 3).complexity((short) 3).effort((short) 3).build();
+
+        Vote expectedVote = new VoteFakeBuilder().id(1L).uncertainty((short) 3).complexity((short) 3).effort((short) 3).calculatedPoint((short) 13).build();
+
+        // Act
+        pokerModuleServiceFactory.getVoteService().vote(testedVote1);
+        pokerModuleServiceFactory.getVoteService().vote(testedVote2);
+
+        // Assert
+        List<Vote> votes = getDslContext().selectFrom(voteTable).fetch().into(Vote.class);
+        assertAll(
+            () -> assertThat(votes.size()).isEqualTo(1),
+            () -> assertThat(votes.getFirst()).isEqualTo(expectedVote)
+        );
     }
 }
