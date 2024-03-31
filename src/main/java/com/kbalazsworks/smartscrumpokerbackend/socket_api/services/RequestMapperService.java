@@ -33,7 +33,7 @@ public class RequestMapperService
     {
         return new Vote(
             null,
-            null,
+            voteRequest.ticketId(),
             voteRequest.voteUncertainty(),
             voteRequest.voteComplexity(),
             voteRequest.voteEffort(),
