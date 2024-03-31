@@ -40,11 +40,11 @@ public class InsecureUserRepository extends AbstractRepository
         return newInsecureUser.into(InsecureUser.class);
     }
 
-    public InsecureUser findByIdSecure(String idSecure) throws AccountException
+    public InsecureUser findByIdSecure(UUID idSecure) throws AccountException
     {
         InsecureUserRecord user = getDSLContext()
             .selectFrom(insecureUserTable)
-            .where(insecureUserTable.ID_SECURE.eq(UUID.fromString(idSecure)))
+            .where(insecureUserTable.ID_SECURE.eq(idSecure))
             .fetchOne();
 
         if (null == user)

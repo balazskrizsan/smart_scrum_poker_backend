@@ -11,6 +11,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_
 
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.UUID;
 
 public class RequestMapperService
 {
@@ -22,9 +23,9 @@ public class RequestMapperService
                 null,
                 request.sprintTitle(),
                 new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-                ""
+                UUID.randomUUID() // @todo: get from UI
             ),
-            request.ticketNames().stream().map(tn -> new Ticket(null, null, tn, false)).toList()
+            request.ticketNames().stream().map(tn -> new Ticket(null, null, null, tn, false)).toList()
         );
     }
 
@@ -32,12 +33,13 @@ public class RequestMapperService
     {
         return new Vote(
             null,
+            null,
             voteRequest.voteUncertainty(),
             voteRequest.voteComplexity(),
             voteRequest.voteEffort(),
             null,
             new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-            voteRequest.userIdSecure().toString()
+            voteRequest.userIdSecure()
         );
     }
 

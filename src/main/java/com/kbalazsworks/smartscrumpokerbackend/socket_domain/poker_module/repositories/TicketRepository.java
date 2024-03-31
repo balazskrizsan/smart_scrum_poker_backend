@@ -18,8 +18,8 @@ public class TicketRepository extends AbstractRepository
     public void createAll(@NonNull List<Ticket> tickets)
     {
         getDSLContext()
-            .insertInto(ticketTable, ticketTable.POKER_ID, ticketTable.NAME)
-            .valuesOfRows(tickets.stream().map(r -> row(r.pokerId(), r.name())).toList())
+            .insertInto(ticketTable, ticketTable.ID_SECURE, ticketTable.POKER_ID, ticketTable.NAME)
+            .valuesOfRows(tickets.stream().map(r -> row(r.idSecure(), r.pokerId(), r.name())).toList())
             .execute();
     }
 

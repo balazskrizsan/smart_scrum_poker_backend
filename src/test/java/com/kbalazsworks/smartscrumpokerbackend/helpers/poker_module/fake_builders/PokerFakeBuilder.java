@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders;
 
+import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class PokerFakeBuilder
     private UUID idSecure = defaultIdSecure1;
     private String sprintName = "sprint #1";
     private LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
-    private String createdBy = "creator";
+    private UUID createdBy = InsecureUserFakeBuilder.defaultIdSecure1;
 
     public Poker build()
     {

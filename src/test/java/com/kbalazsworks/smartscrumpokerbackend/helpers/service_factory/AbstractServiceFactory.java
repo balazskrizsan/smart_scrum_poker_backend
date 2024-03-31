@@ -8,7 +8,15 @@ public abstract class AbstractServiceFactory
 {
     Map<String, Map<String, Object>> oneTimeMocks = new HashMap<>();
 
-    protected  <T> T getDependency(Class<?> newClass, Class<T> dependencyClass, T mock, T diObject)
+    public void setOneTimeMock(Class<?> newClass, Class<?> dependencyClass, Object defaultMock)
+    {
+        oneTimeMocks.put(newClass.getName(), new HashMap<>()
+        {{
+            put(dependencyClass.getName(), defaultMock);
+        }});
+    }
+
+    protected <T> T getDependency(Class<?> newClass, Class<T> dependencyClass, T mock, T diObject)
     {
         var newClassFound = oneTimeMocks.getOrDefault(newClass.getName(), null);
         if (newClassFound != null && !newClassFound.isEmpty())

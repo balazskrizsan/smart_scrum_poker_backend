@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services;
 
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services.UuidService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
 import lombok.NonNull;
@@ -12,12 +13,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TicketService
 {
+    private final UuidService uuidService;
     private final TicketRepository ticketRepository;
 
     // @todo: unit test
     public void createAll(@NonNull List<Ticket> tickets)
     {
-        ticketRepository.createAll(tickets);
+        ticketRepository.createAll(
+            tickets.stream()
+                .map(t -> new Ticket(null, uuidService.getRandom(), t.pokerId(), t.name(), t.isActive()))
+                .toList()
+        );
     }
 
     // @todo: unit test

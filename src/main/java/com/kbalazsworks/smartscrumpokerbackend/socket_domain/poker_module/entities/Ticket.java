@@ -2,6 +2,8 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entit
 
 import lombok.NonNull;
 
-public record Ticket(Long id, Long pokerId, @NonNull String name, @NonNull boolean isActive)
+import java.util.UUID;
+
+public record Ticket(Long id, UUID idSecure, Long pokerId, @NonNull String name, boolean isActive)
 {
 }

@@ -15,6 +15,8 @@ public class InsecureUserFakeBuilder
 {
     public static final long defaultId1 = 102001L;
     public static final UUID defaultIdSecure1 = UUID.fromString("10000000-0000-0000-0000-000000002001");
+    public static final UUID defaultIdSecure2 = UUID.fromString("10000000-0000-0000-0000-000000002002");
+    public static final UUID defaultIdSecure3 = UUID.fromString("10000000-0000-0000-0000-000000002003");
 
     private long id = defaultId1;
     private UUID idSecure = defaultIdSecure1;

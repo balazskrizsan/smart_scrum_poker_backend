@@ -16,6 +16,7 @@ public class VoteRepository extends AbstractRepository
         getDSLContext()
             .insertInto(
                 voteTable,
+                voteTable.TICKET_ID,
                 voteTable.UNCERTAINTY,
                 voteTable.COMPLEXITY,
                 voteTable.EFFORT,
@@ -23,6 +24,7 @@ public class VoteRepository extends AbstractRepository
                 voteTable.CREATED_AT,
                 voteTable.CREATED_BY
             ).values(
+                vote.ticketId(),
                 vote.uncertainty(),
                 vote.complexity(),
                 vote.effort(),

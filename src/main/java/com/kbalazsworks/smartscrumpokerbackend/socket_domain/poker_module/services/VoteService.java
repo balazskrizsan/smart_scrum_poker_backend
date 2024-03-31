@@ -25,6 +25,7 @@ public class VoteService
 
         Vote calculatedVote = new Vote(
             vote.id(),
+            vote.ticketId(),
             vote.uncertainty(),
             vote.complexity(),
             vote.effort(),

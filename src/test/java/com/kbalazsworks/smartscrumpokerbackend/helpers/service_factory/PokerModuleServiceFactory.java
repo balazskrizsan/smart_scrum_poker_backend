@@ -1,6 +1,7 @@
 package com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory;
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services.UuidService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.VoteRepository;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class PokerModuleServiceFactory extends AbstractServiceFactory
 {
     @Autowired
+    private CommonServiceFactory commonServiceFactory;
+    @Autowired
     private PokerRepository pokerRepository;
     @Autowired
     private TicketRepository ticketRepository;
@@ -22,16 +25,18 @@ public class PokerModuleServiceFactory extends AbstractServiceFactory
 
     public StartService getStartService()
     {
-        return getStartService(null, null);
+        return getStartService(null, null, null);
     }
 
     public StartService getStartService(
         PokerService pokerServiceMock,
+        UuidService uuidServiceMock,
         TicketService ticketServiceMock
     )
     {
         return new StartService(
             getDependency(StartService.class, PokerService.class, pokerServiceMock, getPokerService()),
+            getDependency(StartService.class, UuidService.class, uuidServiceMock, commonServiceFactory.getUuidService()),
             getDependency(TicketRepository.class, TicketService.class, ticketServiceMock, getTicketService())
         );
     }
@@ -52,15 +57,17 @@ public class PokerModuleServiceFactory extends AbstractServiceFactory
 
     public TicketService getTicketService()
     {
-        return getTicketService(null);
+        return getTicketService(null, null);
     }
 
     public TicketService getTicketService(
-        TicketRepository TicketRepositoryMock
+        TicketRepository ticketRepositoryMock,
+        UuidService uuidServiceMock
     )
     {
         return new TicketService(
-            getDependency(TicketService.class, TicketRepository.class, TicketRepositoryMock, ticketRepository)
+            getDependency(TicketService.class, UuidService.class, uuidServiceMock, commonServiceFactory.getUuidService()),
+            getDependency(TicketService.class, TicketRepository.class, ticketRepositoryMock, ticketRepository)
         );
     }
 

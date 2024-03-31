@@ -10,7 +10,7 @@ public record Poker(
     UUID idSecure,
     @NonNull String name,
     @NonNull LocalDateTime createdAt,
-    @NonNull String createdBy
+    @NonNull UUID createdBy
 )
 {
 }

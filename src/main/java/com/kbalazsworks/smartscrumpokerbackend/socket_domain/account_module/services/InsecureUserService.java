@@ -26,7 +26,7 @@ public class InsecureUserService
         ));
     }
 
-    public InsecureUser findByIdSecure(String idSecure) throws AccountException
+    public InsecureUser findByIdSecure(UUID idSecure) throws AccountException
     {
         return insecureUserRepository.findByIdSecure(idSecure);
     }

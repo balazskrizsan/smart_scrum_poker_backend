@@ -2,11 +2,16 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_mod
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
+import com.kbalazsworks.smartscrumpokerbackend.helpers.common_module.mocker.UuidServiceMocker;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services.UuidService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.PokerService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.StartService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.TicketService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,24 +59,24 @@ public class StartService_StartTest extends AbstractIntegrationTest
         Poker expectedPoker = new PokerFakeBuilder().id(1L).build();
         Ticket expectedTicket = new TicketFakeBuilder().id(1).pokerId(1).build();
 
+        var ticketUuidServiceMock = new UuidServiceMocker().mockGetRandom(TicketFakeBuilder.defaultIdSecure1).getMock();
+        pokerModuleServiceFactory.setOneTimeMock(TicketService.class, UuidService.class, ticketUuidServiceMock);
+
+        var pokerUuidServiceMock = new UuidServiceMocker().mockGetRandom(PokerFakeBuilder.defaultIdSecure1).getMock();
+        pokerModuleServiceFactory.setOneTimeMock(StartService.class, UuidService.class, pokerUuidServiceMock);
+
         // Act
         Poker actualPokerResponse = pokerModuleServiceFactory.getStartService().start(testedPoker, testedTickets);
 
         // Assert
         PokerRecord actualPokerRecord = getDslContext().selectFrom(pokerTable).fetchOne();
         Poker actualPoker = actualPokerRecord.into(Poker.class);
-        UUID actualPokerIdSecure = actualPokerRecord.getIdSecure();
-        actualPokerRecord.setIdSecure(PokerFakeBuilder.defaultIdSecure1);
-        Poker actualPokerMocked = actualPokerRecord.into(Poker.class);
 
         Ticket actualTicketRow = getDslContext().selectFrom(ticketTable).fetchOne().into(Ticket.class);
 
         assertAll(
             () -> assertThat(actualPokerResponse).isEqualTo(actualPoker),
-
-            () -> assertTrue(actualPokerIdSecure.toString().matches(UuidPattern)),
-            () -> assertThat(actualPokerMocked).isEqualTo(expectedPoker),
-
+            () -> assertThat(actualPoker).isEqualTo(expectedPoker),
             () -> assertThat(actualTicketRow).isEqualTo(expectedTicket)
         );
     }
