@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Poker extends TableImpl<PokerRecord> {
 
-    private static final long serialVersionUID = -1618246336;
+    private static final long serialVersionUID = -895340896;
 
     /**
      * The reference instance of <code>public.poker</code>
@@ -72,7 +72,7 @@ public class Poker extends TableImpl<PokerRecord> {
     /**
      * The column <code>public.poker.created_by</code>.
      */
-    public final TableField<PokerRecord, String> CREATED_BY = createField(DSL.name("created_by"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<PokerRecord, UUID> CREATED_BY = createField(DSL.name("created_by"), org.jooq.impl.SQLDataType.UUID, this, "");
 
     /**
      * Create a <code>public.poker</code> table reference
@@ -124,7 +124,7 @@ public class Poker extends TableImpl<PokerRecord> {
 
     @Override
     public List<UniqueKey<PokerRecord>> getKeys() {
-        return Arrays.<UniqueKey<PokerRecord>>asList(Keys.POKER_PK, Keys.ID_SECURE_UNIQUE);
+        return Arrays.<UniqueKey<PokerRecord>>asList(Keys.POKER_PK, Keys.POKER__ID_SECURE__UNIQUE);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class Poker extends TableImpl<PokerRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Long, UUID, String, LocalDateTime, String> fieldsRow() {
+    public Row5<Long, UUID, String, LocalDateTime, UUID> fieldsRow() {
         return (Row5) super.fieldsRow();
     }
 }

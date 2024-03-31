@@ -11,13 +11,14 @@ import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.VoteRecord;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row7;
+import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -33,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Vote extends TableImpl<VoteRecord> {
 
-    private static final long serialVersionUID = 1618338359;
+    private static final long serialVersionUID = 47901410;
 
     /**
      * The reference instance of <code>public.vote</code>
@@ -52,6 +53,11 @@ public class Vote extends TableImpl<VoteRecord> {
      * The column <code>public.vote.id</code>.
      */
     public final TableField<VoteRecord, Long> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.BIGINT.nullable(false).identity(true), this, "");
+
+    /**
+     * The column <code>public.vote.ticket_id</code>.
+     */
+    public final TableField<VoteRecord, Long> TICKET_ID = createField(DSL.name("ticket_id"), org.jooq.impl.SQLDataType.BIGINT.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>public.vote.uncertainty</code>.
@@ -81,7 +87,7 @@ public class Vote extends TableImpl<VoteRecord> {
     /**
      * The column <code>public.vote.created_by</code>.
      */
-    public final TableField<VoteRecord, String> CREATED_BY = createField(DSL.name("created_by"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<VoteRecord, UUID> CREATED_BY = createField(DSL.name("created_by"), org.jooq.impl.SQLDataType.UUID, this, "");
 
     /**
      * Create a <code>public.vote</code> table reference
@@ -133,7 +139,7 @@ public class Vote extends TableImpl<VoteRecord> {
 
     @Override
     public List<UniqueKey<VoteRecord>> getKeys() {
-        return Arrays.<UniqueKey<VoteRecord>>asList(Keys.VOTE_PK);
+        return Arrays.<UniqueKey<VoteRecord>>asList(Keys.VOTE_PK, Keys.VOTE__TICKET_ID__CREATED_BY__UNIQUE);
     }
 
     @Override
@@ -163,11 +169,11 @@ public class Vote extends TableImpl<VoteRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row7 type methods
+    // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row7<Long, Short, Short, Short, Short, LocalDateTime, String> fieldsRow() {
-        return (Row7) super.fieldsRow();
+    public Row8<Long, Long, Short, Short, Short, Short, LocalDateTime, UUID> fieldsRow() {
+        return (Row8) super.fieldsRow();
     }
 }

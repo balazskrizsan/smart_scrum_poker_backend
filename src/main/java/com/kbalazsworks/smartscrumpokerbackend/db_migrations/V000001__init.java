@@ -20,20 +20,22 @@ public class V000001__init extends AbstractBaseJooqMigration
             .column("id_secure", UUID.nullable(false))
             .column("name", VARCHAR.nullable(false))
             .column("created_at", TIMESTAMP.nullable(false))
-            .column("created_by", VARCHAR.nullable(true))
+            .column("created_by", UUID.nullable(true))
             .constraints(
                 constraint("poker_pk").primaryKey("id"),
-                constraint("id_secure_unique").unique("id_secure")
+                constraint("poker__id_secure__unique").unique("id_secure")
             )
             .execute();
 
         dslContext.createTable("ticket")
             .column("id", BIGINT.nullable(false).identity(true))
+            .column("id_secure", UUID.nullable(false))
             .column("poker_id", BIGINT.nullable(false))
             .column("name", VARCHAR.nullable(false))
             .column("active", BOOLEAN.nullable(false).defaultValue(false))
             .constraints(
                 constraint("ticket_pk").primaryKey("id"),
+                constraint("ticket__id_secure__unique").unique("id_secure"),
                 constraint("fk___ticket__poker_id___poker__id___on_delete_cascade")
                     .foreignKey("poker_id")
                     .references("poker", "id")
@@ -43,14 +45,16 @@ public class V000001__init extends AbstractBaseJooqMigration
 
         dslContext.createTable("vote")
             .column("id", BIGINT.nullable(false).identity(true))
+            .column("ticket_id", BIGINT.nullable(false).identity(true))
             .column("uncertainty", SMALLINT.nullable(false))
             .column("complexity", SMALLINT.nullable(false))
             .column("effort", SMALLINT.nullable(false))
             .column("calculated_point", SMALLINT.nullable(false))
             .column("created_at", TIMESTAMP.nullable(false))
-            .column("created_by", VARCHAR.nullable(true))
+            .column("created_by", UUID.nullable(true))
             .constraints(
-                constraint("vote_pk").primaryKey("id")
+                constraint("vote_pk").primaryKey("id"),
+                constraint("vote__ticket_id__created_by__unique").unique("ticket_id", "created_by")
             )
             .execute();
 
@@ -61,7 +65,7 @@ public class V000001__init extends AbstractBaseJooqMigration
             .column("created_at", TIMESTAMP.nullable(false))
             .constraints(
                 constraint("insecure_user_pk").primaryKey("id"),
-                constraint("insecure_user_unique").unique("id_secure")
+                constraint("insecure_user__id_secure__unique").unique("id_secure")
             )
             .execute();
     }

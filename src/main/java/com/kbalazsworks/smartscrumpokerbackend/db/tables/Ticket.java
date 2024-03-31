@@ -10,13 +10,14 @@ import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.TicketRecord;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row4;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -32,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ticket extends TableImpl<TicketRecord> {
 
-    private static final long serialVersionUID = -1573797435;
+    private static final long serialVersionUID = -1438749011;
 
     /**
      * The reference instance of <code>public.ticket</code>
@@ -51,6 +52,11 @@ public class Ticket extends TableImpl<TicketRecord> {
      * The column <code>public.ticket.id</code>.
      */
     public final TableField<TicketRecord, Long> ID = createField(DSL.name("id"), org.jooq.impl.SQLDataType.BIGINT.nullable(false).identity(true), this, "");
+
+    /**
+     * The column <code>public.ticket.id_secure</code>.
+     */
+    public final TableField<TicketRecord, UUID> ID_SECURE = createField(DSL.name("id_secure"), org.jooq.impl.SQLDataType.UUID.nullable(false), this, "");
 
     /**
      * The column <code>public.ticket.poker_id</code>.
@@ -117,7 +123,7 @@ public class Ticket extends TableImpl<TicketRecord> {
 
     @Override
     public List<UniqueKey<TicketRecord>> getKeys() {
-        return Arrays.<UniqueKey<TicketRecord>>asList(Keys.TICKET_PK);
+        return Arrays.<UniqueKey<TicketRecord>>asList(Keys.TICKET_PK, Keys.TICKET__ID_SECURE__UNIQUE);
     }
 
     @Override
@@ -156,11 +162,11 @@ public class Ticket extends TableImpl<TicketRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<Long, Long, String, Boolean> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<Long, UUID, Long, String, Boolean> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }
