@@ -25,17 +25,19 @@ public class PokerModuleServiceFactory extends AbstractServiceFactory
 
     public StartService getStartService()
     {
-        return getStartService(null, null, null);
+        return getStartService(null, null, null, null);
     }
 
     public StartService getStartService(
         PokerService pokerServiceMock,
+        InsecureUserService insecureUserServiceMock,
         UuidService uuidServiceMock,
         TicketService ticketServiceMock
     )
     {
         return new StartService(
             getDependency(StartService.class, PokerService.class, pokerServiceMock, getPokerService()),
+            getDependency(StartService.class, InsecureUserService.class, insecureUserServiceMock, accountServiceFactory.getInsecureUserService()),
             getDependency(StartService.class, UuidService.class, uuidServiceMock, commonServiceFactory.getUuidService()),
             getDependency(TicketRepository.class, TicketService.class, ticketServiceMock, getTicketService())
         );

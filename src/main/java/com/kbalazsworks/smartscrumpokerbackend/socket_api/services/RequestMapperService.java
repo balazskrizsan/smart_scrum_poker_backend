@@ -23,7 +23,7 @@ public class RequestMapperService
                 null,
                 request.sprintTitle(),
                 new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-                UUID.randomUUID() // @todo: get from UI
+                request.starterInsecureUserId()
             ),
             request.ticketNames().stream().map(tn -> new Ticket(null, null, null, tn, false)).toList()
         );

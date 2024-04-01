@@ -1,25 +1,31 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services;
 
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services.UuidService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.StartPokerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class StartService
 {
     private final PokerService pokerService;
+    private final InsecureUserService insecureUserService;
     private final UuidService uuidService;
     private final TicketService ticketService;
 
-    public Poker start(Poker poker, List<Ticket> tickets) throws PokerException
+    public StartPokerResponse start(Poker poker, List<Ticket> tickets) throws PokerException, AccountException
     {
+        InsecureUser starterUser = insecureUserService.findByIdSecure(poker.createdBy());
+
         Poker newPoker = pokerService.create(new Poker(
             null,
             uuidService.getRandom(),
@@ -34,6 +40,6 @@ public class StartService
                 .toList()
         );
 
-        return newPoker;
+        return new StartPokerResponse(newPoker, starterUser);
     }
 }
