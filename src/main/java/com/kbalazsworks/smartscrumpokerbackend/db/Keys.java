@@ -5,11 +5,13 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.FlywaySchemaHistoryRecord;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.InGamePlayersRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.InsecureUserRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.TicketRecord;
@@ -43,6 +45,7 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = UniqueKeys0.FLYWAY_SCHEMA_HISTORY_PK;
+    public static final UniqueKey<InGamePlayersRecord> IN_GAME_PLAYERS__INSECURE_USER_ID_SECURE__POKER_ID_SECURE__PK = UniqueKeys0.IN_GAME_PLAYERS__INSECURE_USER_ID_SECURE__POKER_ID_SECURE__PK;
     public static final UniqueKey<InsecureUserRecord> INSECURE_USER_PK = UniqueKeys0.INSECURE_USER_PK;
     public static final UniqueKey<InsecureUserRecord> INSECURE_USER__ID_SECURE__UNIQUE = UniqueKeys0.INSECURE_USER__ID_SECURE__UNIQUE;
     public static final UniqueKey<PokerRecord> POKER_PK = UniqueKeys0.POKER_PK;
@@ -71,6 +74,7 @@ public class Keys {
 
     private static class UniqueKeys0 {
         public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = Internal.createUniqueKey(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY, "flyway_schema_history_pk", new TableField[] { FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK }, true);
+        public static final UniqueKey<InGamePlayersRecord> IN_GAME_PLAYERS__INSECURE_USER_ID_SECURE__POKER_ID_SECURE__PK = Internal.createUniqueKey(InGamePlayers.IN_GAME_PLAYERS, "in_game_players__insecure_user_id_secure__poker_id_secure__pk", new TableField[] { InGamePlayers.IN_GAME_PLAYERS.INSECURE_USER_ID_SECURE, InGamePlayers.IN_GAME_PLAYERS.POKER_ID_SECURE }, true);
         public static final UniqueKey<InsecureUserRecord> INSECURE_USER_PK = Internal.createUniqueKey(InsecureUser.INSECURE_USER, "insecure_user_pk", new TableField[] { InsecureUser.INSECURE_USER.ID }, true);
         public static final UniqueKey<InsecureUserRecord> INSECURE_USER__ID_SECURE__UNIQUE = Internal.createUniqueKey(InsecureUser.INSECURE_USER, "insecure_user__id_secure__unique", new TableField[] { InsecureUser.INSECURE_USER.ID_SECURE }, true);
         public static final UniqueKey<PokerRecord> POKER_PK = Internal.createUniqueKey(Poker.POKER, "poker_pk", new TableField[] { Poker.POKER.ID }, true);
