@@ -68,5 +68,15 @@ public class V000001__init extends AbstractBaseJooqMigration
                 constraint("insecure_user__id_secure__unique").unique("id_secure")
             )
             .execute();
+
+        dslContext.createTable("in_game_players")
+            .column("insecure_user_id_secure", UUID.nullable(false))
+            .column("poker_id_secure", UUID.nullable(false))
+            .column("created_at", TIMESTAMP.nullable(false))
+            .constraints(
+                constraint("in_game_players__insecure_user_id_secure__poker_id_secure__pk")
+                    .primaryKey("insecure_user_id_secure", "poker_id_secure")
+            )
+            .execute();
     }
 }
