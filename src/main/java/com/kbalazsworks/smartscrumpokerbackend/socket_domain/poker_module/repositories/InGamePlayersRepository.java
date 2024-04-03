@@ -11,7 +11,7 @@ public class InGamePlayersRepository extends AbstractRepository
     private final com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers inGamePlayersTable =
         com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers.IN_GAME_PLAYERS;
 
-    public void onDuplicateKeyAdd(@NonNull InGamePlayer inGamePlayer)
+    public void onDuplicateKeyIgnoreAdd(@NonNull InGamePlayer inGamePlayer)
     {
         getDSLContext()
             .insertInto(
@@ -25,6 +25,7 @@ public class InGamePlayersRepository extends AbstractRepository
                 inGamePlayer.insecureUserIdSecure(),
                 inGamePlayer.createdAt()
             )
+            .onDuplicateKeyIgnore()
             .execute();
     }
 }

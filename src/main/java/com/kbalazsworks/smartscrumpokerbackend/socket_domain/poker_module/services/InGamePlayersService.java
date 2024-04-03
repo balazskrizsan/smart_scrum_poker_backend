@@ -12,8 +12,8 @@ public class InGamePlayersService
 {
     private final InGamePlayersRepository inGamePlayersRepository;
 
-    public void onDuplicateKeyAdd(@NonNull InGamePlayer inGamePlayer)
+    public void onDuplicateKeyIgnoreAdd(@NonNull InGamePlayer inGamePlayer)
     {
-        inGamePlayersRepository.onDuplicateKeyAdd(inGamePlayer);
+        inGamePlayersRepository.onDuplicateKeyIgnoreAdd(inGamePlayer);
     }
 }
