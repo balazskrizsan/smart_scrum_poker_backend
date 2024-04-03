@@ -2,6 +2,7 @@ package com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory;
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services.UuidService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.InGamePlayersRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.VoteRepository;
@@ -20,6 +21,8 @@ public class PokerModuleServiceFactory extends AbstractServiceFactory
     private TicketRepository ticketRepository;
     @Autowired
     private VoteRepository voteRepository;
+    @Autowired
+    private InGamePlayersRepository inGamePlayersRepository;
     @Autowired
     private AccountServiceFactory accountServiceFactory;
 
@@ -106,5 +109,35 @@ public class PokerModuleServiceFactory extends AbstractServiceFactory
     public StoryPointCalculatorService getStoryPointCalculatorService()
     {
         return new StoryPointCalculatorService();
+    }
+
+    public RoomStateService getRoomStateService()
+    {
+        return getRoomStateService(null, null, null);
+    }
+
+    public RoomStateService getRoomStateService(
+        PokerService pokerServiceMock,
+        InsecureUserService insecureUserServiceMock,
+        TicketService ticketServiceMock
+    )
+    {
+        return new RoomStateService(
+            getDependency(RoomStateService.class, PokerService.class, pokerServiceMock, getPokerService()),
+            getDependency(RoomStateService.class, InsecureUserService.class, insecureUserServiceMock, accountServiceFactory.getInsecureUserService()),
+            getDependency(RoomStateService.class, TicketService.class, ticketServiceMock, getTicketService())
+        );
+    }
+
+    public InGamePlayersService getInGamePlayersService()
+    {
+        return getInGamePlayersService(null);
+    }
+
+    public InGamePlayersService getInGamePlayersService(InGamePlayersRepository inGamePlayersRepositoryMock)
+    {
+        return new InGamePlayersService(
+            getDependency(InGamePlayersService.class, InGamePlayersRepository.class, inGamePlayersRepositoryMock, inGamePlayersRepository)
+        );
     }
 }
