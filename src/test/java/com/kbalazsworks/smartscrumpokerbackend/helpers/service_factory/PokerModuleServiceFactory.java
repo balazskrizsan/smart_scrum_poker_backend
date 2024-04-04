@@ -113,21 +113,23 @@ public class PokerModuleServiceFactory extends AbstractServiceFactory
 
     public RoomStateService getRoomStateService()
     {
-        return getRoomStateService(null, null, null, null);
+        return getRoomStateService(null, null, null, null, null);
     }
 
     public RoomStateService getRoomStateService(
         PokerService pokerServiceMock,
         InsecureUserService insecureUserServiceMock,
         InGamePlayersService inGamePlayersServiceMock,
-        TicketService ticketServiceMock
+        TicketService ticketServiceMock,
+        VoteService voteServiceMock
     )
     {
         return new RoomStateService(
             getDependency(RoomStateService.class, PokerService.class, pokerServiceMock, getPokerService()),
             getDependency(RoomStateService.class, InsecureUserService.class, insecureUserServiceMock, accountServiceFactory.getInsecureUserService()),
             getDependency(RoomStateService.class, InGamePlayersService.class, inGamePlayersServiceMock, getInGamePlayersService()),
-            getDependency(RoomStateService.class, TicketService.class, ticketServiceMock, getTicketService())
+            getDependency(RoomStateService.class, TicketService.class, ticketServiceMock, getTicketService()),
+            getDependency(RoomStateService.class, VoteService.class, voteServiceMock, getVoteService())
         );
     }
 

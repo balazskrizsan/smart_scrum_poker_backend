@@ -7,6 +7,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.serv
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.InGamePlayer;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.RoomStateRequest;
 import lombok.NonNull;
@@ -14,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class RoomStateService
     private final InsecureUserService insecureUserService;
     private final InGamePlayersService inGamePlayersService;
     private final TicketService ticketService;
+    private final VoteService voteService;
 
     public RoomStateResponse get(@NonNull RoomStateRequest roomStateRequest) throws PokerException, AccountException
     {
@@ -42,7 +44,9 @@ public class RoomStateService
         List<InsecureUser> insecureUsers = insecureUserService
             .findByIdSecureList(inGamePlayers.stream().map(InGamePlayer::insecureUserIdSecure).toList());
 
+        Map<Long, List<Vote>> votes = voteService
+            .getVotesWithTicketGroupByTicketIds(tickets.stream().map(Ticket::id).toList());
 
-        return new RoomStateResponse(poker, tickets, insecureUsers);
+        return new RoomStateResponse(poker, tickets, insecureUsers, votes);
     }
 }

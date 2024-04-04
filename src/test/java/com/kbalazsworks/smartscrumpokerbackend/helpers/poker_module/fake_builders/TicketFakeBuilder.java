@@ -47,14 +47,8 @@ public class TicketFakeBuilder
 
     public List<Ticket> build1to3AsList()
     {
-        return new ArrayList<>()
-        {{
-            add(build());
-            add(build2());
-            add(build3());
-        }};
+        return List.of(build(), build2(), build3());
     }
-
 
     public Ticket build()
     {

@@ -5,6 +5,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_build
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.RoomStateRequestFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
+import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.RoomStateResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.RoomStateRequest;
@@ -14,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -36,6 +40,7 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
                     "classpath:test/sqls/_preset_insert_2_insecure_user.sql",
                     "classpath:test/sqls/_preset_insert_2_pokers.sql",
                     "classpath:test/sqls/_preset_insert_5_tickets_all_inactive.sql",
+                    "classpath:test/sqls/_preset_insert_5_votes_to_2_poker_3_ticket.sql",
                 }
             ),
             @Sql(
@@ -54,7 +59,12 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
         RoomStateResponse expected = new RoomStateResponse(
             new PokerFakeBuilder().build(),
             new TicketFakeBuilder().build1to3AsList(),
-            new InsecureUserFakeBuilder().buildAsList()
+            new InsecureUserFakeBuilder().buildAsList(),
+            Map.of(
+                TicketFakeBuilder.defaultId1, List.of(new VoteFakeBuilder().build(), new VoteFakeBuilder().build2()),
+                TicketFakeBuilder.defaultId2, List.of(new VoteFakeBuilder().build3(), new VoteFakeBuilder().build4()),
+                TicketFakeBuilder.defaultId3, List.of(new VoteFakeBuilder().build5())
+            )
         );
 
         // Act
