@@ -12,7 +12,7 @@ public record RoomStateResponse(
     Poker poker,
     List<Ticket> tickets,
     List<InsecureUser> inGameInsecureUsers,
-    Map<Long, List<Vote>> votes
+    Map<Long, Map<Long, Vote>> votes
 )
 {
 }

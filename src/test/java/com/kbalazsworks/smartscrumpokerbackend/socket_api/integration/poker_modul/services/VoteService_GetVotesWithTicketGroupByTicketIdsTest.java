@@ -49,13 +49,19 @@ public class VoteService_GetVotesWithTicketGroupByTicketIdsTest extends Abstract
     {
         // Arrange
         List<Long> testedTicketIds = List.of(TicketFakeBuilder.defaultId1, TicketFakeBuilder.defaultId2);
-        Map<Long, List<Vote>> expected = Map.of(
-            TicketFakeBuilder.defaultId1, List.of(new VoteFakeBuilder().build(), new VoteFakeBuilder().build2()),
-            TicketFakeBuilder.defaultId2, List.of(new VoteFakeBuilder().build3(), new VoteFakeBuilder().build4())
+        Map<Long, Map<Long, Vote>> expected = Map.of(
+            TicketFakeBuilder.defaultId1, Map.of(
+                VoteFakeBuilder.defaultId1, new VoteFakeBuilder().build(),
+                VoteFakeBuilder.defaultId2, new VoteFakeBuilder().build2()
+            ),
+            TicketFakeBuilder.defaultId2, Map.of(
+                VoteFakeBuilder.defaultId3, new VoteFakeBuilder().build3(),
+                VoteFakeBuilder.defaultId4, new VoteFakeBuilder().build4()
+            )
         );
 
         // Act
-        Map<Long, List<Vote>> actual = pokerModuleServiceFactory
+        Map<Long, Map<Long, Vote>> actual = pokerModuleServiceFactory
             .getVoteService()
             .getVotesWithTicketGroupByTicketIds(testedTicketIds);
 

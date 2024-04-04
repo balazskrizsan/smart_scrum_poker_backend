@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories;
 
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.VoteRecord;
 import com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories.AbstractRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import lombok.NonNull;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Repository
 public class VoteRepository extends AbstractRepository
@@ -43,11 +46,19 @@ public class VoteRepository extends AbstractRepository
             .execute();
     }
 
-    public Map<Long, List<Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
+    public Map<Long, Map<Long, Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
     {
         return getDSLContext()
             .selectFrom(voteTable)
             .where(voteTable.TICKET_ID.in(ticketIds))
-            .fetchGroups(voteTable.TICKET_ID, r -> r.into(Vote.class));
+            .collect(
+                Collectors.groupingBy(
+                    VoteRecord::getTicketId,
+                    Collectors.mapping(
+                        r -> r.into(Vote.class),
+                        Collectors.toMap(Vote::id, Function.identity())
+                    )
+                )
+            );
     }
 }

@@ -16,7 +16,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -61,9 +60,17 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
             new TicketFakeBuilder().build1to3AsList(),
             new InsecureUserFakeBuilder().buildAsList(),
             Map.of(
-                TicketFakeBuilder.defaultId1, List.of(new VoteFakeBuilder().build(), new VoteFakeBuilder().build2()),
-                TicketFakeBuilder.defaultId2, List.of(new VoteFakeBuilder().build3(), new VoteFakeBuilder().build4()),
-                TicketFakeBuilder.defaultId3, List.of(new VoteFakeBuilder().build5())
+                TicketFakeBuilder.defaultId1, Map.of(
+                    VoteFakeBuilder.defaultId1, new VoteFakeBuilder().build(),
+                    VoteFakeBuilder.defaultId2, new VoteFakeBuilder().build2()
+                ),
+                TicketFakeBuilder.defaultId2, Map.of(
+                   VoteFakeBuilder.defaultId3, new VoteFakeBuilder().build3(),
+                   VoteFakeBuilder.defaultId4, new VoteFakeBuilder().build4()
+                ),
+                TicketFakeBuilder.defaultId3, Map.of(
+                    VoteFakeBuilder.defaultId5, new VoteFakeBuilder().build5()
+                )
             )
         );
 

@@ -44,7 +44,7 @@ public class VoteService
         return insecureUser;
     }
 
-    public Map<Long, List<Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
+    public Map<Long, Map<Long, Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
     {
         return this.voteRepository.getVotesWithTicketGroupByTicketIds(ticketIds);
     }

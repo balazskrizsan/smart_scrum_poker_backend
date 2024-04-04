@@ -44,7 +44,7 @@ public class RoomStateService
         List<InsecureUser> insecureUsers = insecureUserService
             .findByIdSecureList(inGamePlayers.stream().map(InGamePlayer::insecureUserIdSecure).toList());
 
-        Map<Long, List<Vote>> votes = voteService
+        Map<Long, Map<Long, Vote>> votes = voteService
             .getVotesWithTicketGroupByTicketIds(tickets.stream().map(Ticket::id).toList());
 
         return new RoomStateResponse(poker, tickets, insecureUsers, votes);
