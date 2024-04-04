@@ -6,6 +6,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class InGamePlayersService
@@ -15,5 +18,10 @@ public class InGamePlayersService
     public void onDuplicateKeyIgnoreAdd(@NonNull InGamePlayer inGamePlayer)
     {
         inGamePlayersRepository.onDuplicateKeyIgnoreAdd(inGamePlayer);
+    }
+
+    public List<InGamePlayer> searchUserSecureIdsByPokerIdSecure(UUID pokerIdSecure)
+    {
+        return inGamePlayersRepository.searchUserSecureIdsByPokerIdSecure(pokerIdSecure);
     }
 }

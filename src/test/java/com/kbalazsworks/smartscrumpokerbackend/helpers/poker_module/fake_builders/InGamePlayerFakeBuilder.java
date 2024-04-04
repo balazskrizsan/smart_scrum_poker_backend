@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Accessors(fluent = true)
@@ -21,5 +23,13 @@ public class InGamePlayerFakeBuilder
     public InGamePlayer build()
     {
         return new InGamePlayer(insecureUserIdSecure, pokerIdSecure, createdAt);
+    }
+
+    public List<InGamePlayer> buildAsList()
+    {
+        return new ArrayList<>()
+        {{
+            add(new InGamePlayer(insecureUserIdSecure, pokerIdSecure, createdAt));
+        }};
     }
 }

@@ -5,6 +5,9 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 import lombok.NonNull;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.UUID;
+
 @Repository
 public class InGamePlayersRepository extends AbstractRepository
 {
@@ -27,5 +30,13 @@ public class InGamePlayersRepository extends AbstractRepository
             )
             .onDuplicateKeyIgnore()
             .execute();
+    }
+
+    public List<InGamePlayer> searchUserSecureIdsByPokerIdSecure(UUID pokerIdSecure)
+    {
+        return getDSLContext()
+            .selectFrom(inGamePlayersTable)
+            .where(inGamePlayersTable.POKER_ID_SECURE.eq(pokerIdSecure))
+            .fetchInto(InGamePlayer.class);
     }
 }
