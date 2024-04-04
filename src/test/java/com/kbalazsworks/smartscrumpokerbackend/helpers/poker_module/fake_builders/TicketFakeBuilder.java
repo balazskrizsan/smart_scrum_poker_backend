@@ -17,6 +17,8 @@ public class TicketFakeBuilder
     public static final long defaultId1 = 101001L;
     public static final long defaultId2 = 101002L;
     public static final long defaultId3 = 101003L;
+    public static final long defaultId4 = 101004L;
+    public static final long defaultId5 = 101005L;
     public static final UUID defaultIdSecure1 = UUID.fromString("10000000-0000-0000-0000-000000001001");
     public static final UUID defaultIdSecure2 = UUID.fromString("10000000-0000-0000-0000-000000001002");
     public static final UUID defaultIdSecure3 = UUID.fromString("10000000-0000-0000-0000-000000001003");

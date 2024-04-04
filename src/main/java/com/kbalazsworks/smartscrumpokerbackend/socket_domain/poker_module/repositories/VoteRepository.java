@@ -5,6 +5,9 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 import lombok.NonNull;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public class VoteRepository extends AbstractRepository
 {
@@ -38,5 +41,13 @@ public class VoteRepository extends AbstractRepository
             .set(voteTable.EFFORT, vote.effort())
             .set(voteTable.CALCULATED_POINT, vote.calculatedPoint())
             .execute();
+    }
+
+    public Map<Long, List<Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
+    {
+        return getDSLContext()
+            .selectFrom(voteTable)
+            .where(voteTable.TICKET_ID.in(ticketIds))
+            .fetchGroups(voteTable.TICKET_ID, r -> r.into(Vote.class));
     }
 }

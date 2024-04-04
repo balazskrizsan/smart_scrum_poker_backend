@@ -1,3 +1,4 @@
+-- requires _preset_insert_1_poker
 INSERT INTO ticket (id, id_secure, poker_id, name, active)
 VALUES
     (101001, '10000000-0000-0000-0000-000000001001', 100001, 'ticket #1', false),

@@ -11,6 +11,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class VoteService
@@ -39,5 +42,10 @@ public class VoteService
         voteRepository.create(calculatedVote);
 
         return insecureUser;
+    }
+
+    public Map<Long, List<Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
+    {
+        return this.voteRepository.getVotesWithTicketGroupByTicketIds(ticketIds);
     }
 }
