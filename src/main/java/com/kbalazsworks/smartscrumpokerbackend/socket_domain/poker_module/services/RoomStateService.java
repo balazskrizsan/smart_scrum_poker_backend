@@ -1,10 +1,15 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.RoomStateResponse;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.InGamePlayer;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.RoomStateRequest;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +20,29 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RoomStateService
 {
-    private final PokerRepository pokerRepository;
-    private final TicketRepository ticketRepository;
+    private final PokerService pokerService;
+    private final InsecureUserService insecureUserService;
+    private final InGamePlayersService inGamePlayersService;
+    private final TicketService ticketService;
 
-    public RoomStateResponse get(UUID pokerIdSecure)
+    public RoomStateResponse get(@NonNull RoomStateRequest roomStateRequest) throws PokerException, AccountException
     {
-        Poker poker = pokerRepository.findByIdSecure(pokerIdSecure);
-        List<Ticket> tickets = ticketRepository.searchByPokerId(poker.id());
+        insecureUserService.findByIdSecure(roomStateRequest.insecureUserId());
+        Poker poker = pokerService.findByIdSecure(roomStateRequest.pokerIdSecure());
 
-        return new RoomStateResponse(poker, tickets);
+        List<Ticket> tickets = ticketService.searchByPokerId(poker.id());
+
+        inGamePlayersService.onDuplicateKeyIgnoreAdd(
+            new InGamePlayer(roomStateRequest.insecureUserId(), roomStateRequest.pokerIdSecure(), roomStateRequest.now())
+        );
+
+        List<InGamePlayer> inGamePlayers = inGamePlayersService.
+            searchUserSecureIdsByPokerIdSecure(roomStateRequest.pokerIdSecure());
+
+        List<InsecureUser> insecureUsers = insecureUserService
+            .findByIdSecureList(inGamePlayers.stream().map(InGamePlayer::insecureUserIdSecure).toList());
+
+
+        return new RoomStateResponse(poker, tickets, insecureUsers);
     }
 }

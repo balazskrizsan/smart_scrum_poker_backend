@@ -5,7 +5,11 @@ import com.kbalazsworks.smartscrumpokerbackend.api.exceptions.ApiException;
 import com.kbalazsworks.smartscrumpokerbackend.api.value_objects.ResponseData;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.RoomStateResponse;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.RequestMapperService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoomStateService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.RoomStateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -24,18 +28,21 @@ public class RoomStateListener
 {
     private final RoomStateService roomStateService;
 
-    @MessageMapping("/poker.room.state/{pokerIdSecure}")
+    @MessageMapping("/poker.room.state/{pokerIdSecure}/{insecureUserId}")
     @SendToUser("/queue/reply")
     public ResponseEntity<ResponseData<RoomStateResponse>> pokerRoomState(
         @Payload String message,
-        @DestinationVariable String pokerIdSecure
-    ) throws ApiException
+        @DestinationVariable UUID pokerIdSecure,
+        @DestinationVariable UUID insecureUserId
+    ) throws ApiException, PokerException, AccountException
     {
-        log.info("Listener:/poker.room.state/{}: {}", pokerIdSecure, message);
+        log.info("Listener:/poker.room.state/{}/{}: {}", pokerIdSecure, insecureUserId, message);
 
         return new ResponseEntityBuilder<RoomStateResponse>()
             .socketDestination(SocketDestination.POKER_ROOM_STATE)
-            .data(roomStateService.get(UUID.fromString(pokerIdSecure)))
+            .data(roomStateService.get(
+                new RoomStateRequest(pokerIdSecure, insecureUserId, RequestMapperService.getNow())
+            ))
             .build();
     }
 }
