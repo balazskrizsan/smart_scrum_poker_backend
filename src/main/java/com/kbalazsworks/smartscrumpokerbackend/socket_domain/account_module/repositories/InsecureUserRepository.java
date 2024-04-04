@@ -7,6 +7,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exce
 import org.jooq.Record;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -53,5 +54,13 @@ public class InsecureUserRepository extends AbstractRepository
         }
 
         return user.into(InsecureUser.class);
+    }
+
+    public List<InsecureUser> findByIdSecureList(List<UUID> idSecureList)
+    {
+        return getDSLContext()
+            .selectFrom(insecureUserTable)
+            .where(insecureUserTable.ID_SECURE.in(idSecureList))
+            .fetchInto(InsecureUser.class);
     }
 }

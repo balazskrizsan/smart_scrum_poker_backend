@@ -6,6 +6,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.repo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -29,5 +30,10 @@ public class InsecureUserService
     public InsecureUser findByIdSecure(UUID idSecure) throws AccountException
     {
         return insecureUserRepository.findByIdSecure(idSecure);
+    }
+
+    public List<InsecureUser> findByIdSecureList(List<UUID> idSecureList)
+    {
+        return insecureUserRepository.findByIdSecureList(idSecureList);
     }
 }
