@@ -47,9 +47,9 @@ public class TicketFakeBuilder
     {
         return new ArrayList<>()
         {{
-            add(new TicketFakeBuilder().build());
-            add(new TicketFakeBuilder().build2());
-            add(new TicketFakeBuilder().build3());
+            add(build());
+            add(build2());
+            add(build3());
         }};
     }
 
