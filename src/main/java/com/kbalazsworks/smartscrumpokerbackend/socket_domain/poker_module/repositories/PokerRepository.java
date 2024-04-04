@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories;
 
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
 import com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories.AbstractRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
@@ -42,13 +43,19 @@ public class PokerRepository extends AbstractRepository
         return newPoker.into(Poker.class);
     }
 
-    public Poker findByIdSecure(UUID pokerIdSecure)
+    // @todo: test not found
+    public Poker findByIdSecure(UUID pokerIdSecure) throws PokerException
     {
-        return getDSLContext()
+        PokerRecord record = getDSLContext()
             .selectFrom(pokersTable)
             .where(pokersTable.ID_SECURE.eq(pokerIdSecure))
-            .fetchOne()
-            .into(Poker.class);
-        // @todo: add null check with NotFoundException
+            .fetchOne();
+
+        if (null == record)
+        {
+            throw new PokerException(STR."Poker not found: id#\{pokerIdSecure}");
+        }
+
+        return record.into(Poker.class);
     }
 }

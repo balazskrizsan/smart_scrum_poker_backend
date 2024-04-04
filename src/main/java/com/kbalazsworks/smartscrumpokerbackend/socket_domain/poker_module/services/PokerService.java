@@ -6,6 +6,8 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.reposi
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class PokerService
@@ -16,5 +18,10 @@ public class PokerService
     public Poker create(Poker poker) throws PokerException
     {
         return pokerRepository.create(poker);
+    }
+
+    public Poker findByIdSecure(UUID pokerIdSecure) throws PokerException
+    {
+        return pokerRepository.findByIdSecure(pokerIdSecure);
     }
 }
