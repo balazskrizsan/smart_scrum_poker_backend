@@ -13,6 +13,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -49,19 +50,19 @@ public class VoteService_GetVotesWithTicketGroupByTicketIdsTest extends Abstract
     {
         // Arrange
         List<Long> testedTicketIds = List.of(TicketFakeBuilder.defaultId1, TicketFakeBuilder.defaultId2);
-        Map<Long, Map<Long, Vote>> expected = Map.of(
+        Map<Long, Map<UUID, Vote>> expected = Map.of(
             TicketFakeBuilder.defaultId1, Map.of(
-                VoteFakeBuilder.defaultId1, new VoteFakeBuilder().build(),
-                VoteFakeBuilder.defaultId2, new VoteFakeBuilder().build2()
+                VoteFakeBuilder.defaultCreatedBy, new VoteFakeBuilder().build(),
+                VoteFakeBuilder.defaultCreatedBy2, new VoteFakeBuilder().build2()
             ),
             TicketFakeBuilder.defaultId2, Map.of(
-                VoteFakeBuilder.defaultId3, new VoteFakeBuilder().build3(),
-                VoteFakeBuilder.defaultId4, new VoteFakeBuilder().build4()
+                VoteFakeBuilder.defaultCreatedBy3, new VoteFakeBuilder().build3(),
+                VoteFakeBuilder.defaultCreatedBy4, new VoteFakeBuilder().build4()
             )
         );
 
         // Act
-        Map<Long, Map<Long, Vote>> actual = pokerModuleServiceFactory
+        Map<Long, Map<UUID, Vote>> actual = pokerModuleServiceFactory
             .getVoteService()
             .getVotesWithTicketGroupByTicketIds(testedTicketIds);
 

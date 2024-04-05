@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,7 @@ public class VoteRepository extends AbstractRepository
             .execute();
     }
 
-    public Map<Long, Map<Long, Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
+    public Map<Long, Map<UUID, Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
     {
         return getDSLContext()
             .selectFrom(voteTable)
@@ -56,7 +57,7 @@ public class VoteRepository extends AbstractRepository
                     VoteRecord::getTicketId,
                     Collectors.mapping(
                         r -> r.into(Vote.class),
-                        Collectors.toMap(Vote::id, Function.identity())
+                        Collectors.toMap(Vote::createdBy, Function.identity())
                     )
                 )
             );

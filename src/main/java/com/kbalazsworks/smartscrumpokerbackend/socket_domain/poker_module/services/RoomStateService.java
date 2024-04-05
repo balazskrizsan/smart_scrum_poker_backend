@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class RoomStateService
         List<InsecureUser> insecureUsers = insecureUserService
             .findByIdSecureList(inGamePlayers.stream().map(InGamePlayer::insecureUserIdSecure).toList());
 
-        Map<Long, Map<Long, Vote>> votes = voteService
+        Map<Long, Map<UUID, Vote>> votes = voteService
             .getVotesWithTicketGroupByTicketIds(tickets.stream().map(Ticket::id).toList());
 
         InsecureUser owner = insecureUserService.findByIdSecure(poker.createdBy());

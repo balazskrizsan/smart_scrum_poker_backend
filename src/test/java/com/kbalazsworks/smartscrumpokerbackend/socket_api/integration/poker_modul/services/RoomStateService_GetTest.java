@@ -61,15 +61,15 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
             new InsecureUserFakeBuilder().buildAsList(),
             Map.of(
                 TicketFakeBuilder.defaultId1, Map.of(
-                    VoteFakeBuilder.defaultId1, new VoteFakeBuilder().build(),
-                    VoteFakeBuilder.defaultId2, new VoteFakeBuilder().build2()
+                    VoteFakeBuilder.defaultCreatedBy, new VoteFakeBuilder().build(),
+                    VoteFakeBuilder.defaultCreatedBy2, new VoteFakeBuilder().build2()
                 ),
                 TicketFakeBuilder.defaultId2, Map.of(
-                   VoteFakeBuilder.defaultId3, new VoteFakeBuilder().build3(),
-                   VoteFakeBuilder.defaultId4, new VoteFakeBuilder().build4()
+                   VoteFakeBuilder.defaultCreatedBy3, new VoteFakeBuilder().build3(),
+                   VoteFakeBuilder.defaultCreatedBy4, new VoteFakeBuilder().build4()
                 ),
                 TicketFakeBuilder.defaultId3, Map.of(
-                    VoteFakeBuilder.defaultId5, new VoteFakeBuilder().build5()
+                    VoteFakeBuilder.defaultCreatedBy5, new VoteFakeBuilder().build5()
                 )
             ),
             new InsecureUserFakeBuilder().build()

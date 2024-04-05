@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class VoteService
         return insecureUser;
     }
 
-    public Map<Long, Map<Long, Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
+    public Map<Long, Map<UUID, Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
     {
         return this.voteRepository.getVotesWithTicketGroupByTicketIds(ticketIds);
     }

@@ -13,7 +13,6 @@ public record RoomStateResponse(
     Poker poker,
     List<Ticket> tickets,
     List<InsecureUser> inGameInsecureUsers,
-    Map<Long, Map<Long, Vote>> votes
     Map<Long, Map<UUID, Vote>> votes,
     InsecureUser owner
 )
