@@ -7,12 +7,15 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public record RoomStateResponse(
     Poker poker,
     List<Ticket> tickets,
     List<InsecureUser> inGameInsecureUsers,
     Map<Long, Map<Long, Vote>> votes
+    Map<Long, Map<UUID, Vote>> votes,
+    InsecureUser owner
 )
 {
 }

@@ -47,6 +47,8 @@ public class RoomStateService
         Map<Long, Map<Long, Vote>> votes = voteService
             .getVotesWithTicketGroupByTicketIds(tickets.stream().map(Ticket::id).toList());
 
-        return new RoomStateResponse(poker, tickets, insecureUsers, votes);
+        InsecureUser owner = insecureUserService.findByIdSecure(poker.createdBy());
+
+        return new RoomStateResponse(poker, tickets, insecureUsers, votes, owner);
     }
 }
