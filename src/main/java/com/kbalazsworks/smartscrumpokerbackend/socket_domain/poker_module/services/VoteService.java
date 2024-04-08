@@ -45,8 +45,17 @@ public class VoteService
         return insecureUser;
     }
 
+    // @todo: rename to search
     public Map<Long, Map<UUID, Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
     {
         return this.voteRepository.getVotesWithTicketGroupByTicketIds(ticketIds);
+    }
+
+    // @todo: test
+    public Map<UUID, Vote> searchVotesWithTicketGroupByTicketId(@NonNull Long ticketId)
+    {
+        Map<Long, Map<UUID, Vote>> result = this.voteRepository.getVotesWithTicketGroupByTicketIds(List.of(ticketId));
+
+        return null == result ? Map.of() : result.get(ticketId);
     }
 }
