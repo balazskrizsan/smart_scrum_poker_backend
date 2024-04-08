@@ -52,7 +52,7 @@ public class VoteService
     }
 
     // @todo: test
-    public Map<UUID, Vote> searchVotesWithTicketGroupByTicketId(@NonNull Long ticketId)
+    public Map<UUID, Vote> searchVotesWithTicketGroupByTicketId(long ticketId)
     {
         Map<Long, Map<UUID, Vote>> result = this.voteRepository.getVotesWithTicketGroupByTicketIds(List.of(ticketId));
 

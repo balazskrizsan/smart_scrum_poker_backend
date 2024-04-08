@@ -78,17 +78,19 @@ public class PokerModuleServiceFactory extends AbstractServiceFactory
 
     public RoundService getRoundService()
     {
-        return getRoundService(null, null);
+        return getRoundService(null, null, null);
     }
 
     public RoundService getRoundService(
         TicketService ticketServiceMock,
-        VoteService voteServiceMock
+        VoteService voteServiceMock,
+        PokerService pokerServiceMock
     )
     {
         return new RoundService(
             getDependency(RoundService.class, TicketService.class, ticketServiceMock, getTicketService()),
-            getDependency(InGamePlayersService.class, VoteService.class, voteServiceMock, getVoteService())
+            getDependency(RoundService.class, VoteService.class, voteServiceMock, getVoteService()),
+            getDependency(RoundService.class, PokerService.class, pokerServiceMock, getPokerService())
         );
     }
 

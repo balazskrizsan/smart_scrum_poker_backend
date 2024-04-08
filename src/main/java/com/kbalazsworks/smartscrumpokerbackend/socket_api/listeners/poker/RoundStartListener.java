@@ -4,6 +4,7 @@ import com.kbalazsworks.smartscrumpokerbackend.api.builders.ResponseEntityBuilde
 import com.kbalazsworks.smartscrumpokerbackend.api.exceptions.ApiException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.RoundStartResponse;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoundService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +30,7 @@ public class RoundStartListener
         @DestinationVariable UUID pokerIdSecure,
         @DestinationVariable Long ticketId
     )
-        throws ApiException
+        throws ApiException, PokerException
     {
         log.info("SocketListener:/poker.round.start/{}/{}", pokerIdSecure, ticketId);
 

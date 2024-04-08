@@ -4,6 +4,7 @@ import com.kbalazsworks.smartscrumpokerbackend.api.builders.ResponseEntityBuilde
 import com.kbalazsworks.smartscrumpokerbackend.api.exceptions.ApiException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.VoteStopResponse;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoundService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStop;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class RoundStopListener
         @DestinationVariable UUID pokerIdSecure,
         @DestinationVariable Long ticketId
     )
-        throws ApiException
+        throws ApiException, PokerException
     {
         log.info("SocketListener:/poker.round.stop/{}/{}", pokerIdSecure, ticketId);
 

@@ -5,6 +5,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
@@ -65,5 +67,19 @@ public class RoundService_StartTest extends AbstractIntegrationTest
         List<Ticket> actualTicket = getDslContext().selectFrom(ticketTable).orderBy(ticketTable.ID.asc()).fetch().into(Ticket.class);
 
         assertThat(actualTicket).isEqualTo(expectedTickets);
+    }
+
+    @Test
+    public void notExistingPoker_throwsException()
+    {
+        // Arrange
+        UUID testedPokerId = PokerFakeBuilder.defaultIdSecure1;
+        long testedTicketId = TicketFakeBuilder.defaultId1;
+        String exceptedMessage = STR."Poker not found: id#\{PokerFakeBuilder.defaultIdSecure1}";
+
+        // Act - Assert
+        assertThatThrownBy(() -> pokerModuleServiceFactory.getRoundService().start(testedPokerId, testedTicketId))
+            .isInstanceOf(PokerException.class)
+            .hasMessage(exceptedMessage);
     }
 }

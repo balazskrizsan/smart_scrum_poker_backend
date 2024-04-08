@@ -3,6 +3,7 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.servi
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.PokerRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,12 @@ public class PokerService
     private final PokerRepository pokerRepository;
 
     // @todo: unit test
-    public Poker create(Poker poker) throws PokerException
+    public Poker create(@NonNull Poker poker) throws PokerException
     {
         return pokerRepository.create(poker);
     }
 
-    public Poker findByIdSecure(UUID pokerIdSecure) throws PokerException
+    public Poker findByIdSecure(@NonNull UUID pokerIdSecure) throws PokerException
     {
         return pokerRepository.findByIdSecure(pokerIdSecure);
     }

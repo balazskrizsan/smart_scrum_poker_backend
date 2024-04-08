@@ -6,6 +6,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStop;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
@@ -71,5 +73,19 @@ public class RoundService_StopTest extends AbstractIntegrationTest
             () -> assertThat(actual).isEqualTo(expected),
             () -> assertThat(actualTicket).isEqualTo(expectedTickets)
         );
+    }
+
+    @Test
+    public void notExistingPoker_throwsException()
+    {
+        // Arrange
+        UUID testedPokerId = PokerFakeBuilder.defaultIdSecure1;
+        long testedTicketId = TicketFakeBuilder.defaultId1;
+        String exceptedMessage = STR."Poker not found: id#\{PokerFakeBuilder.defaultIdSecure1}";
+
+        // Act - Assert
+        assertThatThrownBy(() -> pokerModuleServiceFactory.getRoundService().stop(testedPokerId, testedTicketId))
+            .isInstanceOf(PokerException.class)
+            .hasMessage(exceptedMessage);
     }
 }
