@@ -24,16 +24,17 @@ import org.springframework.stereotype.Controller;
 @Log4j2
 @Controller
 @RequiredArgsConstructor
-public class StartAction
+public class StartListener
 {
     private final StartService startService;
 
     @MessageMapping("/poker.start")
     @SendToUser("/queue/reply")
-    public ResponseEntity<ResponseData<StartResponse>> sendBackToUser(
+    public ResponseEntity<ResponseData<StartResponse>> startListener(
         @Payload StartRequest request,
         @Header("simpSessionId") String sessionId
-    ) throws PokerException, ApiException, AccountException
+    )
+        throws PokerException, ApiException, AccountException
     {
         log.info("request/poker.start: {}", request);
 
