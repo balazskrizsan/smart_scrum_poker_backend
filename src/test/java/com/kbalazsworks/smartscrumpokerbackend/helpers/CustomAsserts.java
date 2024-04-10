@@ -5,6 +5,8 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import org.opentest4j.MultipleFailuresError;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,7 +22,8 @@ public class CustomAsserts
             () -> assertThat(actual.id()).isEqualTo(expected.id()),
             () -> assertTrue(actual.idSecure().toString().matches(UuidPattern)),
             () -> assertThat(actual.name()).isEqualTo(expected.name()),
-            () -> assertThat(actual.createdBy()).isEqualTo(InsecureUserFakeBuilder.defaultIdSecure1)
+            () -> assertThat(actual.createdBy()).isEqualTo(InsecureUserFakeBuilder.defaultIdSecure1),
+            () -> assertThat(actual.createdAt()).isAfter(LocalDateTime.of(2010, 1, 1, 0, 0, 0))
         );
     }
 
