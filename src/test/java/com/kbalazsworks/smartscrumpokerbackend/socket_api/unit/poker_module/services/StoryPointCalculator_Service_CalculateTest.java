@@ -23,7 +23,7 @@ public class StoryPointCalculator_Service_CalculateTest extends AbstractTest
 
     @Test
     @SneakyThrows
-    public void qweqweqweqwe()
+    public void calculationWithBadValues_throwsException()
     {
         // Arrange
         var testedVote = new VoteValues(false, false, (short) 10L, (short) 10L, (short) 10L);
