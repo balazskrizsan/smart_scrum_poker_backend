@@ -16,10 +16,11 @@ public class PokerFakeBuilder
 {
     public static final long defaultId1 = 100001L;
     public static final UUID defaultIdSecure1 = UUID.fromString("10000000-0000-0000-0000-000000000001");
+    public static final String defaultSprintName = "sprint #1";
 
     private long id = defaultId1;
     private UUID idSecure = defaultIdSecure1;
-    private String sprintName = "sprint #1";
+    private String sprintName = defaultSprintName;
     private LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
     private UUID createdBy = InsecureUserFakeBuilder.defaultIdSecure1;
 

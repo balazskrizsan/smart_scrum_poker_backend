@@ -50,9 +50,9 @@ public class ApplicationProperties
     private int dataSourceHikariMinimumIdle;
 
 
-    public String getStackJudgeSdkCertP12KeystoreFilePath()
+    public String siteP12KeyStoreFilePath()
     {
-        return "classpath:keystore/v2/sjdev.p12";
+        return "classpath:keystore/dev.p12";
     }
 
     public String getStackJudgeSdkCertP12KeystoreFilePassword()

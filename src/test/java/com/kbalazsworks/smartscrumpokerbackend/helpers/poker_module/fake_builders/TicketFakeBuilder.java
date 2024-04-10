@@ -22,6 +22,8 @@ public class TicketFakeBuilder
     public static final UUID defaultIdSecure1 = UUID.fromString("10000000-0000-0000-0000-000000001001");
     public static final UUID defaultIdSecure2 = UUID.fromString("10000000-0000-0000-0000-000000001002");
     public static final UUID defaultIdSecure3 = UUID.fromString("10000000-0000-0000-0000-000000001003");
+    public static final String defaultName1 = "ticket #1";
+    public static final String defaultName2 = "ticket #2";
 
     private long id = defaultId1;
     private long id2 = defaultId2;
@@ -30,8 +32,10 @@ public class TicketFakeBuilder
     private UUID idSecret2 = defaultIdSecure2;
     private UUID idSecret3 = defaultIdSecure3;
     private long pokerId = PokerFakeBuilder.defaultId1;
-    private String name = "ticket #1";
-    private String name2 = "ticket #2";
+    private long pokerId2 = PokerFakeBuilder.defaultId1;
+    private long pokerId3 = PokerFakeBuilder.defaultId1;
+    private String name = defaultName1;
+    private String name2 = defaultName2;
     private String name3 = "ticket #3";
     private boolean isActive = false;
     private boolean isActive2 = false;
@@ -57,12 +61,12 @@ public class TicketFakeBuilder
 
     public Ticket build2()
     {
-        return new Ticket(id2, idSecret2, pokerId, name2, isActive2);
+        return new Ticket(id2, idSecret2, pokerId2, name2, isActive2);
     }
 
     public Ticket build3()
     {
-        return new Ticket(id3, idSecret3, pokerId, name3, isActive3);
+        return new Ticket(id3, idSecret3, pokerId3, name3, isActive3);
     }
 
     public Ticket buildNoId()
