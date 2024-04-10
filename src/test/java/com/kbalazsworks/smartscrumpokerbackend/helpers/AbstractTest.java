@@ -17,6 +17,4 @@ public abstract class AbstractTest
 {
     @Autowired
     protected ApplicationProperties applicationProperties;
-
-    protected String UuidPattern = "([a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8})";
 }

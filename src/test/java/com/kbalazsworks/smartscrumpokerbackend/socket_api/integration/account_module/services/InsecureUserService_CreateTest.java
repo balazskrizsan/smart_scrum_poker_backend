@@ -14,6 +14,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.util.UUID;
 
+import static com.kbalazsworks.smartscrumpokerbackend.helpers.CustomAsserts.UuidPattern;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;

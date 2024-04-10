@@ -16,6 +16,8 @@ import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.util.List;
 
+import static com.kbalazsworks.smartscrumpokerbackend.helpers.CustomAsserts.softPokerAssert;
+import static com.kbalazsworks.smartscrumpokerbackend.helpers.CustomAsserts.softTicketAssert;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -70,22 +72,9 @@ public class StartListenerTest extends AbstractE2eTest
 
 
         assertAll(
-            () -> assertThat(actualDbPoker.id()).isEqualTo(expectedDbPoker.id()),
-            () -> assertTrue(actualDbPoker.idSecure().toString().matches(UuidPattern)),
-            () -> assertThat(actualDbPoker.name()).isEqualTo(expectedDbPoker.name()),
-            () -> assertThat(actualDbPoker.createdBy()).isEqualTo(InsecureUserFakeBuilder.defaultIdSecure1),
-
-            () -> assertThat(actualDbTickets0.id()).isEqualTo(expectedDbTicket0.id()),
-            () -> assertTrue(actualDbTickets0.idSecure().toString().matches(UuidPattern)),
-            () -> assertThat(actualDbTickets0.pokerId()).isEqualTo(expectedDbTicket0.pokerId()),
-            () -> assertThat(actualDbTickets0.name()).isEqualTo(expectedDbTicket0.name()),
-            () -> assertThat(actualDbTickets0.isActive()).isEqualTo(expectedDbTicket0.isActive()),
-
-            () -> assertThat(actualDbTickets1.id()).isEqualTo(expectedDbTicket1.id()),
-            () -> assertTrue(actualDbTickets1.idSecure().toString().matches(UuidPattern)),
-            () -> assertThat(actualDbTickets1.pokerId()).isEqualTo(expectedDbTicket1.pokerId()),
-            () -> assertThat(actualDbTickets1.name()).isEqualTo(expectedDbTicket1.name()),
-            () -> assertThat(actualDbTickets1.isActive()).isEqualTo(expectedDbTicket1.isActive())
+            () -> softPokerAssert(actualDbPoker, expectedDbPoker),
+            () -> softTicketAssert(actualDbTickets0, expectedDbTicket0),
+            () -> softTicketAssert(actualDbTickets1, expectedDbTicket1)
         );
     }
 }
