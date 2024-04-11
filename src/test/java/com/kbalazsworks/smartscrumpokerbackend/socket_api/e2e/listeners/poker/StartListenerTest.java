@@ -10,6 +10,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -67,6 +68,7 @@ public class StartListenerTest extends AbstractE2eTest
         Poker expectedDbPoker = new PokerFakeBuilder().id(1L).build();
         Ticket expectedDbTicket0 = new TicketFakeBuilder().id(1L).pokerId(expectedDbPoker.id()).build();
         Ticket expectedDbTicket1 = new TicketFakeBuilder().id2(2L).pokerId2(expectedDbPoker.id()).build2();
+        String expectedHttpStatus = HttpStatus.OK.getReasonPhrase();
 
         // Act
         stompSession.subscribe("/user/queue/reply", new PokerStartStompFrameHandler());
@@ -83,7 +85,8 @@ public class StartListenerTest extends AbstractE2eTest
         Ticket actualDbTickets1 = actualDbTickets.get(1);
 
         assertAll(
-            () -> assertThat(actualDbPoker).isEqualTo(actualResponse.body.data.poker()),
+            () -> assertThat(actualResponse.statusCode).isEqualTo(expectedHttpStatus),
+            () -> assertThat(actualResponse.body.data.poker()).isEqualTo(actualDbPoker),
             () -> softPokerAssert(actualDbPoker, expectedDbPoker),
             () -> softTicketAssert(actualDbTickets0, expectedDbTicket0),
             () -> softTicketAssert(actualDbTickets1, expectedDbTicket1)
