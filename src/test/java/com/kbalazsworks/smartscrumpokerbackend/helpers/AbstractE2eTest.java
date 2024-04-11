@@ -1,5 +1,7 @@
 package com.kbalazsworks.smartscrumpokerbackend.helpers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.hc.client5.http.ssl.TrustSelfSignedStrategy;
 import org.apache.hc.core5.ssl.SSLContextBuilder;
 import org.junit.After;
@@ -28,8 +30,14 @@ abstract public class AbstractE2eTest extends AbstractIntegrationTest
         client.getUserProperties().clear();
         client.getUserProperties().put("org.apache.tomcat.websocket.SSL_CONTEXT", getSslContext());
 
+        var objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+        var converter = new MappingJackson2MessageConverter();
+        converter.setObjectMapper(objectMapper);
+
         WebSocketStompClient stompClient = new WebSocketStompClient(client);
-        stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+        stompClient.setMessageConverter(converter);
 
         stompSession = stompClient.connectAsync(
             "wss://localhost:9999/ws",
