@@ -1,6 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.e2e.listeners.poker;
 
-import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractE2eTest;
+import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractE2eSocketTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
@@ -12,13 +12,11 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
-import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -31,7 +29,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
-public class StartListenerTest extends AbstractE2eTest
+public class StartListenerSocketTest extends AbstractE2eSocketTest
 {
     CompletableFuture<ResponseEntity_ResponseData_StartResponse> completableFuture = new CompletableFuture<>();
 
@@ -71,7 +69,11 @@ public class StartListenerTest extends AbstractE2eTest
         String expectedHttpStatus = HttpStatus.OK.getReasonPhrase();
 
         // Act
-        stompSession.subscribe("/user/queue/reply", new PokerStartStompFrameHandler());
+        StompFrameHandler stompHandler = buildStompFrameHandler(
+            completableFuture,
+            ResponseEntity_ResponseData_StartResponse.class
+        );
+        stompSession.subscribe("/user/queue/reply", stompHandler);
         stompSession.send("/app/poker.start", testedPokerStartRequest);
 
         // Assert
@@ -91,21 +93,6 @@ public class StartListenerTest extends AbstractE2eTest
             () -> softTicketAssert(actualDbTickets0, expectedDbTicket0),
             () -> softTicketAssert(actualDbTickets1, expectedDbTicket1)
         );
-    }
-
-    private class PokerStartStompFrameHandler implements StompFrameHandler
-    {
-        @Override
-        public Type getPayloadType(StompHeaders stompHeaders)
-        {
-            return ResponseEntity_ResponseData_StartResponse.class;
-        }
-
-        @Override
-        public void handleFrame(StompHeaders stompHeaders, Object o)
-        {
-            completableFuture.complete((ResponseEntity_ResponseData_StartResponse) o);
-        }
     }
 
     private record ResponseEntity_ResponseData_StartResponse(
