@@ -30,7 +30,7 @@ public class RoomStateService
 
     public RoomStateResponse get(@NonNull RoomStateRequest roomStateRequest) throws PokerException, AccountException
     {
-        insecureUserService.findByIdSecure(roomStateRequest.insecureUserId());
+        InsecureUser currentInsecureUser = insecureUserService.findByIdSecure(roomStateRequest.insecureUserId());
         Poker poker = pokerService.findByIdSecure(roomStateRequest.pokerIdSecure());
 
         List<Ticket> tickets = ticketService.searchByPokerId(poker.id());
@@ -50,6 +50,6 @@ public class RoomStateService
 
         InsecureUser owner = insecureUserService.findByIdSecure(poker.createdBy());
 
-        return new RoomStateResponse(poker, tickets, insecureUsers, votes, owner);
+        return new RoomStateResponse(poker, tickets, insecureUsers, votes, owner, currentInsecureUser);
     }
 }

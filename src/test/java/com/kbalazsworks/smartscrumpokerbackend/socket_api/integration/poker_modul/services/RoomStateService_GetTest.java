@@ -72,6 +72,7 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
                     VoteFakeBuilder.defaultCreatedBy5, new VoteFakeBuilder().build5()
                 )
             ),
+            new InsecureUserFakeBuilder().build(),
             new InsecureUserFakeBuilder().build()
         );
 
