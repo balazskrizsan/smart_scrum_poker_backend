@@ -24,7 +24,7 @@ public class StartService
 
     public StartPokerResponse start(Poker poker, List<Ticket> tickets) throws PokerException, AccountException
     {
-        InsecureUser starterUser = insecureUserService.findByIdSecure(poker.createdBy());
+        insecureUserService.findByIdSecure(poker.createdBy());
 
         Poker newPoker = pokerService.create(new Poker(
             null,
@@ -40,6 +40,6 @@ public class StartService
                 .toList()
         );
 
-        return new StartPokerResponse(newPoker, starterUser);
+        return new StartPokerResponse(newPoker);
     }
 }

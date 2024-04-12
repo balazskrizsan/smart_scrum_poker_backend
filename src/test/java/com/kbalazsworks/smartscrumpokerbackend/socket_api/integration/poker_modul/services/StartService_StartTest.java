@@ -86,7 +86,6 @@ public class StartService_StartTest extends AbstractIntegrationTest
 
         assertAll(
             () -> assertThat(actualStartPokerResponse.poker()).isEqualTo(actualPoker),
-            () -> assertThat(actualStartPokerResponse.insecureUser()).isEqualTo(expectedInsecureUser),
             () -> assertThat(actualPoker).isEqualTo(expectedPoker),
             () -> assertThat(actualTicketRow).isEqualTo(expectedTicket)
         );

@@ -44,13 +44,7 @@ public class StartListener
 
         return new ResponseEntityBuilder<StartResponse>()
             .socketDestination(SocketDestination.POKER_START)
-            .data(
-                new StartResponse(
-                    startPokerResponse.poker(),
-                    startPokerResponse.insecureUser(),
-                    SocketDestination.POKER_START.getValue()
-                )
-            )
+            .data(new StartResponse(startPokerResponse.poker()))
             .build();
     }
 }
