@@ -7,12 +7,14 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUserSessions;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.FlywaySchemaHistoryRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.InGamePlayersRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.InsecureUserRecord;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.InsecureUserSessionsRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.TicketRecord;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.VoteRecord;
@@ -45,21 +47,24 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = UniqueKeys0.FLYWAY_SCHEMA_HISTORY_PK;
-    public static final UniqueKey<InGamePlayersRecord> IN_GAME_PLAYERS__INSECURE_USER_ID_SECURE__POKER_ID_SECURE__PK = UniqueKeys0.IN_GAME_PLAYERS__INSECURE_USER_ID_SECURE__POKER_ID_SECURE__PK;
-    public static final UniqueKey<InsecureUserRecord> INSECURE_USER_PK = UniqueKeys0.INSECURE_USER_PK;
-    public static final UniqueKey<InsecureUserRecord> INSECURE_USER__ID_SECURE__UNIQUE = UniqueKeys0.INSECURE_USER__ID_SECURE__UNIQUE;
-    public static final UniqueKey<PokerRecord> POKER_PK = UniqueKeys0.POKER_PK;
-    public static final UniqueKey<PokerRecord> POKER__ID_SECURE__UNIQUE = UniqueKeys0.POKER__ID_SECURE__UNIQUE;
-    public static final UniqueKey<TicketRecord> TICKET_PK = UniqueKeys0.TICKET_PK;
-    public static final UniqueKey<TicketRecord> TICKET__ID_SECURE__UNIQUE = UniqueKeys0.TICKET__ID_SECURE__UNIQUE;
-    public static final UniqueKey<VoteRecord> VOTE_PK = UniqueKeys0.VOTE_PK;
-    public static final UniqueKey<VoteRecord> VOTE__TICKET_ID__CREATED_BY__UNIQUE = UniqueKeys0.VOTE__TICKET_ID__CREATED_BY__UNIQUE;
+    public static final UniqueKey<InGamePlayersRecord> IN_GAME_PLAYERS__PK___INSECURE_USER_ID_SECURE___POKER_ID_SECURE = UniqueKeys0.IN_GAME_PLAYERS__PK___INSECURE_USER_ID_SECURE___POKER_ID_SECURE;
+    public static final UniqueKey<InsecureUserRecord> INSECURE_USER__PK___ID = UniqueKeys0.INSECURE_USER__PK___ID;
+    public static final UniqueKey<InsecureUserRecord> INSECURE_USER__UNIQUE___ID_SECURE = UniqueKeys0.INSECURE_USER__UNIQUE___ID_SECURE;
+    public static final UniqueKey<InsecureUserSessionsRecord> INSECURE_USER_SESSIONS__PK___INSECURE_USER_ID_SECURE___SESSION_ = UniqueKeys0.INSECURE_USER_SESSIONS__PK___INSECURE_USER_ID_SECURE___SESSION_;
+    public static final UniqueKey<PokerRecord> POKER__PK___ID = UniqueKeys0.POKER__PK___ID;
+    public static final UniqueKey<PokerRecord> POKER__UNIQUE___ID_SECURE = UniqueKeys0.POKER__UNIQUE___ID_SECURE;
+    public static final UniqueKey<TicketRecord> TICKET__PK___ID = UniqueKeys0.TICKET__PK___ID;
+    public static final UniqueKey<TicketRecord> TICKET__UNIQUE___ID_SECURE = UniqueKeys0.TICKET__UNIQUE___ID_SECURE;
+    public static final UniqueKey<VoteRecord> VOTE__PK___ID = UniqueKeys0.VOTE__PK___ID;
+    public static final UniqueKey<VoteRecord> VOTE__UNIQUE___TICKET_ID___CREATED_BY = UniqueKeys0.VOTE__UNIQUE___TICKET_ID___CREATED_BY;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<TicketRecord, PokerRecord> TICKET__FK___TICKET__POKER_ID___POKER__ID___ON_DELETE_CASCADE = ForeignKeys0.TICKET__FK___TICKET__POKER_ID___POKER__ID___ON_DELETE_CASCADE;
+    public static final ForeignKey<InsecureUserSessionsRecord, InsecureUserRecord> INSECURE_USER_SESSIONS__INSECURE_USER_SESSIONS__FK___INSECURE_USER_ID_SECURE___INSECURE = ForeignKeys0.INSECURE_USER_SESSIONS__INSECURE_USER_SESSIONS__FK___INSECURE_USER_ID_SECURE___INSECURE;
+    public static final ForeignKey<TicketRecord, PokerRecord> TICKET__TICKET__FK___POKER_ID___POKER__ID___ON_DELETE_CASCADE = ForeignKeys0.TICKET__TICKET__FK___POKER_ID___POKER__ID___ON_DELETE_CASCADE;
+    public static final ForeignKey<VoteRecord, TicketRecord> VOTE__VOTE_FK___TICKET_ID___TICKET__ID = ForeignKeys0.VOTE__VOTE_FK___TICKET_ID___TICKET__ID;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -74,18 +79,21 @@ public class Keys {
 
     private static class UniqueKeys0 {
         public static final UniqueKey<FlywaySchemaHistoryRecord> FLYWAY_SCHEMA_HISTORY_PK = Internal.createUniqueKey(FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY, "flyway_schema_history_pk", new TableField[] { FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY.INSTALLED_RANK }, true);
-        public static final UniqueKey<InGamePlayersRecord> IN_GAME_PLAYERS__INSECURE_USER_ID_SECURE__POKER_ID_SECURE__PK = Internal.createUniqueKey(InGamePlayers.IN_GAME_PLAYERS, "in_game_players__insecure_user_id_secure__poker_id_secure__pk", new TableField[] { InGamePlayers.IN_GAME_PLAYERS.INSECURE_USER_ID_SECURE, InGamePlayers.IN_GAME_PLAYERS.POKER_ID_SECURE }, true);
-        public static final UniqueKey<InsecureUserRecord> INSECURE_USER_PK = Internal.createUniqueKey(InsecureUser.INSECURE_USER, "insecure_user_pk", new TableField[] { InsecureUser.INSECURE_USER.ID }, true);
-        public static final UniqueKey<InsecureUserRecord> INSECURE_USER__ID_SECURE__UNIQUE = Internal.createUniqueKey(InsecureUser.INSECURE_USER, "insecure_user__id_secure__unique", new TableField[] { InsecureUser.INSECURE_USER.ID_SECURE }, true);
-        public static final UniqueKey<PokerRecord> POKER_PK = Internal.createUniqueKey(Poker.POKER, "poker_pk", new TableField[] { Poker.POKER.ID }, true);
-        public static final UniqueKey<PokerRecord> POKER__ID_SECURE__UNIQUE = Internal.createUniqueKey(Poker.POKER, "poker__id_secure__unique", new TableField[] { Poker.POKER.ID_SECURE }, true);
-        public static final UniqueKey<TicketRecord> TICKET_PK = Internal.createUniqueKey(Ticket.TICKET, "ticket_pk", new TableField[] { Ticket.TICKET.ID }, true);
-        public static final UniqueKey<TicketRecord> TICKET__ID_SECURE__UNIQUE = Internal.createUniqueKey(Ticket.TICKET, "ticket__id_secure__unique", new TableField[] { Ticket.TICKET.ID_SECURE }, true);
-        public static final UniqueKey<VoteRecord> VOTE_PK = Internal.createUniqueKey(Vote.VOTE, "vote_pk", new TableField[] { Vote.VOTE.ID }, true);
-        public static final UniqueKey<VoteRecord> VOTE__TICKET_ID__CREATED_BY__UNIQUE = Internal.createUniqueKey(Vote.VOTE, "vote__ticket_id__created_by__unique", new TableField[] { Vote.VOTE.TICKET_ID, Vote.VOTE.CREATED_BY }, true);
+        public static final UniqueKey<InGamePlayersRecord> IN_GAME_PLAYERS__PK___INSECURE_USER_ID_SECURE___POKER_ID_SECURE = Internal.createUniqueKey(InGamePlayers.IN_GAME_PLAYERS, "in_game_players__pk___insecure_user_id_secure___poker_id_secure", new TableField[] { InGamePlayers.IN_GAME_PLAYERS.INSECURE_USER_ID_SECURE, InGamePlayers.IN_GAME_PLAYERS.POKER_ID_SECURE }, true);
+        public static final UniqueKey<InsecureUserRecord> INSECURE_USER__PK___ID = Internal.createUniqueKey(InsecureUser.INSECURE_USER, "insecure_user__pk___id", new TableField[] { InsecureUser.INSECURE_USER.ID }, true);
+        public static final UniqueKey<InsecureUserRecord> INSECURE_USER__UNIQUE___ID_SECURE = Internal.createUniqueKey(InsecureUser.INSECURE_USER, "insecure_user__unique___id_secure", new TableField[] { InsecureUser.INSECURE_USER.ID_SECURE }, true);
+        public static final UniqueKey<InsecureUserSessionsRecord> INSECURE_USER_SESSIONS__PK___INSECURE_USER_ID_SECURE___SESSION_ = Internal.createUniqueKey(InsecureUserSessions.INSECURE_USER_SESSIONS, "insecure_user_sessions__pk___insecure_user_id_secure___session_", new TableField[] { InsecureUserSessions.INSECURE_USER_SESSIONS.INSECURE_USER_ID_SECURE, InsecureUserSessions.INSECURE_USER_SESSIONS.SESSION_ID }, true);
+        public static final UniqueKey<PokerRecord> POKER__PK___ID = Internal.createUniqueKey(Poker.POKER, "poker__pk___id", new TableField[] { Poker.POKER.ID }, true);
+        public static final UniqueKey<PokerRecord> POKER__UNIQUE___ID_SECURE = Internal.createUniqueKey(Poker.POKER, "poker__unique___id_secure", new TableField[] { Poker.POKER.ID_SECURE }, true);
+        public static final UniqueKey<TicketRecord> TICKET__PK___ID = Internal.createUniqueKey(Ticket.TICKET, "ticket__pk___id", new TableField[] { Ticket.TICKET.ID }, true);
+        public static final UniqueKey<TicketRecord> TICKET__UNIQUE___ID_SECURE = Internal.createUniqueKey(Ticket.TICKET, "ticket__unique___id_secure", new TableField[] { Ticket.TICKET.ID_SECURE }, true);
+        public static final UniqueKey<VoteRecord> VOTE__PK___ID = Internal.createUniqueKey(Vote.VOTE, "vote__pk___id", new TableField[] { Vote.VOTE.ID }, true);
+        public static final UniqueKey<VoteRecord> VOTE__UNIQUE___TICKET_ID___CREATED_BY = Internal.createUniqueKey(Vote.VOTE, "vote__unique___ticket_id___created_by", new TableField[] { Vote.VOTE.TICKET_ID, Vote.VOTE.CREATED_BY }, true);
     }
 
     private static class ForeignKeys0 {
-        public static final ForeignKey<TicketRecord, PokerRecord> TICKET__FK___TICKET__POKER_ID___POKER__ID___ON_DELETE_CASCADE = Internal.createForeignKey(Keys.POKER_PK, Ticket.TICKET, "fk___ticket__poker_id___poker__id___on_delete_cascade", new TableField[] { Ticket.TICKET.POKER_ID }, true);
+        public static final ForeignKey<InsecureUserSessionsRecord, InsecureUserRecord> INSECURE_USER_SESSIONS__INSECURE_USER_SESSIONS__FK___INSECURE_USER_ID_SECURE___INSECURE = Internal.createForeignKey(Keys.INSECURE_USER__UNIQUE___ID_SECURE, InsecureUserSessions.INSECURE_USER_SESSIONS, "insecure_user_sessions__fk___insecure_user_id_secure___insecure", new TableField[] { InsecureUserSessions.INSECURE_USER_SESSIONS.INSECURE_USER_ID_SECURE }, true);
+        public static final ForeignKey<TicketRecord, PokerRecord> TICKET__TICKET__FK___POKER_ID___POKER__ID___ON_DELETE_CASCADE = Internal.createForeignKey(Keys.POKER__PK___ID, Ticket.TICKET, "ticket__fk___poker_id___poker__id___on_delete_cascade", new TableField[] { Ticket.TICKET.POKER_ID }, true);
+        public static final ForeignKey<VoteRecord, TicketRecord> VOTE__VOTE_FK___TICKET_ID___TICKET__ID = Internal.createForeignKey(Keys.TICKET__PK___ID, Vote.VOTE, "vote_fk___ticket_id___ticket__id", new TableField[] { Vote.VOTE.TICKET_ID }, true);
     }
 }

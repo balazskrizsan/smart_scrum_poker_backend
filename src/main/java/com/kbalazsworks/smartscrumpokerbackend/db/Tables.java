@@ -7,6 +7,7 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUserSessions;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote;
@@ -32,6 +33,11 @@ public class Tables {
      * The table <code>public.insecure_user</code>.
      */
     public static final InsecureUser INSECURE_USER = InsecureUser.INSECURE_USER;
+
+    /**
+     * The table <code>public.insecure_user_sessions</code>.
+     */
+    public static final InsecureUserSessions INSECURE_USER_SESSIONS = InsecureUserSessions.INSECURE_USER_SESSIONS;
 
     /**
      * The table <code>public.poker</code>.

@@ -33,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ticket extends TableImpl<TicketRecord> {
 
-    private static final long serialVersionUID = -1438749011;
+    private static final long serialVersionUID = -1843042776;
 
     /**
      * The reference instance of <code>public.ticket</code>
@@ -118,21 +118,21 @@ public class Ticket extends TableImpl<TicketRecord> {
 
     @Override
     public UniqueKey<TicketRecord> getPrimaryKey() {
-        return Keys.TICKET_PK;
+        return Keys.TICKET__PK___ID;
     }
 
     @Override
     public List<UniqueKey<TicketRecord>> getKeys() {
-        return Arrays.<UniqueKey<TicketRecord>>asList(Keys.TICKET_PK, Keys.TICKET__ID_SECURE__UNIQUE);
+        return Arrays.<UniqueKey<TicketRecord>>asList(Keys.TICKET__PK___ID, Keys.TICKET__UNIQUE___ID_SECURE);
     }
 
     @Override
     public List<ForeignKey<TicketRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<TicketRecord, ?>>asList(Keys.TICKET__FK___TICKET__POKER_ID___POKER__ID___ON_DELETE_CASCADE);
+        return Arrays.<ForeignKey<TicketRecord, ?>>asList(Keys.TICKET__TICKET__FK___POKER_ID___POKER__ID___ON_DELETE_CASCADE);
     }
 
     public Poker poker() {
-        return new Poker(this, Keys.TICKET__FK___TICKET__POKER_ID___POKER__ID___ON_DELETE_CASCADE);
+        return new Poker(this, Keys.TICKET__TICKET__FK___POKER_ID___POKER__ID___ON_DELETE_CASCADE);
     }
 
     @Override

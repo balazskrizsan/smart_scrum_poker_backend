@@ -7,6 +7,7 @@ package com.kbalazsworks.smartscrumpokerbackend.db;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.FlywaySchemaHistory;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUserSessions;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote;
@@ -25,7 +26,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = 48391118;
+    private static final long serialVersionUID = -64536294;
 
     /**
      * The reference instance of <code>public</code>
@@ -46,6 +47,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.insecure_user</code>.
      */
     public final InsecureUser INSECURE_USER = InsecureUser.INSECURE_USER;
+
+    /**
+     * The table <code>public.insecure_user_sessions</code>.
+     */
+    public final InsecureUserSessions INSECURE_USER_SESSIONS = InsecureUserSessions.INSECURE_USER_SESSIONS;
 
     /**
      * The table <code>public.poker</code>.
@@ -81,6 +87,7 @@ public class Public extends SchemaImpl {
             FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY,
             InGamePlayers.IN_GAME_PLAYERS,
             InsecureUser.INSECURE_USER,
+            InsecureUserSessions.INSECURE_USER_SESSIONS,
             Poker.POKER,
             Ticket.TICKET,
             Vote.VOTE);

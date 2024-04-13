@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Vote extends TableImpl<VoteRecord> {
 
-    private static final long serialVersionUID = 47901410;
+    private static final long serialVersionUID = 1116906248;
 
     /**
      * The reference instance of <code>public.vote</code>
@@ -134,12 +134,21 @@ public class Vote extends TableImpl<VoteRecord> {
 
     @Override
     public UniqueKey<VoteRecord> getPrimaryKey() {
-        return Keys.VOTE_PK;
+        return Keys.VOTE__PK___ID;
     }
 
     @Override
     public List<UniqueKey<VoteRecord>> getKeys() {
-        return Arrays.<UniqueKey<VoteRecord>>asList(Keys.VOTE_PK, Keys.VOTE__TICKET_ID__CREATED_BY__UNIQUE);
+        return Arrays.<UniqueKey<VoteRecord>>asList(Keys.VOTE__PK___ID, Keys.VOTE__UNIQUE___TICKET_ID___CREATED_BY);
+    }
+
+    @Override
+    public List<ForeignKey<VoteRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<VoteRecord, ?>>asList(Keys.VOTE__VOTE_FK___TICKET_ID___TICKET__ID);
+    }
+
+    public Ticket ticket() {
+        return new Ticket(this, Keys.VOTE__VOTE_FK___TICKET_ID___TICKET__ID);
     }
 
     @Override

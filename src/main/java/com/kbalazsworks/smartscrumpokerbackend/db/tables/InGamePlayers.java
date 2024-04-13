@@ -33,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InGamePlayers extends TableImpl<InGamePlayersRecord> {
 
-    private static final long serialVersionUID = 1362986385;
+    private static final long serialVersionUID = 2056840637;
 
     /**
      * The reference instance of <code>public.in_game_players</code>
@@ -103,12 +103,12 @@ public class InGamePlayers extends TableImpl<InGamePlayersRecord> {
 
     @Override
     public UniqueKey<InGamePlayersRecord> getPrimaryKey() {
-        return Keys.IN_GAME_PLAYERS__INSECURE_USER_ID_SECURE__POKER_ID_SECURE__PK;
+        return Keys.IN_GAME_PLAYERS__PK___INSECURE_USER_ID_SECURE___POKER_ID_SECURE;
     }
 
     @Override
     public List<UniqueKey<InGamePlayersRecord>> getKeys() {
-        return Arrays.<UniqueKey<InGamePlayersRecord>>asList(Keys.IN_GAME_PLAYERS__INSECURE_USER_ID_SECURE__POKER_ID_SECURE__PK);
+        return Arrays.<UniqueKey<InGamePlayersRecord>>asList(Keys.IN_GAME_PLAYERS__PK___INSECURE_USER_ID_SECURE___POKER_ID_SECURE);
     }
 
     @Override

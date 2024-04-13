@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Poker extends TableImpl<PokerRecord> {
 
-    private static final long serialVersionUID = -895340896;
+    private static final long serialVersionUID = 1356598265;
 
     /**
      * The reference instance of <code>public.poker</code>
@@ -119,12 +119,12 @@ public class Poker extends TableImpl<PokerRecord> {
 
     @Override
     public UniqueKey<PokerRecord> getPrimaryKey() {
-        return Keys.POKER_PK;
+        return Keys.POKER__PK___ID;
     }
 
     @Override
     public List<UniqueKey<PokerRecord>> getKeys() {
-        return Arrays.<UniqueKey<PokerRecord>>asList(Keys.POKER_PK, Keys.POKER__ID_SECURE__UNIQUE);
+        return Arrays.<UniqueKey<PokerRecord>>asList(Keys.POKER__PK___ID, Keys.POKER__UNIQUE___ID_SECURE);
     }
 
     @Override

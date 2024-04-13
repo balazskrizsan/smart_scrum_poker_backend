@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InsecureUser extends TableImpl<InsecureUserRecord> {
 
-    private static final long serialVersionUID = 513781848;
+    private static final long serialVersionUID = 1809570081;
 
     /**
      * The reference instance of <code>public.insecure_user</code>
@@ -114,12 +114,12 @@ public class InsecureUser extends TableImpl<InsecureUserRecord> {
 
     @Override
     public UniqueKey<InsecureUserRecord> getPrimaryKey() {
-        return Keys.INSECURE_USER_PK;
+        return Keys.INSECURE_USER__PK___ID;
     }
 
     @Override
     public List<UniqueKey<InsecureUserRecord>> getKeys() {
-        return Arrays.<UniqueKey<InsecureUserRecord>>asList(Keys.INSECURE_USER_PK, Keys.INSECURE_USER__ID_SECURE__UNIQUE);
+        return Arrays.<UniqueKey<InsecureUserRecord>>asList(Keys.INSECURE_USER__PK___ID, Keys.INSECURE_USER__UNIQUE___ID_SECURE);
     }
 
     @Override
