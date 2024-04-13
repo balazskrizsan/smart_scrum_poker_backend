@@ -36,7 +36,7 @@ public class V000001__init extends AbstractBaseJooqMigration
             .constraints(
                 constraint("ticket__pk___id").primaryKey("id"),
                 constraint("ticket__unique___id_secure").unique("id_secure"),
-                constraint("ticket__fk___ticket__poker_id___poker__id___on_delete_cascade")
+                constraint("ticket__fk___poker_id___poker__id___on_delete_cascade")
                     .foreignKey("poker_id")
                     .references("poker", "id")
                     .onDeleteCascade()
@@ -55,7 +55,7 @@ public class V000001__init extends AbstractBaseJooqMigration
             .constraints(
                 constraint("vote__pk___id").primaryKey("id"),
                 constraint("vote__unique___ticket_id___created_by").unique("ticket_id", "created_by"),
-                constraint("vote_fk___vote__ticket_id___ticket__id")
+                constraint("vote_fk___ticket_id___ticket__id")
                     .foreignKey("ticket_id")
                     .references("ticket", "id")
                     .onDeleteCascade()
