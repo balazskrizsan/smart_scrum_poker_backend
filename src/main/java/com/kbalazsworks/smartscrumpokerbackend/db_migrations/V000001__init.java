@@ -22,8 +22,8 @@ public class V000001__init extends AbstractBaseJooqMigration
             .column("created_at", TIMESTAMP.nullable(false))
             .column("created_by", UUID.nullable(true))
             .constraints(
-                constraint("poker_pk").primaryKey("id"),
-                constraint("poker__id_secure__unique").unique("id_secure")
+                constraint("pk___id").primaryKey("id"),
+                constraint("unique___id_secure").unique("id_secure")
             )
             .execute();
 
@@ -34,8 +34,8 @@ public class V000001__init extends AbstractBaseJooqMigration
             .column("name", VARCHAR.nullable(false))
             .column("active", BOOLEAN.nullable(false).defaultValue(false))
             .constraints(
-                constraint("ticket_pk").primaryKey("id"),
-                constraint("ticket__id_secure__unique").unique("id_secure"),
+                constraint("pk___id").primaryKey("id"),
+                constraint("unique___id_secure").unique("id_secure"),
                 constraint("fk___ticket__poker_id___poker__id___on_delete_cascade")
                     .foreignKey("poker_id")
                     .references("poker", "id")
@@ -55,6 +55,8 @@ public class V000001__init extends AbstractBaseJooqMigration
             .constraints(
                 constraint("vote_pk").primaryKey("id"),
                 constraint("vote__ticket_id__created_by__unique").unique("ticket_id", "created_by")
+                constraint("pk___id").primaryKey("id"),
+                constraint("unique___ticket_id___created_by").unique("ticket_id", "created_by")
             )
             .execute();
 
@@ -66,6 +68,8 @@ public class V000001__init extends AbstractBaseJooqMigration
             .constraints(
                 constraint("insecure_user_pk").primaryKey("id"),
                 constraint("insecure_user__id_secure__unique").unique("id_secure")
+                constraint("pk___id").primaryKey("id"),
+                constraint("unique___id_secure").unique("id_secure")
             )
             .execute();
 
@@ -74,7 +78,7 @@ public class V000001__init extends AbstractBaseJooqMigration
             .column("poker_id_secure", UUID.nullable(false))
             .column("created_at", TIMESTAMP.nullable(false))
             .constraints(
-                constraint("in_game_players__insecure_user_id_secure__poker_id_secure__pk")
+                constraint("pk___insecure_user_id_secure___poker_id_secure")
                     .primaryKey("insecure_user_id_secure", "poker_id_secure")
             )
             .execute();
