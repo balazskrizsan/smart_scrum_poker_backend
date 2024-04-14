@@ -32,7 +32,8 @@ public class SocketChannelInterceptor implements ChannelInterceptor
         {
             simpSessionId = Objects.requireNonNull(headers.get("simpSessionId")).toString();
             insecureUserIdSecure = Objects.requireNonNull(multiValueMap).get("insecureUserIdSecure").getFirst();
-        } catch (NullPointerException e)
+        }
+        catch (NullPointerException e)
         {
             return message;
         }
