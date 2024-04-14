@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Accessors(fluent = true)
@@ -24,5 +25,9 @@ public class InsecureUserSessionFakeBuilder
     public InsecureUserSession build()
     {
         return new InsecureUserSession(insecureUserIdSecure, sessionId, createdAt);
+    }
+    public List<InsecureUserSession> buildAsList()
+    {
+        return List.of(new InsecureUserSession(insecureUserIdSecure, sessionId, createdAt));
     }
 }

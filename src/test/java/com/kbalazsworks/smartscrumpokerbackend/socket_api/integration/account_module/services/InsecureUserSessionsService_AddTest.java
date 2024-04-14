@@ -10,6 +10,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
@@ -38,19 +40,20 @@ public class InsecureUserSessionsService_AddTest extends AbstractIntegrationTest
             )
         }
     )
-    public void addOneItem_createsOneRecord()
+    public void addTwoItemsWithOnDuplicateKeyIgnore_createsOneRecord()
     {
         // Arrange
         InsecureUserSession testedInsecureUserSession = new InsecureUserSessionFakeBuilder().build();
-        InsecureUserSession expectedInsecureUserSession = new InsecureUserSessionFakeBuilder().build();
+        List<InsecureUserSession> expectedInsecureUserSession = new InsecureUserSessionFakeBuilder().buildAsList();
 
         // Act
         accountServiceFactory.getInsecureUserSessionsService().add(testedInsecureUserSession);
+        accountServiceFactory.getInsecureUserSessionsService().add(testedInsecureUserSession);
 
         // Assert
-        InsecureUserSession actual = getDslContext()
+        List<InsecureUserSession> actual = getDslContext()
             .selectFrom(insecureUserSessionsTable)
-            .fetchOneInto(InsecureUserSession.class);
+            .fetchInto(InsecureUserSession.class);
 
         assertThat(actual).isEqualTo(expectedInsecureUserSession);
     }
