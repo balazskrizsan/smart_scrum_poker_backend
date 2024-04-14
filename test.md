@@ -12,3 +12,4 @@ SERVER_PORT=9999;SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:46040/smartsc
 | insecure_user   | 102xxx       |
 | vote            | 103xxx       |
 | in_game_players | no increment |
+| session keys    | 105xxx       |
