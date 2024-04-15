@@ -4,6 +4,8 @@ import com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories.Abstra
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
 public class InsecureUserSessionsRepository extends AbstractRepository
 {
@@ -25,6 +27,14 @@ public class InsecureUserSessionsRepository extends AbstractRepository
                 insecureUserSession.createdAt()
             )
             .onDuplicateKeyIgnore()
+            .execute();
+    }
+
+    public void removeBySessionId(UUID sessionId)
+    {
+        getDSLContext()
+            .deleteFrom(insecureUserSessionsTable)
+            .where(insecureUserSessionsTable.SESSION_ID.eq(sessionId))
             .execute();
     }
 }

@@ -5,6 +5,8 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.repo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class InsecureUserSessionsService
@@ -14,5 +16,10 @@ public class InsecureUserSessionsService
     public void add(InsecureUserSession insecureUserSession)
     {
         insecureUserSessionsRepository.create(insecureUserSession);
+    }
+
+    public void removeBySessionId(UUID sessionId)
+    {
+        insecureUserSessionsRepository.removeBySessionId(sessionId);
     }
 }
