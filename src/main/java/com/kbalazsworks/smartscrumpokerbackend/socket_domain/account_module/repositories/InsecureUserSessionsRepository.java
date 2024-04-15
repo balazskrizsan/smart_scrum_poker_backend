@@ -2,6 +2,8 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.rep
 
 import com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories.AbstractRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
+import lombok.NonNull;
+import org.jooq.Record1;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
@@ -12,9 +14,9 @@ public class InsecureUserSessionsRepository extends AbstractRepository
     private final com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUserSessions insecureUserSessionsTable =
         com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUserSessions.INSECURE_USER_SESSIONS;
 
-    public void create(InsecureUserSession insecureUserSession)
+    public boolean create(@NonNull InsecureUserSession insecureUserSession)
     {
-        getDSLContext()
+        Record1<UUID> returning = getDSLContext()
             .insertInto(
                 insecureUserSessionsTable,
                 insecureUserSessionsTable.INSECURE_USER_ID_SECURE,
@@ -27,7 +29,10 @@ public class InsecureUserSessionsRepository extends AbstractRepository
                 insecureUserSession.createdAt()
             )
             .onDuplicateKeyIgnore()
-            .execute();
+            .returningResult(insecureUserSessionsTable.SESSION_ID)
+            .fetchOne();
+
+        return null != returning;
     }
 
     public void removeBySessionId(UUID sessionId)

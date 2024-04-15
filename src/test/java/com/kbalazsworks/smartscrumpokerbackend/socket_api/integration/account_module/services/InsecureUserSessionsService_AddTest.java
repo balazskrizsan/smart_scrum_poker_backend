@@ -13,6 +13,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
@@ -47,14 +48,18 @@ public class InsecureUserSessionsService_AddTest extends AbstractIntegrationTest
         List<InsecureUserSession> expectedInsecureUserSession = new InsecureUserSessionFakeBuilder().buildAsList();
 
         // Act
-        accountServiceFactory.getInsecureUserSessionsService().add(testedInsecureUserSession);
-        accountServiceFactory.getInsecureUserSessionsService().add(testedInsecureUserSession);
+        boolean actualHasInsert1 = accountServiceFactory.getInsecureUserSessionsService().add(testedInsecureUserSession);
+        boolean actualHasInsert2 = accountServiceFactory.getInsecureUserSessionsService().add(testedInsecureUserSession);
 
         // Assert
         List<InsecureUserSession> actual = getDslContext()
             .selectFrom(insecureUserSessionsTable)
             .fetchInto(InsecureUserSession.class);
 
-        assertThat(actual).isEqualTo(expectedInsecureUserSession);
+        assertAll(
+            () -> assertThat(actual).isEqualTo(expectedInsecureUserSession),
+            () -> assertThat(actualHasInsert1).isEqualTo(true),
+            () -> assertThat(actualHasInsert2).isEqualTo(false)
+        );
     }
 }

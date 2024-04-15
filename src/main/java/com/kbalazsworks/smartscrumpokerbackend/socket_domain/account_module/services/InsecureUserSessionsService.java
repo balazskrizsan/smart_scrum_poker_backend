@@ -2,6 +2,7 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.ser
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.repositories.InsecureUserSessionsRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,12 @@ public class InsecureUserSessionsService
 {
     private final InsecureUserSessionsRepository insecureUserSessionsRepository;
 
-    public void add(InsecureUserSession insecureUserSession)
+    public boolean add(@NonNull InsecureUserSession insecureUserSession)
     {
-        insecureUserSessionsRepository.create(insecureUserSession);
+        return insecureUserSessionsRepository.create(insecureUserSession);
     }
 
-    public void removeBySessionId(UUID sessionId)
+    public void removeBySessionId(@NonNull UUID sessionId)
     {
         insecureUserSessionsRepository.removeBySessionId(sessionId);
     }
