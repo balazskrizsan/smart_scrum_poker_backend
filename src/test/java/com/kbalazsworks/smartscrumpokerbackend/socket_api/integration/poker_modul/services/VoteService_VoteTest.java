@@ -37,6 +37,8 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
                 scripts = {
                     "classpath:test/sqls/_truncate_tables.sql",
                     "classpath:test/sqls/_preset_insert_1_insecure_user.sql",
+                    "classpath:test/sqls/_preset_insert_1_poker.sql",
+                    "classpath:test/sqls/_preset_insert_3_tickets_all_inactive.sql",
                 }
             ),
             @Sql(
@@ -104,6 +106,8 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
                 scripts = {
                     "classpath:test/sqls/_truncate_tables.sql",
                     "classpath:test/sqls/_preset_insert_1_insecure_user.sql",
+                    "classpath:test/sqls/_preset_insert_1_poker.sql",
+                    "classpath:test/sqls/_preset_insert_3_tickets_all_inactive.sql",
                 }
             ),
             @Sql(
