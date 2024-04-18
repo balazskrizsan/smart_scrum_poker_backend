@@ -8,13 +8,18 @@ import lombok.NonNull;
 import org.jooq.Record;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Repository
 public class PokerRepository extends AbstractRepository
 {
     private final com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker pokersTable =
         com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker.POKER;
+    private final com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers inGamePlayersTable =
+        com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers.IN_GAME_PLAYERS;
 
     public Poker create(@NonNull Poker poker) throws PokerException
     {
@@ -44,7 +49,7 @@ public class PokerRepository extends AbstractRepository
     }
 
     // @todo: test not found
-    public Poker findByIdSecure(UUID pokerIdSecure) throws PokerException
+    public Poker findByIdSecure(@NonNull UUID pokerIdSecure) throws PokerException
     {
         PokerRecord record = getDSLContext()
             .selectFrom(pokersTable)
@@ -57,5 +62,18 @@ public class PokerRepository extends AbstractRepository
         }
 
         return record.into(Poker.class);
+    }
+
+    public Map<UUID, Poker> searchWatchedPokers(@NonNull UUID insecureUserIdSecure)
+    {
+        return getDSLContext()
+            .select(pokersTable.fields())
+            .from(pokersTable)
+            .leftJoin(inGamePlayersTable)
+            .on(inGamePlayersTable.POKER_ID_SECURE.eq(pokersTable.ID_SECURE))
+            .where(inGamePlayersTable.INSECURE_USER_ID_SECURE.eq(insecureUserIdSecure))
+            .fetchInto(Poker.class)
+            .stream()
+            .collect(Collectors.toMap(Poker::idSecure, Function.identity()));
     }
 }

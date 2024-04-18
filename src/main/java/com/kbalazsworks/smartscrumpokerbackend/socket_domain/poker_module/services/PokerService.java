@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -24,5 +25,10 @@ public class PokerService
     public Poker findByIdSecure(@NonNull UUID pokerIdSecure) throws PokerException
     {
         return pokerRepository.findByIdSecure(pokerIdSecure);
+    }
+
+    public Map<UUID, Poker> searchWatchedPokers(@NonNull UUID insecureUserIdSecure)
+    {
+        return pokerRepository.searchWatchedPokers(insecureUserIdSecure);
     }
 }
