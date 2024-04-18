@@ -90,6 +90,7 @@ public class V000001__init extends AbstractBaseJooqMigration
             .constraints(
                 constraint("insecure_user_sessions__pk___insecure_user_id_secure___session_id")
                     .primaryKey("insecure_user_id_secure", "session_id"),
+                constraint("insecure_user_sessions__unique___session_id").unique("session_id"),
                 constraint("insecure_user_sessions__fk___insecure_user_id_secure___insecure_user__id_secure")
                     .foreignKey("insecure_user_id_secure")
                     .references("insecure_user", "id_secure")
