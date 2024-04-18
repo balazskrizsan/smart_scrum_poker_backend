@@ -35,6 +35,16 @@ public class InsecureUserSessionsRepository extends AbstractRepository
         return null != returning;
     }
 
+    public int countByIdSecure(UUID uuidInsecureUserIdSecure)
+    {
+        var ctx = getDSLContext();
+
+        return ctx.fetchCount(
+            ctx.selectFrom(insecureUserSessionsTable)
+                .where(insecureUserSessionsTable.INSECURE_USER_ID_SECURE.eq(uuidInsecureUserIdSecure))
+        );
+    }
+
     public void removeBySessionId(UUID sessionId)
     {
         getDSLContext()

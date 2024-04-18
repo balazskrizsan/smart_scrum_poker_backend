@@ -19,6 +19,11 @@ public class InsecureUserSessionsService
         return insecureUserSessionsRepository.create(insecureUserSession);
     }
 
+    public int countByIdSecure(@NonNull UUID uuidInsecureUserIdSecure)
+    {
+        return insecureUserSessionsRepository.countByIdSecure(uuidInsecureUserIdSecure);
+    }
+
     public void removeBySessionId(@NonNull UUID sessionId)
     {
         insecureUserSessionsRepository.removeBySessionId(sessionId);
