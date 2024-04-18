@@ -16,7 +16,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
-public class InsecureUserSessionsService_countByIdSecure extends AbstractIntegrationTest
+public class InsecureUserSessionsService_countByIdSecureTest extends AbstractIntegrationTest
 {
     @Autowired
     private AccountServiceFactory accountServiceFactory;
