@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services;
 
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.exceptions.SocketException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.SocketConnectionHandlerService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.SessionException;
@@ -21,7 +22,7 @@ public class SocketDisconnectedService
     private final SocketConnectionHandlerService socketConnectionHandlerService;
 
     // @todo: test
-    public DisconnectResponse disconnect(MessageHeaders headers) throws SessionException
+    public DisconnectResponse disconnect(MessageHeaders headers) throws SessionException, SocketException
     {
         UUID sessionId = socketConnectionHandlerService.getSessionId(headers);
         InsecureUserSession insecureUserSession = insecureUserSessionsService.getInsecureUserSession(sessionId);

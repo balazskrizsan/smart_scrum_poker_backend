@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.listeners.main;
 
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.exceptions.SocketException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.SocketNotificationHandlerService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services.SocketConnectedService;
@@ -21,7 +22,7 @@ public class SocketConnectListener
 
     // @todo: test
     @EventListener
-    public void socketConnectListener(@NonNull SessionConnectedEvent event) throws AccountException
+    public void socketConnectListener(@NonNull SessionConnectedEvent event) throws AccountException, SocketException
     {
         log.info("Socket connection opened: {}", event);
 

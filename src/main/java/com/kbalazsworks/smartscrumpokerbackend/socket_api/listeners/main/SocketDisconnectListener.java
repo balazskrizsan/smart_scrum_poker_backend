@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.listeners.main;
 
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.exceptions.SocketException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.SocketNotificationHandlerService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.SessionException;
@@ -22,7 +23,8 @@ public class SocketDisconnectListener
 
     // @todo: test
     @EventListener
-    public void socketDisconnectListener(@NonNull SessionDisconnectEvent event) throws AccountException, SessionException
+    public void socketDisconnectListener(@NonNull SessionDisconnectEvent event)
+        throws AccountException, SessionException, SocketException
     {
         log.info("Socket connection closed: {}", event);
 

@@ -1,6 +1,7 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.common.factories.LocalDateTimeFactory;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.exceptions.SocketException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.SocketConnectionHandlerService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserSessionsService;
@@ -22,7 +23,7 @@ public class SocketConnectedService
     private final LocalDateTimeFactory localDateTimeFactory;
 
     // @todo: test
-    public ConnectResponse connect(MessageHeaders headers)
+    public ConnectResponse connect(MessageHeaders headers) throws SocketException
     {
         UUID insecureUserIdSecure = socketConnectionHandlerService.getInsecureUserIdSecure(headers);
         UUID simpSessionId = socketConnectionHandlerService.getSessionId(headers);

@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.services;
 
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.exceptions.SocketException;
 import lombok.NonNull;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.GenericMessage;
@@ -16,9 +17,16 @@ import static org.springframework.messaging.support.NativeMessageHeaderAccessor.
 @Service
 public class SocketConnectionHandlerService
 {
-    public UUID getSessionId(@NonNull MessageHeaders headers)
+    public UUID getSessionId(@NonNull MessageHeaders headers) throws SocketException
     {
-        return UUID.fromString(Objects.requireNonNull(headers.get("simpSessionId")).toString());
+        try
+        {
+            return UUID.fromString(Objects.requireNonNull(headers.get("simpSessionId")).toString());
+        }
+        catch (NullPointerException e)
+        {
+            throw new SocketException("simpSessionId not found");
+        }
     }
 
     // @todo: test
