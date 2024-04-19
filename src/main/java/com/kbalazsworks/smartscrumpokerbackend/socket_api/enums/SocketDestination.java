@@ -2,6 +2,8 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.enums;
 
 public enum SocketDestination
 {
+    SESSION_CREATED_OR_UPDATED("/app/session.created_or_updated"),
+    SESSION_CLOSED("/app/session.closed"),
     POKER_START("/app/poker.start"),
     POKER_ROOM_STATE("/app/poker.room.state"),
     POKER_ROUND_START("/app/poker.round.start"),
