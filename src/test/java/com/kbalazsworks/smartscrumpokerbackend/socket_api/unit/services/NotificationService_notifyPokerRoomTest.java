@@ -19,7 +19,7 @@ import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDes
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class NotificationService_notifyPokerRoom extends AbstractTest
+public class NotificationService_notifyPokerRoomTest extends AbstractTest
 {
     @Autowired
     private SocketApiServiceFactory socketApiServiceFactory;
