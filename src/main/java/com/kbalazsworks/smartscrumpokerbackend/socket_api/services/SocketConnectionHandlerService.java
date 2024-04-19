@@ -29,18 +29,23 @@ public class SocketConnectionHandlerService
         }
     }
 
-    // @todo: test
-    public UUID getInsecureUserIdSecure(@NonNull MessageHeaders headers)
+    public UUID getInsecureUserIdSecure(@NonNull MessageHeaders headers) throws SocketException
     {
-        String insecureUserIdSecure = Objects.requireNonNull(getNativeHeaders(headers))
-            .get("insecureUserIdSecure")
-            .getFirst();
+        try
+        {
+            String insecureUserIdSecure = Objects.requireNonNull(getNativeHeaders(headers))
+                .get("insecureUserIdSecure")
+                .getFirst();
 
-        return UUID.fromString(insecureUserIdSecure);
+            return UUID.fromString(insecureUserIdSecure);
+        }
+        catch (NullPointerException e)
+        {
+            throw new SocketException("insecureUserIdSecure not found");
+        }
     }
 
-    // @todo: test
-    public Map<String, List<String>> getNativeHeaders(@NonNull MessageHeaders headers)
+    private Map<String, List<String>> getNativeHeaders(@NonNull MessageHeaders headers)
     {
         GenericMessage<?> genericMessage = headers.get(CONNECT_MESSAGE_HEADER, GenericMessage.class);
 
