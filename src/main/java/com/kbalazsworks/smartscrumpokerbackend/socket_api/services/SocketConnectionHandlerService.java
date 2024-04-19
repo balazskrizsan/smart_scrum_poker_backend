@@ -16,7 +16,6 @@ import static org.springframework.messaging.support.NativeMessageHeaderAccessor.
 @Service
 public class SocketConnectionHandlerService
 {
-    // @todo: test
     public UUID getSessionId(@NonNull MessageHeaders headers)
     {
         return UUID.fromString(Objects.requireNonNull(headers.get("simpSessionId")).toString());
