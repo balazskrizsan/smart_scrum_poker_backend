@@ -1,7 +1,9 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.repositories;
 
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.InsecureUserSessionsRecord;
 import com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories.AbstractRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.SessionException;
 import lombok.NonNull;
 import org.jooq.Record1;
 import org.springframework.stereotype.Repository;
@@ -51,5 +53,21 @@ public class InsecureUserSessionsRepository extends AbstractRepository
             .deleteFrom(insecureUserSessionsTable)
             .where(insecureUserSessionsTable.SESSION_ID.eq(sessionId))
             .execute();
+    }
+
+    public InsecureUserSession getInsecureUserSession(UUID sessionId) throws SessionException
+    {
+        InsecureUserSessionsRecord insecureUserSessionRecord = getDSLContext()
+            .selectFrom(insecureUserSessionsTable)
+            .where(insecureUserSessionsTable.SESSION_ID.eq(sessionId))
+            .fetchOne();
+
+        // @todo: test
+        if (null == insecureUserSessionRecord)
+        {
+            throw new SessionException(STR."Session not found: session_id#\{sessionId}");
+        }
+
+        return insecureUserSessionRecord.into(InsecureUserSession.class);
     }
 }

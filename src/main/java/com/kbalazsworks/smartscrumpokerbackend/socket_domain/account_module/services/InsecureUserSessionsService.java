@@ -1,6 +1,7 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.SessionException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.repositories.InsecureUserSessionsRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,10 @@ public class InsecureUserSessionsService
     public void removeBySessionId(@NonNull UUID sessionId)
     {
         insecureUserSessionsRepository.removeBySessionId(sessionId);
+    }
+
+    public InsecureUserSession getInsecureUserSession(@NonNull UUID sessionId) throws SessionException
+    {
+        return insecureUserSessionsRepository.getInsecureUserSession(sessionId);
     }
 }
