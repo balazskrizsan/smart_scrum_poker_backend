@@ -1,4 +1,4 @@
-package com.kbalazsworks.smartscrumpokerbackend.socket_api.unit.poker_module.services;
+package com.kbalazsworks.smartscrumpokerbackend.socket_domain.unit.poker_module.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractTest;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.StoryPointException;

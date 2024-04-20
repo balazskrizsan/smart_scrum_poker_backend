@@ -1,4 +1,4 @@
-package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_modul.services;
+package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.poker_module.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.PokerRecord;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
@@ -6,7 +6,6 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.common_module.mocker.Uuid
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services.UuidService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.StartService;

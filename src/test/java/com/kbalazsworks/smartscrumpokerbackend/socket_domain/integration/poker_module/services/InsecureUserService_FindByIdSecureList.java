@@ -1,4 +1,4 @@
-package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_modul.services;
+package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.poker_module.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;

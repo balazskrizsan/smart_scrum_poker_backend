@@ -1,15 +1,15 @@
-package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_modul.services;
+package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.account_service.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.PokerService;
-import lombok.SneakyThrows;
+import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserSessionFakeBuilder;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserSessionsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +17,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
-public class PokerService_FindByIdSecure extends AbstractIntegrationTest
+public class InsecureUserSessionsService_RemoveBySessionIdTest extends AbstractIntegrationTest
 {
     @Test
     @SqlGroup(
@@ -28,7 +28,7 @@ public class PokerService_FindByIdSecure extends AbstractIntegrationTest
                 scripts = {
                     "classpath:test/sqls/_truncate_tables.sql",
                     "classpath:test/sqls/_preset_insert_2_insecure_user.sql",
-                    "classpath:test/sqls/_preset_insert_2_pokers.sql",
+                    "classpath:test/sqls/_preset_insert_3_sessions_for_2_users.sql",
                 }
             ),
             @Sql(
@@ -38,17 +38,23 @@ public class PokerService_FindByIdSecure extends AbstractIntegrationTest
             )
         }
     )
-    @SneakyThrows
-    public void SelectFromFilledDb_ReturnsOnlyOneEntity()
+    public void remove1SessionIdFrom3sessionsDb_remains2records()
     {
         // Arrange
-        UUID testedPokerInsecureId = PokerFakeBuilder.defaultIdSecure1;
-        Poker expected = new PokerFakeBuilder().build();
+        UUID testedSessionId = InsecureUserSessionFakeBuilder.defaultSessionId2;
+        List<InsecureUserSession> expected = List.of(
+            new InsecureUserSessionFakeBuilder().build(),
+            new InsecureUserSessionFakeBuilder().build3()
+        );
 
         // Act
-        Poker actual = createInstance(PokerService.class).findByIdSecure(testedPokerInsecureId);
+        createInstance(InsecureUserSessionsService.class).removeBySessionId(testedSessionId);
 
         // Assert
+        List<InsecureUserSession> actual = getDslContext()
+            .selectFrom(insecureUserSessionsTable)
+            .fetchInto(InsecureUserSession.class);
+
         assertThat(actual).isEqualTo(expected);
     }
 }

@@ -1,4 +1,4 @@
-package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.account_module.services;
+package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.account_service.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.InsecureUserRecord;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
