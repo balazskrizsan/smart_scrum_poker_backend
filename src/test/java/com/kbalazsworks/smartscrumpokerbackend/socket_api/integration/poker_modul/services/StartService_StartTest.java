@@ -61,10 +61,9 @@ public class StartService_StartTest extends AbstractIntegrationTest
         setOneTimeMock(TicketService.class, ticketUuidServiceMock);
 
         var pokerUuidServiceMock = new UuidServiceMocker().mockGetRandom(PokerFakeBuilder.defaultIdSecure1).getMock();
-        setOneTimeMock(StartService.class, pokerUuidServiceMock);
 
         // Act
-        StartPokerResponse actualStartPokerResponse = createInstance(StartService.class)
+        StartPokerResponse actualStartPokerResponse = createInstance(StartService.class, pokerUuidServiceMock)
             .start(testedPoker, testedTickets);
 
         // Assert
@@ -106,10 +105,11 @@ public class StartService_StartTest extends AbstractIntegrationTest
         setOneTimeMock(TicketService.class, ticketUuidServiceMock);
 
         var pokerUuidServiceMock = new UuidServiceMocker().mockGetRandom(PokerFakeBuilder.defaultIdSecure1).getMock();
-        setOneTimeMock(StartService.class, pokerUuidServiceMock);
 
         // Act - Assert
-        assertThatThrownBy(() -> createInstance(StartService.class).start(testedPoker, testedTickets))
+        assertThatThrownBy(() -> createInstance(StartService.class, pokerUuidServiceMock)
+            .start(testedPoker, testedTickets)
+        )
             .isInstanceOf(AccountException.class)
             .hasMessage("User not found");
     }

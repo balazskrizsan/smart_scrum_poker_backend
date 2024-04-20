@@ -29,15 +29,27 @@ public abstract class AbstractTest
     {
         serviceFactory.resetMockContainer();
     }
+
+    protected <T> T createInstance(@NonNull Class<T> clazz, @NonNull List<Object> mocks)
+    {
+        mocks.forEach(m -> setOneTimeMock(clazz, m));
+
+        return createInstance(clazz);
+    }
+
+    protected <T> T createInstance(@NonNull Class<T> clazz, @NonNull Object mock)
+    {
+        setOneTimeMock(clazz, mock);
+
+        return createInstance(clazz);
+    }
+
     protected <T> T createInstance(@NonNull Class<T> clazz)
     {
         return serviceFactory.createInstance(clazz);
     }
 
-    protected void setOneTimeMock(
-        @NonNull Class<?> newClass,
-        @NonNull Object mock
-    )
+    protected void setOneTimeMock(@NonNull Class<?> newClass, @NonNull Object mock)
     {
         serviceFactory.setOneTimeMock(newClass, mock);
     }
