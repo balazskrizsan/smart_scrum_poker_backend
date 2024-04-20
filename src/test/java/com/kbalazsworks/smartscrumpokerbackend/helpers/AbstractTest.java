@@ -28,10 +28,9 @@ public abstract class AbstractTest
 
     protected void setOneTimeMock(
         @NonNull Class<?> newClass,
-        @NonNull Class<?> dependencyClass,
-        @NonNull Object defaultMock
+        @NonNull Object mock
     )
     {
-        serviceFactory.setOneTimeMock(newClass, dependencyClass, defaultMock);
+        serviceFactory.setOneTimeMock(newClass, mock);
     }
 }

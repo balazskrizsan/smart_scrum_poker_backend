@@ -38,7 +38,7 @@ public class NotificationService_notifyPokerRoomTest extends AbstractTest
             .build();
 
         // Act
-        setOneTimeMock(NotificationService.class, SimpMessagingTemplate.class, mock);
+        setOneTimeMock(NotificationService.class, mock);
         createInstance(NotificationService.class).notifyPokerRoom(testedPokerIdSecure, testedData, testedPokerRoomState);
 
         // Assert

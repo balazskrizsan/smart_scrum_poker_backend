@@ -58,10 +58,10 @@ public class StartService_StartTest extends AbstractIntegrationTest
         Ticket expectedTicket = new TicketFakeBuilder().id(1).pokerId(1).build();
 
         var ticketUuidServiceMock = new UuidServiceMocker().mockGetRandom(TicketFakeBuilder.defaultIdSecure1).getMock();
-        setOneTimeMock(TicketService.class, UuidService.class, ticketUuidServiceMock);
+        setOneTimeMock(TicketService.class, ticketUuidServiceMock);
 
         var pokerUuidServiceMock = new UuidServiceMocker().mockGetRandom(PokerFakeBuilder.defaultIdSecure1).getMock();
-        setOneTimeMock(StartService.class, UuidService.class, pokerUuidServiceMock);
+        setOneTimeMock(StartService.class, pokerUuidServiceMock);
 
         // Act
         StartPokerResponse actualStartPokerResponse = createInstance(StartService.class)
@@ -103,10 +103,10 @@ public class StartService_StartTest extends AbstractIntegrationTest
         List<Ticket> testedTickets = new TicketFakeBuilder().buildNoIdAsList();
 
         var ticketUuidServiceMock = new UuidServiceMocker().mockGetRandom(TicketFakeBuilder.defaultIdSecure1).getMock();
-        setOneTimeMock(TicketService.class, UuidService.class, ticketUuidServiceMock);
+        setOneTimeMock(TicketService.class, ticketUuidServiceMock);
 
         var pokerUuidServiceMock = new UuidServiceMocker().mockGetRandom(PokerFakeBuilder.defaultIdSecure1).getMock();
-        setOneTimeMock(StartService.class, UuidService.class, pokerUuidServiceMock);
+        setOneTimeMock(StartService.class, pokerUuidServiceMock);
 
         // Act - Assert
         assertThatThrownBy(() -> createInstance(StartService.class).start(testedPoker, testedTickets))

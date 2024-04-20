@@ -63,7 +63,7 @@ public class SocketNotificationHandlerService_notifyPokerRoomsWithNewSessionTest
             .build();
 
         // Act
-        setOneTimeMock(NotificationService.class, SimpMessagingTemplate.class, mock);
+        setOneTimeMock(NotificationService.class, mock);
         createInstance(SocketNotificationHandlerService.class)
             .notifyPokerRoomsWithNewSession(testedInsecureUserIdSecure);
 

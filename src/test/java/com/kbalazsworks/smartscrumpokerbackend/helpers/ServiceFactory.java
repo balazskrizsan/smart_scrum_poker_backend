@@ -37,13 +37,12 @@ public class ServiceFactory
 
     public void setOneTimeMock(
         @NonNull Class<?> newClass,
-        @NonNull Class<?> dependencyClass,
-        @NonNull Object defaultMock
+        @NonNull Object mock
     )
     {
         oneTimeMocks.put(newClass.getName(), new HashMap<>()
         {{
-            put(dependencyClass.getName(), defaultMock);
+            put(mock.getClass().getName(), mock);
         }});
     }
 
