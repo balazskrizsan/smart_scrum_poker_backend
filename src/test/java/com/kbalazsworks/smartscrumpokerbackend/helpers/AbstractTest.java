@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.After;
+
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @RunWith(SpringRunner.class)
@@ -21,6 +24,11 @@ public abstract class AbstractTest
     @Autowired
     private ServiceFactory serviceFactory;
 
+    @After
+    public void after()
+    {
+        serviceFactory.resetMockContainer();
+    }
     protected <T> T createInstance(@NonNull Class<T> clazz)
     {
         return serviceFactory.createInstance(clazz);

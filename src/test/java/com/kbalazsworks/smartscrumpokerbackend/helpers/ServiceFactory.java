@@ -46,6 +46,11 @@ public class ServiceFactory
         }});
     }
 
+    public void resetMockContainer()
+    {
+        oneTimeMocks = new HashMap<>();
+    }
+
     @SneakyThrows
     public <T> T createInstance(@NonNull Class<T> clazz)
     {
