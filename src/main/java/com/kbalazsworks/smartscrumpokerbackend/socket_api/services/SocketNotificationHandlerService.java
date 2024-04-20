@@ -1,6 +1,7 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.api.exceptions.ApiException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.SessionResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
@@ -27,48 +28,45 @@ public class SocketNotificationHandlerService
     private final NotificationService notificationService;
     private final InsecureUserService insecureUserService;
 
+    public void notifyPokerRoomsWithNewSession(@NonNull UUID insecureUserIdSecure) throws AccountException
+    {
+        notifyPokerRoom(
+            insecureUserIdSecure,
+            SESSION_CREATED_OR_UPDATED,
+            "Notify poker rooms closed session: {}, pokers: {}"
+        );
+    }
+
     // @todo test
-    public void notifyPokerRoomsWithNewSession(@NonNull UUID insecureUserIdSecure)
+    public void notifyPokerRoomsWithLeavingSession(@NonNull UUID insecureUserIdSecure) throws AccountException
+    {
+        notifyPokerRoom(
+            insecureUserIdSecure,
+            SESSION_CLOSED,
+            "Notify poker rooms with new session: {}, pokers: {}"
+        );
+    }
+
+    private void notifyPokerRoom(
+        @NonNull UUID insecureUserIdSecure,
+        @NonNull SocketDestination socketDestination,
+        @NonNull String logMessage
+    )
         throws AccountException
     {
-        // @todo: move to domain
         InsecureUser user = insecureUserService.findByIdSecure(insecureUserIdSecure);
         Map<UUID, Poker> pokers = pokerService.searchWatchedPokers(insecureUserIdSecure);
-        log.info("Notify poker rooms with new session: {}, pokers: {}", insecureUserIdSecure, pokers.keySet());
-        // @todo: end move to domain
+        log.info(logMessage, insecureUserIdSecure, pokers.keySet());
 
         pokers.keySet().forEach(pokerIdSecure -> {
             try
             {
-                notificationService.notifyPokerRoom(pokerIdSecure, new SessionResponse(user), SESSION_CREATED_OR_UPDATED);
+                notificationService.notifyPokerRoom(pokerIdSecure, new SessionResponse(user), socketDestination);
             }
             catch (ApiException e)
             {
-                throw new RuntimeException(STR."NotifyPokerRooms error: \{e.getMessage()}", e);
+                log.error(STR."NotifyPokerRooms error: \{e.getMessage()}", e);
             }
         });
-    }
-
-    // @todo test
-    public void notifyPokerRoomsWithLeavingSession(UUID insecureUserIdSecure)
-        throws AccountException
-    {
-        // @todo: move to domain
-        InsecureUser user = insecureUserService.findByIdSecure(insecureUserIdSecure);
-        Map<UUID, Poker> pokers = pokerService.searchWatchedPokers(insecureUserIdSecure);
-        log.info("Notify poker rooms closed session: {}, pokers: {}", insecureUserIdSecure, pokers.keySet());
-        // @todo: end move to domain
-
-        for (UUID pokerIdSecure : pokers.keySet())
-        {
-            try
-            {
-                notificationService.notifyPokerRoom(pokerIdSecure, new SessionResponse(user), SESSION_CLOSED);
-            }
-            catch (ApiException e)
-            {
-                throw new RuntimeException(STR."NotifyPokerRooms error: \{e.getMessage()}", e);
-            }
-        }
     }
 }
