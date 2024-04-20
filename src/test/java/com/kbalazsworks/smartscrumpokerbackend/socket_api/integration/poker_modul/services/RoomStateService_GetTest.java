@@ -6,12 +6,11 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.RoomStateRequestFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.RoomStateResponse;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoomStateService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.RoomStateRequest;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -25,9 +24,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class RoomStateService_GetTest extends AbstractIntegrationTest
 {
-    @Autowired
-    private PokerModuleServiceFactory pokerModuleServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -65,8 +61,8 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
                     VoteFakeBuilder.defaultCreatedBy2, new VoteFakeBuilder().build2()
                 ),
                 TicketFakeBuilder.defaultId2, Map.of(
-                   VoteFakeBuilder.defaultCreatedBy3, new VoteFakeBuilder().build3(),
-                   VoteFakeBuilder.defaultCreatedBy4, new VoteFakeBuilder().build4()
+                    VoteFakeBuilder.defaultCreatedBy3, new VoteFakeBuilder().build3(),
+                    VoteFakeBuilder.defaultCreatedBy4, new VoteFakeBuilder().build4()
                 ),
                 TicketFakeBuilder.defaultId3, Map.of(
                     VoteFakeBuilder.defaultCreatedBy5, new VoteFakeBuilder().build5()
@@ -77,7 +73,7 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
         );
 
         // Act
-        RoomStateResponse actual = pokerModuleServiceFactory.getRoomStateService().get(testedRoomStateRequest);
+        RoomStateResponse actual = createInstance(RoomStateService.class).get(testedRoomStateRequest);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

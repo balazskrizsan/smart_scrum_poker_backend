@@ -2,10 +2,9 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_mod
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.AccountServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -21,9 +20,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class InsecureUserService_FindByIdSecureList extends AbstractIntegrationTest
 {
-    @Autowired
-    private AccountServiceFactory accountServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -53,7 +49,7 @@ public class InsecureUserService_FindByIdSecureList extends AbstractIntegrationT
 
 
         // Act
-        List<InsecureUser> actual = accountServiceFactory.getInsecureUserService().findByIdSecureList(testedIdScecureList);
+        List<InsecureUser> actual = createInstance(InsecureUserService.class).findByIdSecureList(testedIdScecureList);
 
         // Assert
         assertThat(actual).isEqualTo(expectedInsecureUsers);

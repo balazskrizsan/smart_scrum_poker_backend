@@ -2,11 +2,10 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_mod
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.PokerService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -20,9 +19,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class PokerService_FindByIdSecure extends AbstractIntegrationTest
 {
-    @Autowired
-    private PokerModuleServiceFactory pokerModuleServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -50,7 +46,7 @@ public class PokerService_FindByIdSecure extends AbstractIntegrationTest
         Poker expected = new PokerFakeBuilder().build();
 
         // Act
-        Poker actual = pokerModuleServiceFactory.getPokerService().findByIdSecure(testedPokerInsecureId);
+        Poker actual = createInstance(PokerService.class).findByIdSecure(testedPokerInsecureId);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

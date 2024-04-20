@@ -2,11 +2,10 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.unit.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.SocketApiServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.exceptions.SocketException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.SocketConnectionHandlerService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.GenericMessage;
 
@@ -21,9 +20,6 @@ import static org.springframework.messaging.support.NativeMessageHeaderAccessor.
 
 public class SocketConnectionHandlerService_getInsecureUserIdSecureTest extends AbstractTest
 {
-    @Autowired
-    private SocketApiServiceFactory socketApiServiceFactory;
-
     @Test
     @SneakyThrows
     public void getInsecureUserIdSecureFromNativeHeaders_returnsInsecureUuid()
@@ -47,9 +43,7 @@ public class SocketConnectionHandlerService_getInsecureUserIdSecureTest extends 
         UUID expectedInsecureUserIdSecure = InsecureUserFakeBuilder.defaultIdSecure1;
 
         // Act
-        UUID actual = socketApiServiceFactory
-            .getSocketConnectionHandlerService()
-            .getInsecureUserIdSecure(testedHeaders);
+        UUID actual = createInstance(SocketConnectionHandlerService.class).getInsecureUserIdSecure(testedHeaders);
 
         // Assert
         assertThat(actual).isEqualTo(expectedInsecureUserIdSecure);
@@ -63,8 +57,7 @@ public class SocketConnectionHandlerService_getInsecureUserIdSecureTest extends 
         MessageHeaders testedHeaders = new MessageHeaders(Map.of());
 
         // Act - Assert
-        assertThatThrownBy(() -> socketApiServiceFactory
-            .getSocketConnectionHandlerService()
+        assertThatThrownBy(() -> createInstance(SocketConnectionHandlerService.class)
             .getInsecureUserIdSecure(testedHeaders)
         )
             .isInstanceOf((SocketException.class))

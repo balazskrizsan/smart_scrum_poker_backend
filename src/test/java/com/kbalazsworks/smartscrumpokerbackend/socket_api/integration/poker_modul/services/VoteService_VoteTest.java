@@ -3,13 +3,12 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_mod
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.VoteService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -25,9 +24,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class VoteService_VoteTest extends AbstractIntegrationTest
 {
-    @Autowired
-    private PokerModuleServiceFactory pokerModuleServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -57,7 +53,7 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
         InsecureUser expectedInsecureUser = new InsecureUserFakeBuilder().build();
 
         // Act
-        InsecureUser actualInsecureUser = pokerModuleServiceFactory.getVoteService().vote(testedVote);
+        InsecureUser actualInsecureUser = createInstance(VoteService.class).vote(testedVote);
 
         // Assert
         Vote actualVote = getDslContext().selectFrom(voteTable).fetchOne().into(Vote.class);
@@ -92,7 +88,7 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
         Vote testedVote = new VoteFakeBuilder().build();
 
         // Act - Assert
-        assertThatThrownBy(() -> pokerModuleServiceFactory.getVoteService().vote(testedVote))
+        assertThatThrownBy(() -> createInstance(VoteService.class).vote(testedVote))
             .isInstanceOf(AccountException.class)
             .hasMessage("User not found");
     }
@@ -127,8 +123,9 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
         Vote expectedVote = new VoteFakeBuilder().id(1L).uncertainty((short) 3).complexity((short) 3).effort((short) 3).calculatedPoint((short) 13).build();
 
         // Act
-        pokerModuleServiceFactory.getVoteService().vote(testedVote1);
-        pokerModuleServiceFactory.getVoteService().vote(testedVote2);
+        VoteService service = createInstance(VoteService.class);
+        service.vote(testedVote1);
+        service.vote(testedVote2);
 
         // Assert
         List<Vote> votes = getDslContext().selectFrom(voteTable).fetch().into(Vote.class);

@@ -5,11 +5,10 @@ import com.kbalazsworks.smartscrumpokerbackend.api.value_objects.ResponseData;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.common_module.mocker.SimpMessagingTemplateMocker;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.SocketApiServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.NotificationService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
@@ -21,9 +20,6 @@ import static org.mockito.Mockito.verify;
 
 public class NotificationService_notifyPokerRoomTest extends AbstractTest
 {
-    @Autowired
-    private SocketApiServiceFactory socketApiServiceFactory;
-
     @Test
     @SneakyThrows
     public void notifyPokerRoomWithSimpMessagingTemplate_callsTemplate()
@@ -42,8 +38,8 @@ public class NotificationService_notifyPokerRoomTest extends AbstractTest
             .build();
 
         // Act
-        socketApiServiceFactory.getNotificationService(mock)
-            .notifyPokerRoom(testedPokerIdSecure, testedData, testedPokerRoomState);
+        setOneTimeMock(NotificationService.class, SimpMessagingTemplate.class, mock);
+        createInstance(NotificationService.class).notifyPokerRoom(testedPokerIdSecure, testedData, testedPokerRoomState);
 
         // Assert
         verify(mock, times(1)).convertAndSend(expectedDestination, expectedData);

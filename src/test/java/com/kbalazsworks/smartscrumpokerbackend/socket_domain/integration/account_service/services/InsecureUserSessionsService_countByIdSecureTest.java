@@ -2,9 +2,8 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.accoun
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.AccountServiceFactory;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserSessionsService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -18,9 +17,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class InsecureUserSessionsService_countByIdSecureTest extends AbstractIntegrationTest
 {
-    @Autowired
-    private AccountServiceFactory accountServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -47,7 +43,7 @@ public class InsecureUserSessionsService_countByIdSecureTest extends AbstractInt
         int expectedRecords = 2;
 
         // Act
-        int actual = accountServiceFactory.getInsecureUserSessionsService().countByIdSecure(testedInsecureUserIdSecure);
+        int actual = createInstance(InsecureUserSessionsService.class).countByIdSecure(testedInsecureUserIdSecure);
 
         // Assert
         assertThat(actual).isEqualTo(expectedRecords);

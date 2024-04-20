@@ -2,10 +2,9 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.account_m
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserSessionFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.AccountServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserSessionsService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -20,9 +19,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class InsecureUserSessionsService_RemoveBySessionIdTest extends AbstractIntegrationTest
 {
-    @Autowired
-    private AccountServiceFactory accountServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -52,7 +48,7 @@ public class InsecureUserSessionsService_RemoveBySessionIdTest extends AbstractI
         );
 
         // Act
-        accountServiceFactory.getInsecureUserSessionsService().removeBySessionId(testedSessionId);
+        createInstance(InsecureUserSessionsService.class).removeBySessionId(testedSessionId);
 
         // Assert
         List<InsecureUserSession> actual = getDslContext()

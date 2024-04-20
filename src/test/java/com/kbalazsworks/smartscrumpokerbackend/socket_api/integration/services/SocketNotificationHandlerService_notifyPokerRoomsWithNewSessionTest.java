@@ -6,12 +6,11 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.common_module.mocker.SimpMessagingTemplateMocker;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.SocketApiServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.SessionResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.NotificationService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.SocketNotificationHandlerService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.context.jdbc.Sql;
@@ -28,9 +27,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class SocketNotificationHandlerService_notifyPokerRoomsWithNewSessionTest extends AbstractIntegrationTest
 {
-    @Autowired
-    private SocketApiServiceFactory socketApiServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -67,9 +63,8 @@ public class SocketNotificationHandlerService_notifyPokerRoomsWithNewSessionTest
             .build();
 
         // Act
-        socketApiServiceFactory.setOneTimeMock(NotificationService.class, SimpMessagingTemplate.class, mock);
-        socketApiServiceFactory
-            .getSocketNotificationHandlerService()
+        setOneTimeMock(NotificationService.class, SimpMessagingTemplate.class, mock);
+        createInstance(SocketNotificationHandlerService.class)
             .notifyPokerRoomsWithNewSession(testedInsecureUserIdSecure);
 
         // Assert

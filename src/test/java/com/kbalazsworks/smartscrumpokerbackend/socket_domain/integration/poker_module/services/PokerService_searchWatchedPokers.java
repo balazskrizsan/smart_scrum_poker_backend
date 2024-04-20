@@ -3,10 +3,9 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.poker_
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.PokerService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -21,9 +20,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class PokerService_searchWatchedPokers extends AbstractIntegrationTest
 {
-    @Autowired
-    private PokerModuleServiceFactory pokerModuleServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -51,7 +47,7 @@ public class PokerService_searchWatchedPokers extends AbstractIntegrationTest
         Map<UUID, Poker> expected = Map.of(PokerFakeBuilder.defaultIdSecure2, new PokerFakeBuilder().build2());
 
         // Act
-        Map<UUID, Poker> actual = pokerModuleServiceFactory.getPokerService().searchWatchedPokers(testedInsecureUserIdSecure);
+        Map<UUID, Poker> actual = createInstance(PokerService.class).searchWatchedPokers(testedInsecureUserIdSecure);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

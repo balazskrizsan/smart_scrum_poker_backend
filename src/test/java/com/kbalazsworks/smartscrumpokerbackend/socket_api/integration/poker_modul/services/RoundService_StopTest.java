@@ -4,13 +4,12 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoundService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStop;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -28,9 +27,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class RoundService_StopTest extends AbstractIntegrationTest
 {
-    @Autowired
-    private PokerModuleServiceFactory pokerModuleServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -64,7 +60,7 @@ public class RoundService_StopTest extends AbstractIntegrationTest
         ));
 
         // Act
-        VoteStop actual = pokerModuleServiceFactory.getRoundService().stop(testedPokerIdSecret, testedTicketId);
+        VoteStop actual = createInstance(RoundService.class).stop(testedPokerIdSecret, testedTicketId);
 
         // Assert
         List<Ticket> actualTicket = getDslContext().selectFrom(ticketTable).orderBy(ticketTable.ID.asc()).fetchInto(Ticket.class);
@@ -84,7 +80,7 @@ public class RoundService_StopTest extends AbstractIntegrationTest
         String exceptedMessage = STR."Poker not found: id#\{PokerFakeBuilder.defaultIdSecure1}";
 
         // Act - Assert
-        assertThatThrownBy(() -> pokerModuleServiceFactory.getRoundService().stop(testedPokerId, testedTicketId))
+        assertThatThrownBy(() -> createInstance(RoundService.class).stop(testedPokerId, testedTicketId))
             .isInstanceOf(PokerException.class)
             .hasMessage(exceptedMessage);
     }

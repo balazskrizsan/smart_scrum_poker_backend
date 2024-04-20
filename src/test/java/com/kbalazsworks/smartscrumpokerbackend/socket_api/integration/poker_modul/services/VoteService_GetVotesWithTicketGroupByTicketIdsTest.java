@@ -3,10 +3,9 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_mod
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.VoteService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -22,9 +21,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class VoteService_GetVotesWithTicketGroupByTicketIdsTest extends AbstractIntegrationTest
 {
-    @Autowired
-    private PokerModuleServiceFactory pokerModuleServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -62,8 +58,7 @@ public class VoteService_GetVotesWithTicketGroupByTicketIdsTest extends Abstract
         );
 
         // Act
-        Map<Long, Map<UUID, Vote>> actual = pokerModuleServiceFactory
-            .getVoteService()
+        Map<Long, Map<UUID, Vote>> actual = createInstance(VoteService.class)
             .getVotesWithTicketGroupByTicketIds(testedTicketIds);
 
         // Assert

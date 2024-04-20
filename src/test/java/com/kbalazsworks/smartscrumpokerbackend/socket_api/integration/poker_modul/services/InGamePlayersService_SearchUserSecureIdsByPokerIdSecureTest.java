@@ -3,10 +3,9 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.poker_mod
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.InGamePlayerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.InGamePlayer;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.InGamePlayersService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -21,9 +20,6 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 public class InGamePlayersService_SearchUserSecureIdsByPokerIdSecureTest extends AbstractIntegrationTest
 {
-    @Autowired
-    private PokerModuleServiceFactory pokerModuleServiceFactory;
-
     @Test
     @SqlGroup(
         {
@@ -49,8 +45,7 @@ public class InGamePlayersService_SearchUserSecureIdsByPokerIdSecureTest extends
         List<InGamePlayer> expectedInGamePlayer = new InGamePlayerFakeBuilder().buildAsList();
 
         // Act
-        List<InGamePlayer> actualInGamePlayers = pokerModuleServiceFactory
-            .getInGamePlayersService()
+        List<InGamePlayer> actualInGamePlayers = createInstance(InGamePlayersService.class)
             .searchUserSecureIdsByPokerIdSecure(testedPokerIdSecure);
 
         // Assert

@@ -1,8 +1,8 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.unit.poker_module.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractTest;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.service_factory.PokerModuleServiceFactory;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.StoryPointException;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.StoryPointCalculatorService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteValues;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class StoryPointCalculator_Service_CalculateTest extends AbstractTest
 {
-    @Autowired
-    private PokerModuleServiceFactory pokerModuleServiceFactory;
 
     @Test
     @SneakyThrows
@@ -29,7 +27,7 @@ public class StoryPointCalculator_Service_CalculateTest extends AbstractTest
         var testedVote = new VoteValues(false, false, (short) 10L, (short) 10L, (short) 10L);
 
         // Act - Assert
-        assertThatThrownBy(() -> pokerModuleServiceFactory.getStoryPointCalculatorService().calculate(testedVote))
+        assertThatThrownBy(() -> createInstance(StoryPointCalculatorService.class).calculate(testedVote))
             .isInstanceOf((StoryPointException.class))
             .hasMessage("Not implemented");
     }
@@ -40,9 +38,8 @@ public class StoryPointCalculator_Service_CalculateTest extends AbstractTest
     public void validScenarios_returnsWithExpectedStoryPoint(VoteValues voteValues, Short expectedCalculation)
     {
         // Arrange - In provider
-
         // Act
-        var actualCalculation = pokerModuleServiceFactory.getStoryPointCalculatorService().calculate(voteValues);
+        var actualCalculation = createInstance(StoryPointCalculatorService.class).calculate(voteValues);
 
         // Assert
         assertThat(actualCalculation).isEqualTo(expectedCalculation);

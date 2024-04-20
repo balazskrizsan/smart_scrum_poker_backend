@@ -2,6 +2,7 @@ package com.kbalazsworks.smartscrumpokerbackend.helpers;
 
 import com.kbalazsworks.smartscrumpokerbackend.SmartScrumPokerApplication;
 import com.kbalazsworks.smartscrumpokerbackend.config.ApplicationProperties;
+import lombok.NonNull;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,4 +18,20 @@ public abstract class AbstractTest
 {
     @Autowired
     protected ApplicationProperties applicationProperties;
+    @Autowired
+    private ServiceFactory serviceFactory;
+
+    protected <T> T createInstance(@NonNull Class<T> clazz)
+    {
+        return serviceFactory.createInstance(clazz);
+    }
+
+    protected void setOneTimeMock(
+        @NonNull Class<?> newClass,
+        @NonNull Class<?> dependencyClass,
+        @NonNull Object defaultMock
+    )
+    {
+        serviceFactory.setOneTimeMock(newClass, dependencyClass, defaultMock);
+    }
 }
