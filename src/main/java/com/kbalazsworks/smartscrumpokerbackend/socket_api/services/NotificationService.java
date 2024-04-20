@@ -14,7 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NotificationService
 {
-    private final SimpMessagingTemplate template;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     public <T> void notifyPokerRoom(
         @NonNull UUID pokerIdSecure,
@@ -23,7 +23,7 @@ public class NotificationService
     )
         throws ApiException
     {
-        template.convertAndSend(
+        simpMessagingTemplate.convertAndSend(
             STR."/queue/reply-\{pokerIdSecure}",
             new ResponseEntityBuilder<T>().socketDestination(socketDestination).data(data).build()
         );
