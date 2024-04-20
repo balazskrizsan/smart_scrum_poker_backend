@@ -24,6 +24,15 @@ abstract public class AbstractE2eSocketTest extends AbstractIntegrationTest
 
     private StompSession stompSession = null;
 
+    @After
+    public void e2eAfter()
+    {
+        if (null != stompSession)
+        {
+            stompSession.disconnect();
+        }
+    }
+
     protected <T> StompFrameHandler buildStompFrameHandler(
         CompletableFuture<T> completableFuture,
         Class<T> payloadType
@@ -71,14 +80,5 @@ abstract public class AbstractE2eSocketTest extends AbstractIntegrationTest
         ).get(10, SECONDS);
 
         return stompSession;
-    }
-
-    @After
-    public void e2eAfter()
-    {
-        if (null != stompSession)
-        {
-            stompSession.disconnect();
-        }
     }
 }
