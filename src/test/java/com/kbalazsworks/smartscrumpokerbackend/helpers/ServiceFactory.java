@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.helpers;
 
+import com.kbalazsworks.smartscrumpokerbackend.helpers.exceptions.ServiceFactoryException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.repositories.InsecureUserRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.repositories.InsecureUserSessionsRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.InGamePlayersRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,8 +53,20 @@ public class ServiceFactory
         oneTimeMocks = new HashMap<>();
     }
 
-    @SneakyThrows
-    public <T> T createInstance(@NonNull Class<T> clazz)
+    public <T> T createInstance(@NonNull Class<T> clazz) throws ServiceFactoryException
+    {
+        try
+        {
+            return createInstanceLogic(clazz);
+        }
+        catch (InvocationTargetException | InstantiationException | IllegalAccessException e)
+        {
+            throw new ServiceFactoryException(STR."Service instance creation error: \{e.getMessage()}", e);
+        }
+    }
+
+    public <T> T createInstanceLogic(@NonNull Class<T> clazz)
+        throws InvocationTargetException, InstantiationException, IllegalAccessException, ServiceFactoryException
     {
         List<Field> diFields = getPrivateFinalNotStaticFields(clazz);
         Constructor<T> constructor = getLombokAllRequiredArgsConstructor(clazz, diFields);

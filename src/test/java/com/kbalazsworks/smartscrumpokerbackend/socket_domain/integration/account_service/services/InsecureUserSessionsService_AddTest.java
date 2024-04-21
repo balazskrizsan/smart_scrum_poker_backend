@@ -4,6 +4,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserSessionFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserSessionsService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -37,6 +38,7 @@ public class InsecureUserSessionsService_AddTest extends AbstractIntegrationTest
             )
         }
     )
+    @SneakyThrows
     public void addTwoItemsWithOnDuplicateKeyIgnore_createsOneRecord()
     {
         // Arrange

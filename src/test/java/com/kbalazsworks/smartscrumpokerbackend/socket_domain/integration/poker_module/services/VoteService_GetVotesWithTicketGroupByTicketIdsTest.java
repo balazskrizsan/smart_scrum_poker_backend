@@ -5,6 +5,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.VoteService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -42,6 +43,7 @@ public class VoteService_GetVotesWithTicketGroupByTicketIdsTest extends Abstract
             )
         }
     )
+    @SneakyThrows
     public void selectFromDb_returnsGroupedVotes()
     {
         // Arrange

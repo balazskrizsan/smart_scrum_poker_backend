@@ -5,6 +5,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.InGamePlayer;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.InGamePlayersService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -38,6 +39,7 @@ public class InGamePlayersService_SearchUserSecureIdsByPokerIdSecureTest extends
             )
         }
     )
+    @SneakyThrows
     public void searchFromOneInsertedRecord_returnsOneElementInList()
     {
         // Arrange

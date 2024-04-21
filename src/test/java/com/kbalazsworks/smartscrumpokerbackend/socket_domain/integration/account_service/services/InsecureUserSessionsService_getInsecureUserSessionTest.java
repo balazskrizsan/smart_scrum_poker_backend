@@ -5,6 +5,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_build
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.SessionException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserSessionsService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -38,6 +39,7 @@ public class InsecureUserSessionsService_getInsecureUserSessionTest extends Abst
             )
         }
     )
+    @SneakyThrows
     public void selectFromFilledDb_returnSelectedInsecureUserSession() throws SessionException
     {
         // Arrange

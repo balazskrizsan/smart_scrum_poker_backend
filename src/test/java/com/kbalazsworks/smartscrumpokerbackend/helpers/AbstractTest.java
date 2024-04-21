@@ -2,6 +2,7 @@ package com.kbalazsworks.smartscrumpokerbackend.helpers;
 
 import com.kbalazsworks.smartscrumpokerbackend.SmartScrumPokerApplication;
 import com.kbalazsworks.smartscrumpokerbackend.config.ApplicationProperties;
+import com.kbalazsworks.smartscrumpokerbackend.helpers.exceptions.ServiceFactoryException;
 import lombok.NonNull;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,21 +31,21 @@ public abstract class AbstractTest
         serviceFactory.resetMockContainer();
     }
 
-    protected <T> T createInstance(@NonNull Class<T> clazz, @NonNull List<Object> mocks)
+    protected <T> T createInstance(@NonNull Class<T> clazz, @NonNull List<Object> mocks) throws ServiceFactoryException
     {
         mocks.forEach(m -> setOneTimeMock(clazz, m));
 
         return createInstance(clazz);
     }
 
-    protected <T> T createInstance(@NonNull Class<T> clazz, @NonNull Object mock)
+    protected <T> T createInstance(@NonNull Class<T> clazz, @NonNull Object mock) throws ServiceFactoryException
     {
         setOneTimeMock(clazz, mock);
 
         return createInstance(clazz);
     }
 
-    protected <T> T createInstance(@NonNull Class<T> clazz)
+    protected <T> T createInstance(@NonNull Class<T> clazz) throws ServiceFactoryException
     {
         return serviceFactory.createInstance(clazz);
     }

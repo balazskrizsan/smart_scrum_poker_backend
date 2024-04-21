@@ -5,6 +5,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_build
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.PokerService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -40,6 +41,7 @@ public class PokerService_searchWatchedPokers extends AbstractIntegrationTest
             )
         }
     )
+    @SneakyThrows
     public void selectFilledDb_returnsSelectedPokerAsIdMap()
     {
         // Arrange

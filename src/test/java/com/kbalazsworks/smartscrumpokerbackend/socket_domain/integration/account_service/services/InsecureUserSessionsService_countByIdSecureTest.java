@@ -3,6 +3,7 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.accoun
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserSessionsService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -36,6 +37,7 @@ public class InsecureUserSessionsService_countByIdSecureTest extends AbstractInt
             )
         }
     )
+    @SneakyThrows
     public void countSessionsUserFromFilledDb_returnsUserSessionCountNumber()
     {
         // Arrange

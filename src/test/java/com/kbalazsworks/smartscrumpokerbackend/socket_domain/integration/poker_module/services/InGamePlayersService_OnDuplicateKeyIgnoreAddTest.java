@@ -4,6 +4,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.InGamePlayerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.InGamePlayer;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.InGamePlayersService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -37,6 +38,7 @@ public class InGamePlayersService_OnDuplicateKeyIgnoreAddTest extends AbstractIn
             )
         }
     )
+    @SneakyThrows
     public void AddOnePlayerToTheGame_DbRecordCreates()
     {
         // Arrange
@@ -71,6 +73,7 @@ public class InGamePlayersService_OnDuplicateKeyIgnoreAddTest extends AbstractIn
             )
         }
     )
+    @SneakyThrows
     public void AddSamePlayerTwiceToTheGame_IgnoreTheSecond()
     {
         // Arrange

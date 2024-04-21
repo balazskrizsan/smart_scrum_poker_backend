@@ -4,6 +4,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -38,6 +39,7 @@ public class InsecureUserService_FindByIdSecureList extends AbstractIntegrationT
             )
         }
     )
+    @SneakyThrows
     public void ThreeUsersDbPresetReadOneByIdSecureList_returnsOneInList()
     {
         // Arrange
