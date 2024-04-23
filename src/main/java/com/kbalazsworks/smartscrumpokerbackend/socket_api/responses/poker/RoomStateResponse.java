@@ -15,7 +15,8 @@ public record RoomStateResponse(
     List<InsecureUser> inGameInsecureUsers,
     Map<Long, Map<UUID, Vote>> votes,
     InsecureUser owner,
-    InsecureUser currentInsecureUser
+    InsecureUser currentInsecureUser,
+    List<InsecureUser> currentInsecureUsersWithSession
 )
 {
 }

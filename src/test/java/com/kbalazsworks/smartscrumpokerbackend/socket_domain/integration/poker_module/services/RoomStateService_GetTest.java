@@ -32,7 +32,8 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
                 config = @SqlConfig(transactionMode = ISOLATED),
                 scripts = {
                     "classpath:test/sqls/_truncate_tables.sql",
-                    "classpath:test/sqls/_preset_insert_2_insecure_user.sql",
+                    "classpath:test/sqls/_preset_insert_3_insecure_user.sql",
+                    "classpath:test/sqls/_preset_insert_3_sessions_for_2_users.sql",
                     "classpath:test/sqls/_preset_insert_2_pokers.sql",
                     "classpath:test/sqls/_preset_insert_5_tickets_all_inactive.sql",
                     "classpath:test/sqls/_preset_insert_5_votes_to_2_poker_3_ticket.sql",
@@ -69,7 +70,8 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
                 )
             ),
             new InsecureUserFakeBuilder().build(),
-            new InsecureUserFakeBuilder().build()
+            new InsecureUserFakeBuilder().build(),
+            new InsecureUserFakeBuilder().buildAsList()
         );
 
         // Act

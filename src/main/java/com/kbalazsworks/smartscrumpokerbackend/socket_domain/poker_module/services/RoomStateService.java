@@ -30,26 +30,30 @@ public class RoomStateService
 
     public RoomStateResponse get(@NonNull RoomStateRequest roomStateRequest) throws PokerException, AccountException
     {
-        InsecureUser currentInsecureUser = insecureUserService.findByIdSecure(roomStateRequest.insecureUserId());
-        Poker poker = pokerService.findByIdSecure(roomStateRequest.pokerIdSecure());
+        UUID pokerIdSecure = roomStateRequest.pokerIdSecure();
+        UUID insecureUserId = roomStateRequest.insecureUserId();
+
+        InsecureUser currentInsecureUser = insecureUserService.findByIdSecure(insecureUserId);
+        Poker poker = pokerService.findByIdSecure(pokerIdSecure);
 
         List<Ticket> tickets = ticketService.searchByPokerId(poker.id());
 
         inGamePlayersService.onDuplicateKeyIgnoreAdd(
-            new InGamePlayer(roomStateRequest.insecureUserId(), roomStateRequest.pokerIdSecure(), roomStateRequest.now())
+            new InGamePlayer(insecureUserId, pokerIdSecure, roomStateRequest.now())
         );
 
-        List<InGamePlayer> inGamePlayers = inGamePlayersService.
-            searchUserSecureIdsByPokerIdSecure(roomStateRequest.pokerIdSecure());
+        List<InGamePlayer> inGamePlayers = inGamePlayersService.searchUserSecureIdsByPokerIdSecure(pokerIdSecure);
+        List<UUID> inGameUsersIdSecures = inGamePlayers.stream().map(InGamePlayer::insecureUserIdSecure).toList();
 
-        List<InsecureUser> insecureUsers = insecureUserService
-            .findByIdSecureList(inGamePlayers.stream().map(InGamePlayer::insecureUserIdSecure).toList());
+        List<InsecureUser> insecureUsers = insecureUserService.findByIdSecureList(inGameUsersIdSecures);
 
         Map<Long, Map<UUID, Vote>> votes = voteService
             .getVotesWithTicketGroupByTicketIds(tickets.stream().map(Ticket::id).toList());
 
         InsecureUser owner = insecureUserService.findByIdSecure(poker.createdBy());
 
-        return new RoomStateResponse(poker, tickets, insecureUsers, votes, owner, currentInsecureUser);
+        List<InsecureUser> usersWithSession = insecureUserService.searchUsersWithActiveSession(inGameUsersIdSecures);
+
+        return new RoomStateResponse(poker, tickets, insecureUsers, votes, owner, currentInsecureUser, usersWithSession);
     }
 }

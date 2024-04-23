@@ -66,7 +66,7 @@ public class InsecureUserRepository extends AbstractRepository
     public List<InsecureUser> searchUsersWithActiveSession(@NonNull List<UUID> idSecures)
     {
         return getDSLContext()
-            .select(insecureUserTable.fields())
+            .selectDistinct(insecureUserTable.fields())
             .from(insecureUserTable)
             .rightJoin(insecureUserSessionsTable)
             .on(insecureUserTable.ID_SECURE.eq(insecureUserSessionsTable.INSECURE_USER_ID_SECURE))
