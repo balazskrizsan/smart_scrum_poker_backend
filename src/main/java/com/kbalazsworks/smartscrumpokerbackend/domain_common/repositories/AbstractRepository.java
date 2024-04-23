@@ -10,6 +10,11 @@ abstract public class AbstractRepository
 {
     private JooqService jooqService;
 
+    protected final com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser insecureUserTable =
+        com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser.INSECURE_USER;
+    protected final com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUserSessions insecureUserSessionsTable =
+        com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUserSessions.INSECURE_USER_SESSIONS;
+
     @Autowired
     public void setJooqService(JooqService jooqService)
     {

@@ -1,4 +1,5 @@
 -- _preset_insert_3_insecure_user
+-- _preset_insert_1_poker
 -- _preset_insert_3_tickets_all_inactive
 INSERT INTO vote (id, ticket_id, uncertainty, complexity, effort, calculated_point, created_at, created_by)
 VALUES (103001, 101001, 1, 2, 3, 5, '2020-11-22 11:22:33', '10000000-0000-0000-0000-000000002001'),

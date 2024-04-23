@@ -3,6 +3,7 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.ser
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.repositories.InsecureUserRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class InsecureUserService
 {
     private final InsecureUserRepository insecureUserRepository;
 
-    public InsecureUser create(InsecureUser insecureUser) throws AccountException
+    public InsecureUser create(@NonNull InsecureUser insecureUser) throws AccountException
     {
         var newUuid = UUID.randomUUID();
 
@@ -27,13 +28,18 @@ public class InsecureUserService
         ));
     }
 
-    public InsecureUser findByIdSecure(UUID idSecure) throws AccountException
+    public InsecureUser findByIdSecure(@NonNull UUID idSecure) throws AccountException
     {
         return insecureUserRepository.findByIdSecure(idSecure);
     }
 
-    public List<InsecureUser> findByIdSecureList(List<UUID> idSecureList)
+    public List<InsecureUser> findByIdSecureList(@NonNull List<UUID> idSecureList)
     {
         return insecureUserRepository.findByIdSecureList(idSecureList);
+    }
+
+    public List<InsecureUser> searchUsersWithActiveSession(@NonNull List<UUID> idSecures)
+    {
+        return insecureUserRepository.searchUsersWithActiveSession(idSecures);
     }
 }

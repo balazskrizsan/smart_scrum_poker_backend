@@ -4,6 +4,7 @@ import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.InsecureUserRec
 import com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories.AbstractRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
+import lombok.NonNull;
 import org.jooq.Record;
 import org.springframework.stereotype.Repository;
 
@@ -13,10 +14,8 @@ import java.util.UUID;
 @Repository
 public class InsecureUserRepository extends AbstractRepository
 {
-    private final com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser insecureUserTable =
-        com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser.INSECURE_USER;
 
-    public InsecureUser create(InsecureUser insecureUser) throws AccountException
+    public InsecureUser create(@NonNull InsecureUser insecureUser) throws AccountException
     {
         Record newInsecureUser = getDSLContext()
             .insertInto(
@@ -41,7 +40,7 @@ public class InsecureUserRepository extends AbstractRepository
         return newInsecureUser.into(InsecureUser.class);
     }
 
-    public InsecureUser findByIdSecure(UUID idSecure) throws AccountException
+    public InsecureUser findByIdSecure(@NonNull UUID idSecure) throws AccountException
     {
         InsecureUserRecord user = getDSLContext()
             .selectFrom(insecureUserTable)
@@ -56,11 +55,22 @@ public class InsecureUserRepository extends AbstractRepository
         return user.into(InsecureUser.class);
     }
 
-    public List<InsecureUser> findByIdSecureList(List<UUID> idSecureList)
+    public List<InsecureUser> findByIdSecureList(@NonNull List<UUID> idSecureList)
     {
         return getDSLContext()
             .selectFrom(insecureUserTable)
             .where(insecureUserTable.ID_SECURE.in(idSecureList))
+            .fetchInto(InsecureUser.class);
+    }
+
+    public List<InsecureUser> searchUsersWithActiveSession(@NonNull List<UUID> idSecures)
+    {
+        return getDSLContext()
+            .select(insecureUserTable.fields())
+            .from(insecureUserTable)
+            .rightJoin(insecureUserSessionsTable)
+            .on(insecureUserTable.ID_SECURE.eq(insecureUserSessionsTable.INSECURE_USER_ID_SECURE))
+            .where(insecureUserSessionsTable.INSECURE_USER_ID_SECURE.in(idSecures))
             .fetchInto(InsecureUser.class);
     }
 }

@@ -35,20 +35,23 @@ public class InsecureUserFakeBuilder
         return new InsecureUser(id, idSecure, userName, createdAt);
     }
 
+    public InsecureUser build2()
+    {
+        return new InsecureUser(id2, idSecure2, userName2, createdAt);
+    }
 
     public List<InsecureUser> buildAsList()
     {
-        return new ArrayList<>()
-        {{
-            add(new InsecureUser(id, idSecure, userName, createdAt));
-        }};
+        return List.of(build());
     }
 
     public List<InsecureUser> build2AsList()
     {
-        return new ArrayList<>()
-        {{
-            add(new InsecureUser(id2, idSecure2, userName2, createdAt));
-        }};
+        return List.of(build2());
+    }
+
+    public List<InsecureUser> build1and2AsList()
+    {
+        return List.of(build(), build2());
     }
 }
