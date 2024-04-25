@@ -65,7 +65,7 @@ public class ServiceFactory
         }
     }
 
-    public <T> T createInstanceLogic(@NonNull Class<T> clazz)
+    private <T> T createInstanceLogic(@NonNull Class<T> clazz)
         throws InvocationTargetException, InstantiationException, IllegalAccessException, ServiceFactoryException
     {
         List<Field> diFields = getPrivateFinalNotStaticFields(clazz);
