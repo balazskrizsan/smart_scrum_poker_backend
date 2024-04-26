@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class StartService_StartTest extends AbstractIntegrationTest
 {
     @Test
-    @SqlPreset(presets = {Insert1InsecureUser.class}, transactional = true, truncate = true, truncateAfter = true)
+    @SqlPreset(presets = {Insert1InsecureUser.class})
     @SneakyThrows
     public void insertValidStartData_createsPokerInDb()
     {
@@ -59,7 +59,7 @@ public class StartService_StartTest extends AbstractIntegrationTest
     }
 
     @Test
-    @SqlPreset(presets = {}, transactional = true, truncate = true, truncateAfter = true)
+    @SqlPreset()
     @SneakyThrows
     public void insertWithoutDbUser_throwsAccountException()
     {

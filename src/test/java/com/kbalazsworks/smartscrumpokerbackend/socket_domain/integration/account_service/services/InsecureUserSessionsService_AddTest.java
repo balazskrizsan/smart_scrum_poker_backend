@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class InsecureUserSessionsService_AddTest extends AbstractIntegrationTest
 {
     @Test
-    @SqlPreset(presets = {Insert1InsecureUser.class}, transactional = true, truncate = true, truncateAfter = true)
+    @SqlPreset(presets = {Insert1InsecureUser.class})
     @SneakyThrows
     public void addTwoItemsWithOnDuplicateKeyIgnore_createsOneRecord()
     {

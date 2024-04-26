@@ -30,7 +30,7 @@ public class StartListenerSocketTest extends AbstractE2eSocketTest
     CompletableFuture<ResponseEntity_ResponseData_StartResponse> completableFuture = new CompletableFuture<>();
 
     @Test
-    @SqlPreset(presets = {Insert1InsecureUser.class}, transactional = true, truncate = true, truncateAfter = true)
+    @SqlPreset(presets = {Insert1InsecureUser.class})
     @SneakyThrows
     public void startAPoker_createsDbFromStompPublish()
     {

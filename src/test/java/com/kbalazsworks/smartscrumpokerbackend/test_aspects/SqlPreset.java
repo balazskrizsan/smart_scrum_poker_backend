@@ -17,12 +17,12 @@ import java.lang.annotation.Target;
 @Testable
 public @interface SqlPreset
 {
-    Class<? extends IInsert>[] presets();
+    Class<? extends IInsert>[] presets() default {};
 
     // @todo: implement
-    boolean transactional();
+    boolean transactional() default true;
 
-    boolean truncate();
+    boolean truncate() default true;
 
-    boolean truncateAfter();
+    boolean truncateAfter() default true;
 }

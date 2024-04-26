@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class InsecureUserService_CreateTest extends AbstractIntegrationTest
 {
     @Test
-    @SqlPreset(presets = {}, transactional = true, truncate = true, truncateAfter = true)
+    @SqlPreset()
     @SneakyThrows
     public void validInsecureUserRequest_createsInsecureUserRecord()
     {

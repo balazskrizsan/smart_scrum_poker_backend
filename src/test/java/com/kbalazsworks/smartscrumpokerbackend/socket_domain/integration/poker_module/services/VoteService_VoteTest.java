@@ -66,7 +66,7 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
     }
 
     @Test
-    @SqlPreset(presets = {}, transactional = true, truncate = true, truncateAfter = true)
+    @SqlPreset()
     @SneakyThrows
     public void insertWithoutDbUser_ThrowsException()
     {
