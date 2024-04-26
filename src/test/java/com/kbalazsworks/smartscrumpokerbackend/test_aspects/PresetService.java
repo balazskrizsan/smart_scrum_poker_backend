@@ -16,7 +16,7 @@ import java.util.List;
 import static com.kbalazsworks.smartscrumpokerbackend.db.Public.PUBLIC;
 
 @Service
-public class BeforeService
+public class PresetService
 {
     @Autowired
     private JooqService jooqService;

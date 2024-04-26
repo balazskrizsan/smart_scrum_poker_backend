@@ -24,6 +24,5 @@ public @interface SqlPreset
 
     boolean truncate();
 
-    // @todo: implement
     boolean truncateAfter();
 }

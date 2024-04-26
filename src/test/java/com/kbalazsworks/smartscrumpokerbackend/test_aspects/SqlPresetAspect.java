@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 public class SqlPresetAspect
 {
     @Autowired
-    private BeforeService beforeService;
+    private PresetService presetService;
 
     @Pointcut("execution(* com.kbalazsworks.smartscrumpokerbackend..*(..))")
     protected void findAllSocketDomainTestClasses()
@@ -35,15 +35,22 @@ public class SqlPresetAspect
 
         if (annotation.truncate())
         {
-            beforeService.truncateDb();
+            presetService.truncateDb();
         }
 
         Class<? extends IInsert>[] presets = annotation.presets();
         if (presets.length > 0)
         {
-            beforeService.setupDb(presets);
+            presetService.setupDb(presets);
         }
 
-        return joinPoint.proceed();
+        var proceeded =  joinPoint.proceed();
+
+        if (annotation.truncateAfter())
+        {
+            presetService.truncateDb();
+        }
+
+        return proceeded;
     }
 }
