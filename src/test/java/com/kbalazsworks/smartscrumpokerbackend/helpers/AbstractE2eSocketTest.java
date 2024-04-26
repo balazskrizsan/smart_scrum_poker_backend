@@ -2,7 +2,7 @@ package com.kbalazsworks.smartscrumpokerbackend.helpers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -24,7 +24,7 @@ abstract public class AbstractE2eSocketTest extends AbstractIntegrationTest
 
     private StompSession stompSession = null;
 
-    @After
+    @AfterEach
     public void e2eAfter()
     {
         if (null != stompSession)

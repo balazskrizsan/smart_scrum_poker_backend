@@ -4,20 +4,20 @@ import com.kbalazsworks.smartscrumpokerbackend.SmartScrumPokerApplication;
 import com.kbalazsworks.smartscrumpokerbackend.config.ApplicationProperties;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.exceptions.ServiceFactoryException;
 import lombok.NonNull;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.junit.After;
 
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@RunWith(SpringRunner.class)
 @TestPropertySource(locations = "classpath:application.properties")
 @ContextConfiguration(classes = SmartScrumPokerApplication.class)
+@EnableAspectJAutoProxy
 public abstract class AbstractTest
 {
     @Autowired
@@ -25,7 +25,7 @@ public abstract class AbstractTest
     @Autowired
     private ServiceFactory serviceFactory;
 
-    @After
+    @AfterEach
     public void after()
     {
         serviceFactory.resetMockContainer();
