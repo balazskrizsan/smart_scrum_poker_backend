@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.e2e.listeners.poker;
 
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert1InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractE2eSocketTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
@@ -8,14 +9,12 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.poker.StartRe
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.StartResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
+import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.util.List;
 import java.util.Map;
@@ -25,32 +24,13 @@ import static com.kbalazsworks.smartscrumpokerbackend.helpers.CustomAsserts.soft
 import static com.kbalazsworks.smartscrumpokerbackend.helpers.CustomAsserts.softTicketAssert;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
 public class StartListenerSocketTest extends AbstractE2eSocketTest
 {
     CompletableFuture<ResponseEntity_ResponseData_StartResponse> completableFuture = new CompletableFuture<>();
 
-    @SqlGroup(
-        {
-            @Sql(
-                executionPhase = BEFORE_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {
-                    "classpath:test/sqls/_truncate_tables.sql",
-                    "classpath:test/sqls/_preset_insert_1_insecure_user.sql"
-                }
-            ),
-            @Sql(
-                executionPhase = AFTER_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {"classpath:test/sqls/_truncate_tables.sql"}
-            )
-        }
-    )
     @Test
+    @SqlPreset(presets = {Insert1InsecureUser.class}, transactional = true, truncate = true, truncateAfter = true)
     @SneakyThrows
     public void startAPoker_createsDbFromStompPublish()
     {
