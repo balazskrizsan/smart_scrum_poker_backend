@@ -1,5 +1,11 @@
 package com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories;
 
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUserSessions;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket;
+import com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.domain_common.services.JooqService;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +16,12 @@ abstract public class AbstractRepository
 {
     private JooqService jooqService;
 
-    protected final com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser insecureUserTable =
-        com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUser.INSECURE_USER;
-    protected final com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUserSessions insecureUserSessionsTable =
-        com.kbalazsworks.smartscrumpokerbackend.db.tables.InsecureUserSessions.INSECURE_USER_SESSIONS;
+    protected final InsecureUser insecureUserTable = InsecureUser.INSECURE_USER;
+    protected final InsecureUserSessions insecureUserSessionsTable = InsecureUserSessions.INSECURE_USER_SESSIONS;
+    protected final InGamePlayers inGamePlayersTable = InGamePlayers.IN_GAME_PLAYERS;
+    protected final Vote voteTable = Vote.VOTE;
+    protected final Ticket ticketTable = Ticket.TICKET;
+    protected final Poker pokersTable = Poker.POKER;
 
     @Autowired
     public void setJooqService(JooqService jooqService)

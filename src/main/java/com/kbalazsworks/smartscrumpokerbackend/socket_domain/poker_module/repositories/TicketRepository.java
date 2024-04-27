@@ -12,9 +12,6 @@ import static org.jooq.impl.DSL.row;
 @Repository
 public class TicketRepository extends AbstractRepository
 {
-    private final com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket ticketTable =
-        com.kbalazsworks.smartscrumpokerbackend.db.tables.Ticket.TICKET;
-
     public void createAll(@NonNull List<Ticket> tickets)
     {
         getDSLContext()

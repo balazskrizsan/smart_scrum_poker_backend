@@ -5,7 +5,6 @@ import com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories.Abstra
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import lombok.NonNull;
-import org.jooq.Record;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -16,11 +15,6 @@ import java.util.stream.Collectors;
 @Repository
 public class PokerRepository extends AbstractRepository
 {
-    private final com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker pokersTable =
-        com.kbalazsworks.smartscrumpokerbackend.db.tables.Poker.POKER;
-    private final com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers inGamePlayersTable =
-        com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers.IN_GAME_PLAYERS;
-
     public Poker create(@NonNull Poker poker) throws PokerException
     {
         PokerRecord pokerRecord = getDSLContext().newRecord(pokersTable, poker);

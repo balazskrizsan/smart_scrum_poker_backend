@@ -11,23 +11,11 @@ import java.util.UUID;
 @Repository
 public class InGamePlayersRepository extends AbstractRepository
 {
-    private final com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers inGamePlayersTable =
-        com.kbalazsworks.smartscrumpokerbackend.db.tables.InGamePlayers.IN_GAME_PLAYERS;
-
     public void onDuplicateKeyIgnoreAdd(@NonNull InGamePlayer inGamePlayer)
     {
-        getDSLContext()
-            .insertInto(
-                inGamePlayersTable,
-                inGamePlayersTable.POKER_ID_SECURE,
-                inGamePlayersTable.INSECURE_USER_ID_SECURE,
-                inGamePlayersTable.CREATED_AT
-            )
-            .values(
-                inGamePlayer.pokerIdSecure(),
-                inGamePlayer.insecureUserIdSecure(),
-                inGamePlayer.createdAt()
-            )
+        var ctx = getDSLContext();
+        ctx.insertInto(inGamePlayersTable)
+            .set(ctx.newRecord(inGamePlayersTable, inGamePlayer))
             .onDuplicateKeyIgnore()
             .execute();
     }

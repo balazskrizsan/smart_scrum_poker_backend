@@ -16,9 +16,6 @@ import java.util.stream.Collectors;
 @Repository
 public class VoteRepository extends AbstractRepository
 {
-    private final com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote voteTable =
-        com.kbalazsworks.smartscrumpokerbackend.db.tables.Vote.VOTE;
-
     public void create(@NonNull Vote vote)
     {
         DSLContext ctx = getDSLContext();
