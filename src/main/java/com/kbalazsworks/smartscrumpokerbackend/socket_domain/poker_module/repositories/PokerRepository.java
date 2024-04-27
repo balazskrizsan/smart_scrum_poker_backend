@@ -23,29 +23,15 @@ public class PokerRepository extends AbstractRepository
 
     public Poker create(@NonNull Poker poker) throws PokerException
     {
-        Record newPoker = getDSLContext()
-            .insertInto(
-                pokersTable,
-                pokersTable.ID_SECURE,
-                pokersTable.NAME,
-                pokersTable.CREATED_AT,
-                pokersTable.CREATED_BY
-            )
-            .values(
-                poker.idSecure(),
-                poker.name(),
-                poker.createdAt(),
-                poker.createdBy()
-            )
-            .returningResult(pokersTable.fields())
-            .fetchOne();
+        PokerRecord pokerRecord = getDSLContext().newRecord(pokersTable, poker);
+        pokerRecord.store();
 
-        if (null == newPoker)
+        if (pokerRecord.getId() == null)
         {
             throw new PokerException("Poker creation failed.");
         }
 
-        return newPoker.into(Poker.class);
+        return pokerRecord.into(Poker.class);
     }
 
     // @todo: test not found
