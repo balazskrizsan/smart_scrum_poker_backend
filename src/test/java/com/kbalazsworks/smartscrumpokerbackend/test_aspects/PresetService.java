@@ -26,7 +26,7 @@ public class PresetService
         PUBLIC.getTables()
             .stream()
             .filter(t -> !t.asTable().getName().contains("flyway_schema_history"))
-            .forEach(t -> jooqService.getDbContext().truncate(t).cascade().execute());
+            .forEach(t -> jooqService.getDbContext().truncate(t).restartIdentity().cascade().execute());
     }
 
     public void setupDb(@NonNull Class<? extends IInsert>[] presets)
