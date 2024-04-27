@@ -34,7 +34,8 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
     public void successfulVoteCall_savedToDb()
     {
         // Arrange
-        Vote testedVote = new VoteFakeBuilder().build();
+        Vote testedVote = new VoteFakeBuilder().id(null).build();
+
         Vote expectedVote = new VoteFakeBuilder().id(1L).build();
         InsecureUser expectedInsecureUser = new InsecureUserFakeBuilder().build();
 
@@ -56,7 +57,7 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
     public void insertWithoutDbUser_ThrowsException()
     {
         // Arrange
-        Vote testedVote = new VoteFakeBuilder().build();
+        Vote testedVote = new VoteFakeBuilder().id(null).build();
 
         // Act - Assert
         assertThatThrownBy(() -> createInstance(VoteService.class).vote(testedVote))
@@ -70,8 +71,8 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
     public void sendVoteMultipleTimes_fromSecondTheFirstRowWillBeUpdated()
     {
         // Arrange
-        Vote testedVote1 = new VoteFakeBuilder().uncertainty((short) 1).complexity((short) 1).effort((short) 1).build();
-        Vote testedVote2 = new VoteFakeBuilder().uncertainty((short) 3).complexity((short) 3).effort((short) 3).build();
+        Vote testedVote1 = new VoteFakeBuilder().id(null).uncertainty((short) 1).complexity((short) 1).effort((short) 1).build();
+        Vote testedVote2 = new VoteFakeBuilder().id(null).uncertainty((short) 3).complexity((short) 3).effort((short) 3).build();
 
         Vote expectedVote = new VoteFakeBuilder().id(1L).uncertainty((short) 3).complexity((short) 3).effort((short) 3).calculatedPoint((short) 13).build();
 

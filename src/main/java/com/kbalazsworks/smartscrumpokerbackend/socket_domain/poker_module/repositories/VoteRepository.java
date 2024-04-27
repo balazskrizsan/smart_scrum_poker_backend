@@ -4,6 +4,7 @@ import com.kbalazsworks.smartscrumpokerbackend.db.tables.records.VoteRecord;
 import com.kbalazsworks.smartscrumpokerbackend.domain_common.repositories.AbstractRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import lombok.NonNull;
+import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,25 +21,10 @@ public class VoteRepository extends AbstractRepository
 
     public void create(@NonNull Vote vote)
     {
-        getDSLContext()
-            .insertInto(
-                voteTable,
-                voteTable.TICKET_ID,
-                voteTable.UNCERTAINTY,
-                voteTable.COMPLEXITY,
-                voteTable.EFFORT,
-                voteTable.CALCULATED_POINT,
-                voteTable.CREATED_AT,
-                voteTable.CREATED_BY
-            ).values(
-                vote.ticketId(),
-                vote.uncertainty(),
-                vote.complexity(),
-                vote.effort(),
-                vote.calculatedPoint(),
-                vote.createdAt(),
-                vote.createdBy()
-            )
+        DSLContext ctx = getDSLContext();
+
+        ctx.insertInto(voteTable)
+            .set(ctx.newRecord(voteTable, vote))
             .onDuplicateKeyUpdate()
             .set(voteTable.UNCERTAINTY, vote.uncertainty())
             .set(voteTable.COMPLEXITY, vote.complexity())
