@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class JooqService
 {
     private final ApplicationProperties ap;
-    private DSLContext dslContext = null;
+    private static DSLContext dslContext = null;
 
     public DSLContext getDbContext()
     {
