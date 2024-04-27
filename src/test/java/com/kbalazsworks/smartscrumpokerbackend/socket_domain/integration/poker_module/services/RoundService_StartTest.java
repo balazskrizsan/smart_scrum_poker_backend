@@ -1,11 +1,14 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.poker_module.services;
 
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert1Poker;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert3TicketsAllInactive;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoundService;
+import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
@@ -25,24 +28,7 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 public class RoundService_StartTest extends AbstractIntegrationTest
 {
     @Test
-    @SqlGroup(
-        {
-            @Sql(
-                executionPhase = BEFORE_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {
-                    "classpath:test/sqls/_truncate_tables.sql",
-                    "classpath:test/sqls/_preset_insert_1_poker.sql",
-                    "classpath:test/sqls/_preset_insert_3_tickets_all_inactive.sql",
-                }
-            ),
-            @Sql(
-                executionPhase = AFTER_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {"classpath:test/sqls/_truncate_tables.sql"}
-            )
-        }
-    )
+    @SqlPreset(presets = {Insert1Poker.class, Insert3TicketsAllInactive.class})
     @SneakyThrows
     public void startAStartableRound_broadcastToRoom()
     {

@@ -1,5 +1,8 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.poker_module.services;
 
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert1Poker;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert3TicketsAllInactive;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert5VotesFor2Poker3Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
@@ -8,11 +11,9 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoundService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStop;
+import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.util.List;
 import java.util.Map;
@@ -21,32 +22,11 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
 public class RoundService_StopTest extends AbstractIntegrationTest
 {
     @Test
-    @SqlGroup(
-        {
-            @Sql(
-                executionPhase = BEFORE_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {
-                    "classpath:test/sqls/_truncate_tables.sql",
-                    "classpath:test/sqls/_preset_insert_1_poker.sql",
-                    "classpath:test/sqls/_preset_insert_3_tickets_all_inactive.sql",
-                    "classpath:test/sqls/_preset_insert_5_votes_to_2_poker_3_ticket.sql",
-                }
-            ),
-            @Sql(
-                executionPhase = AFTER_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {"classpath:test/sqls/_truncate_tables.sql"}
-            )
-        }
-    )
+    @SqlPreset(presets = {Insert1Poker.class, Insert3TicketsAllInactive.class, Insert5VotesFor2Poker3Ticket.class})
     @SneakyThrows
     public void stopAStopableRound_broadcastToRoom()
     {

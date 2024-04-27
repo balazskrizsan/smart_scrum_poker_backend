@@ -1,5 +1,10 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.poker_module.services;
 
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert2Poker;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert3InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert3SessionsFor2Users;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert5TicketsAllInactive;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert5VotesFor2Poker3Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
@@ -9,43 +14,24 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.RoomStateResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoomStateService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.RoomStateRequest;
+import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
 public class RoomStateService_GetTest extends AbstractIntegrationTest
 {
     @Test
-    @SqlGroup(
-        {
-            @Sql(
-                executionPhase = BEFORE_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {
-                    "classpath:test/sqls/_truncate_tables.sql",
-                    "classpath:test/sqls/_preset_insert_3_insecure_user.sql",
-                    "classpath:test/sqls/_preset_insert_3_sessions_for_2_users.sql",
-                    "classpath:test/sqls/_preset_insert_2_pokers.sql",
-                    "classpath:test/sqls/_preset_insert_5_tickets_all_inactive.sql",
-                    "classpath:test/sqls/_preset_insert_5_votes_to_2_poker_3_ticket.sql",
-                }
-            ),
-            @Sql(
-                executionPhase = AFTER_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {"classpath:test/sqls/_truncate_tables.sql"}
-            )
-        }
-    )
+    @SqlPreset(presets = {
+        Insert3InsecureUser.class,
+        Insert3SessionsFor2Users.class,
+        Insert2Poker.class,
+        Insert5TicketsAllInactive.class,
+        Insert5VotesFor2Poker3Ticket.class
+    })
     @SneakyThrows
     public void RequestingARoomState_returnRoomStateAndSetTheInGamePlayer()
     {

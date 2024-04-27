@@ -22,14 +22,21 @@ public class InsecureUserSessionFakeBuilder
     public static final UUID defaultSessionId3 = UUID.fromString("10000000-0000-0000-0000-000000005003");
 
     private UUID insecureUserIdSecure = defaultInsecureUserIdSecure;
+    private UUID insecureUserIdSecure2 = defaultInsecureUserIdSecure2;
     private UUID insecureUserIdSecure3 = defaultInsecureUserIdSecure3;
     private UUID sessionId = defaultSessionId;
+    private UUID sessionId2 = defaultSessionId2;
     private UUID sessionId3 = defaultSessionId3;
     private LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
 
     public InsecureUserSession build()
     {
         return new InsecureUserSession(insecureUserIdSecure, sessionId, createdAt);
+    }
+
+    public InsecureUserSession build2()
+    {
+        return new InsecureUserSession(insecureUserIdSecure2, sessionId2, createdAt);
     }
 
     public InsecureUserSession build3()

@@ -2,6 +2,10 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_api.integration.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.api.builders.ResponseEntityBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.api.value_objects.ResponseData;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert1InGamePlayerForPoker2;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert2InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert2Poker;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert3TicketsAllInactive;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.common_module.mocker.SimpMessagingTemplateMocker;
@@ -9,45 +13,26 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.SessionResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.NotificationService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.SocketNotificationHandlerService;
+import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.util.UUID;
 
 import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination.SESSION_CREATED_OR_UPDATED;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
 public class SocketNotificationHandlerService_notifyPokerRoomsWithNewSessionTest extends AbstractIntegrationTest
 {
     @Test
-    @SqlGroup(
-        {
-            @Sql(
-                executionPhase = BEFORE_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {
-                    "classpath:test/sqls/_truncate_tables.sql",
-                    "classpath:test/sqls/_preset_insert_2_insecure_user.sql",
-                    "classpath:test/sqls/_preset_insert_3_pokers.sql",
-                    "classpath:test/sqls/_preset_insert_1_in_game_players_user.sql",
-                    "classpath:test/sqls/_preset_insert_3_tickets_all_inactive.sql",
-                }
-            ),
-            @Sql(
-                executionPhase = AFTER_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {"classpath:test/sqls/_truncate_tables.sql"}
-            )
-        }
-    )
+    @SqlPreset(presets = {
+        Insert2InsecureUser.class,
+        Insert2Poker.class,
+        Insert1InGamePlayerForPoker2.class,
+        Insert3TicketsAllInactive.class
+    })
     @SneakyThrows
     public void newSessionNotifyPokerRoomsFromFilledDb_callsNotificationService()
     {

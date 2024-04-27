@@ -1,5 +1,8 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.poker_module.services;
 
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert1InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert1Poker;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert3TicketsAllInactive;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
@@ -26,25 +29,7 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 public class VoteService_VoteTest extends AbstractIntegrationTest
 {
     @Test
-    @SqlGroup(
-        {
-            @Sql(
-                executionPhase = BEFORE_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {
-                    "classpath:test/sqls/_truncate_tables.sql",
-                    "classpath:test/sqls/_preset_insert_1_insecure_user.sql",
-                    "classpath:test/sqls/_preset_insert_1_poker.sql",
-                    "classpath:test/sqls/_preset_insert_3_tickets_all_inactive.sql",
-                }
-            ),
-            @Sql(
-                executionPhase = AFTER_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {"classpath:test/sqls/_truncate_tables.sql"}
-            )
-        }
-    )
+    @SqlPreset(presets = {Insert1InsecureUser.class, Insert1Poker.class, Insert3TicketsAllInactive.class})
     @SneakyThrows
     public void successfulVoteCall_savedToDb()
     {
@@ -80,25 +65,7 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
     }
 
     @Test
-    @SqlGroup(
-        {
-            @Sql(
-                executionPhase = BEFORE_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {
-                    "classpath:test/sqls/_truncate_tables.sql",
-                    "classpath:test/sqls/_preset_insert_1_insecure_user.sql",
-                    "classpath:test/sqls/_preset_insert_1_poker.sql",
-                    "classpath:test/sqls/_preset_insert_3_tickets_all_inactive.sql",
-                }
-            ),
-            @Sql(
-                executionPhase = AFTER_TEST_METHOD,
-                config = @SqlConfig(transactionMode = ISOLATED),
-                scripts = {"classpath:test/sqls/_truncate_tables.sql"}
-            )
-        }
-    )
+    @SqlPreset(presets = {Insert1InsecureUser.class, Insert1Poker.class, Insert3TicketsAllInactive.class})
     @SneakyThrows
     public void sendVoteMultipleTimes_fromSecondTheFirstRowWillBeUpdated()
     {
