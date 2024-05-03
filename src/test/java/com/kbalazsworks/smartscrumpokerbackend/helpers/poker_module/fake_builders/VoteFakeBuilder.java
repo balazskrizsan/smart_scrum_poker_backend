@@ -24,6 +24,8 @@ public class VoteFakeBuilder
     public static final UUID defaultCreatedBy3 = InsecureUserFakeBuilder.defaultIdSecure1;
     public static final UUID defaultCreatedBy4 = InsecureUserFakeBuilder.defaultIdSecure3;
     public static final UUID defaultCreatedBy5 = InsecureUserFakeBuilder.defaultIdSecure4;
+    public static final short defaultCalculatedPoint = 5;
+    public static final short defaultCalculatedPoint4 = 13;
 
     private Long id = defaultId1;
     private Long id2 = defaultId2;
@@ -38,8 +40,8 @@ public class VoteFakeBuilder
     private short uncertainty = 1;
     private short complexity = 2;
     private short effort = 3;
-    private short calculatedPoint = 5;
-    private short calculatedPoint4 = 13;
+    private short calculatedPoint = defaultCalculatedPoint;
+    private short calculatedPoint4 = defaultCalculatedPoint4;
     private LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
     private UUID createdBy = defaultCreatedBy;
     private UUID createdBy2 = defaultCreatedBy2;

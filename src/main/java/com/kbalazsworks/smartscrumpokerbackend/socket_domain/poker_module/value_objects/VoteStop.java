@@ -5,6 +5,6 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 import java.util.Map;
 import java.util.UUID;
 
-public record VoteStop(Map<UUID, Vote> votes, double avg)
+public record VoteStop(Map<UUID, Vote> votes, double avg, short min, short max)
 {
 }

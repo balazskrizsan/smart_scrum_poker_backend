@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -29,8 +31,14 @@ public class RoundService
         pokerService.findByIdSecure(pokerIdSecure);
         ticketService.deactivate(ticketId);
         Map<UUID, Vote> votes = voteService.searchVotesWithTicketGroupByTicketId(ticketId);
-        double avg = votes.values().stream().mapToDouble(Vote::calculatedPoint).average().orElse(Double.NaN);
 
-        return new VoteStop(votes, avg);
+        Supplier<Stream<Vote>> valueStreamSupplier = () -> votes.values().stream();
+        Supplier<Stream<Short>> calculatedPointStreamSupplier = () -> valueStreamSupplier.get().map(Vote::calculatedPoint);
+
+        double avg = valueStreamSupplier.get().mapToDouble(Vote::calculatedPoint).average().orElseThrow();
+        short min = calculatedPointStreamSupplier.get().min(Short::compare).orElseThrow();
+        short max = calculatedPointStreamSupplier.get().max(Short::compare).orElseThrow();
+
+        return new VoteStop(votes, avg, min, max);
     }
 }

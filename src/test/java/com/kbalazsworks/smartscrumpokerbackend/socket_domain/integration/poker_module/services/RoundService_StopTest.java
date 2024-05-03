@@ -39,7 +39,10 @@ public class RoundService_StopTest extends AbstractIntegrationTest
                 VoteFakeBuilder.defaultCreatedBy3, new VoteFakeBuilder().build3(),
                 VoteFakeBuilder.defaultCreatedBy4, new VoteFakeBuilder().build4()
             ),
-            9);
+            9,
+            VoteFakeBuilder.defaultCalculatedPoint,
+            VoteFakeBuilder.defaultCalculatedPoint4
+        );
 
         // Act
         VoteStop actual = createInstance(RoundService.class).stop(testedPokerIdSecret, testedTicketId);
