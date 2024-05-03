@@ -41,7 +41,7 @@ public class RoundStopListener
             STR."/queue/reply-\{pokerIdSecure}",
             new ResponseEntityBuilder<VoteStopResponse>()
                 .socketDestination(SocketDestination.POKER_ROUND_STOP)
-                .data(new VoteStopResponse(pokerIdSecure, ticketId, voteStop.votes()))
+                .data(new VoteStopResponse(pokerIdSecure, ticketId, voteStop))
                 .build()
         );
     }

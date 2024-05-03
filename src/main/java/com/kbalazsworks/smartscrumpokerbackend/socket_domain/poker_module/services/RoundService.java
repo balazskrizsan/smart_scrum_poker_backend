@@ -29,7 +29,8 @@ public class RoundService
         pokerService.findByIdSecure(pokerIdSecure);
         ticketService.deactivate(ticketId);
         Map<UUID, Vote> votes = voteService.searchVotesWithTicketGroupByTicketId(ticketId);
+        double avg = votes.values().stream().mapToDouble(Vote::calculatedPoint).average().orElse(Double.NaN);
 
-        return new VoteStop(votes);
+        return new VoteStop(votes, avg);
     }
 }

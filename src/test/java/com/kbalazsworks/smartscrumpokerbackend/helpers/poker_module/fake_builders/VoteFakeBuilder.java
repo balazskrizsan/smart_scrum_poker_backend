@@ -39,6 +39,7 @@ public class VoteFakeBuilder
     private short complexity = 2;
     private short effort = 3;
     private short calculatedPoint = 5;
+    private short calculatedPoint4 = 13;
     private LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
     private UUID createdBy = defaultCreatedBy;
     private UUID createdBy2 = defaultCreatedBy2;
@@ -63,7 +64,7 @@ public class VoteFakeBuilder
 
     public Vote build4()
     {
-        return new Vote(id4, ticketId4, uncertainty, complexity, effort, calculatedPoint, createdAt, createdBy4);
+        return new Vote(id4, ticketId4, uncertainty, complexity, effort, calculatedPoint4, createdAt, createdBy4);
     }
 
     public Vote build5()

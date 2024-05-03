@@ -34,10 +34,12 @@ public class RoundService_StopTest extends AbstractIntegrationTest
         UUID testedPokerIdSecret = PokerFakeBuilder.defaultIdSecure1;
         long testedTicketId = TicketFakeBuilder.defaultId2;
         var expectedTickets = new TicketFakeBuilder().build1to3AsList();
-        var expected = new VoteStop(Map.of(
-            VoteFakeBuilder.defaultCreatedBy3, new VoteFakeBuilder().build3(),
-            VoteFakeBuilder.defaultCreatedBy4, new VoteFakeBuilder().build4()
-        ));
+        var expected = new VoteStop(
+            Map.of(
+                VoteFakeBuilder.defaultCreatedBy3, new VoteFakeBuilder().build3(),
+                VoteFakeBuilder.defaultCreatedBy4, new VoteFakeBuilder().build4()
+            ),
+            9);
 
         // Act
         VoteStop actual = createInstance(RoundService.class).stop(testedPokerIdSecret, testedTicketId);
