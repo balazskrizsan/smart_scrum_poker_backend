@@ -14,20 +14,24 @@ import java.util.UUID;
 @Setter
 public class VoteFakeBuilder
 {
-    public static final long defaultId1 = 103001L;
+    public static final long defaultId = 103001L;
     public static final long defaultId2 = 103002L;
     public static final long defaultId3 = 103003L;
     public static final long defaultId4 = 103004L;
     public static final long defaultId5 = 103005L;
+    public static final Long defaultTicketId = TicketFakeBuilder.defaultId1;
     public static final UUID defaultCreatedBy = InsecureUserFakeBuilder.defaultIdSecure1;
     public static final UUID defaultCreatedBy2 = InsecureUserFakeBuilder.defaultIdSecure2;
     public static final UUID defaultCreatedBy3 = InsecureUserFakeBuilder.defaultIdSecure1;
     public static final UUID defaultCreatedBy4 = InsecureUserFakeBuilder.defaultIdSecure3;
     public static final UUID defaultCreatedBy5 = InsecureUserFakeBuilder.defaultIdSecure4;
+    public static final short defaultUncertainty = 1;
+    public static final short defaultComplexity = 2;
+    public static final short defaultEffort = 3;
     public static final short defaultCalculatedPoint = 5;
     public static final short defaultCalculatedPoint4 = 13;
 
-    private Long id = defaultId1;
+    private Long id = defaultId;
     private Long id2 = defaultId2;
     private Long id3 = defaultId3;
     private Long id4 = defaultId4;
@@ -37,9 +41,9 @@ public class VoteFakeBuilder
     private Long ticketId3 = TicketFakeBuilder.defaultId2;
     private Long ticketId4 = TicketFakeBuilder.defaultId2;
     private Long ticketId5 = TicketFakeBuilder.defaultId3;
-    private short uncertainty = 1;
-    private short complexity = 2;
-    private short effort = 3;
+    private short uncertainty = defaultUncertainty;
+    private short complexity = defaultComplexity;
+    private short effort = defaultEffort;
     private short calculatedPoint = defaultCalculatedPoint;
     private short calculatedPoint4 = defaultCalculatedPoint4;
     private LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);

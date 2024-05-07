@@ -7,6 +7,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractE2eSocketTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
+import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteRequestFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.poker.VoteRequest;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.VoteResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
@@ -39,14 +40,8 @@ public class VoteListenerSocketTest extends AbstractE2eSocketTest
 
         UUID testedPokerIdSecret = PokerFakeBuilder.defaultIdSecure1;
         Vote testedVote = new VoteFakeBuilder().id(null).build();
-        VoteRequest testedVoteRequest = new VoteRequest(
-            testedVote.createdBy(),
-            testedPokerIdSecret,
-            testedVote.ticketId(),
-            testedVote.uncertainty(),
-            testedVote.complexity(),
-            testedVote.effort()
-        );
+        VoteRequest testedVoteRequest = new VoteRequestFakeBuilder().build();
+
         String testedDestination = STR."/app/poker/vote/\{testedPokerIdSecret}/\{testedVote.ticketId()}";
         String testedSubscribeUrl = STR."/queue/reply-\{testedPokerIdSecret}";
 
