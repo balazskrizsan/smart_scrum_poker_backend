@@ -13,18 +13,12 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.servic
 import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
 public class VoteService_VoteTest extends AbstractIntegrationTest
 {
@@ -43,7 +37,7 @@ public class VoteService_VoteTest extends AbstractIntegrationTest
         InsecureUser actualInsecureUser = createInstance(VoteService.class).vote(testedVote);
 
         // Assert
-        Vote actualVote = getDslContext().selectFrom(voteTable).fetchOne().into(Vote.class);
+        Vote actualVote = getDslContext().selectFrom(voteTable).fetchOneInto(Vote.class);
 
         assertAll(
             () -> assertThat(actualVote).isEqualTo(expectedVote),
