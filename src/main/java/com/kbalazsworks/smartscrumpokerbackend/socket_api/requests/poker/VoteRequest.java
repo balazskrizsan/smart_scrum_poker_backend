@@ -7,6 +7,8 @@ public record VoteRequest(
     UUID pokerIdSecure,
     long ticketId,
     short voteUncertainty,
-    short voteComplexity, short voteEffort)
+    short voteComplexity,
+    short voteEffort
+)
 {
 }
