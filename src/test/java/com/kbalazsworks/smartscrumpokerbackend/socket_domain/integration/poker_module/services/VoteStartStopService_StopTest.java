@@ -9,7 +9,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoundService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.VoteStartStopService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStop;
 import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class RoundService_StopTest extends AbstractIntegrationTest
+public class VoteStartStopService_StopTest extends AbstractIntegrationTest
 {
     @Test
     @SqlPreset(presets = {Insert1Poker.class, Insert3TicketsAllInactive.class, Insert5VotesFor2Poker3Ticket.class})
@@ -45,7 +45,7 @@ public class RoundService_StopTest extends AbstractIntegrationTest
         );
 
         // Act
-        VoteStop actual = createInstance(RoundService.class).stop(testedPokerIdSecret, testedTicketId);
+        VoteStop actual = createInstance(VoteStartStopService.class).stop(testedPokerIdSecret, testedTicketId);
 
         // Assert
         List<Ticket> actualTicket = getDslContext().selectFrom(ticketTable).orderBy(ticketTable.ID.asc()).fetchInto(Ticket.class);
@@ -65,7 +65,7 @@ public class RoundService_StopTest extends AbstractIntegrationTest
         String exceptedMessage = STR."Poker not found: id#\{PokerFakeBuilder.defaultIdSecure1}";
 
         // Act - Assert
-        assertThatThrownBy(() -> createInstance(RoundService.class).stop(testedPokerId, testedTicketId))
+        assertThatThrownBy(() -> createInstance(VoteStartStopService.class).stop(testedPokerId, testedTicketId))
             .isInstanceOf(PokerException.class)
             .hasMessage(exceptedMessage);
     }

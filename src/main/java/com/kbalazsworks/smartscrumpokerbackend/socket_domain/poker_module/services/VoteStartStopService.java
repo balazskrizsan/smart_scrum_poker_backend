@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class RoundService
+public class VoteStartStopService
 {
     private final TicketService ticketService;
     private final VoteService voteService;

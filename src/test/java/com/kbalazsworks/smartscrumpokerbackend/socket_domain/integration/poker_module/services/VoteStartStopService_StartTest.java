@@ -7,13 +7,10 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoundService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.VoteStartStopService;
 import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +18,8 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
-public class RoundService_StartTest extends AbstractIntegrationTest
+public class VoteStartStopService_StartTest extends AbstractIntegrationTest
 {
     @Test
     @SqlPreset(presets = {Insert1Poker.class, Insert3TicketsAllInactive.class})
@@ -43,7 +37,7 @@ public class RoundService_StartTest extends AbstractIntegrationTest
         }};
 
         // Act
-        createInstance(RoundService.class).start(testedPokerIdSecret, testedTicketId);
+        createInstance(VoteStartStopService.class).start(testedPokerIdSecret, testedTicketId);
 
         // Assert
         List<Ticket> actualTicket = getDslContext().selectFrom(ticketTable).orderBy(ticketTable.ID.asc()).fetch().into(Ticket.class);
@@ -60,7 +54,7 @@ public class RoundService_StartTest extends AbstractIntegrationTest
         String exceptedMessage = STR."Poker not found: id#\{PokerFakeBuilder.defaultIdSecure1}";
 
         // Act - Assert
-        assertThatThrownBy(() -> createInstance(RoundService.class).start(testedPokerId, testedTicketId))
+        assertThatThrownBy(() -> createInstance(VoteStartStopService.class).start(testedPokerId, testedTicketId))
             .isInstanceOf(PokerException.class)
             .hasMessage(exceptedMessage);
     }

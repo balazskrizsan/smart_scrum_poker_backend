@@ -25,7 +25,7 @@ import static com.kbalazsworks.smartscrumpokerbackend.helpers.CustomAsserts.soft
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class StartListenerSocketTest extends AbstractE2eSocketTest
+public class VoteStartListenerSocketTest extends AbstractE2eSocketTest
 {
     CompletableFuture<ResponseEntity_ResponseData_StartResponse> completableFuture = new CompletableFuture<>();
 
@@ -54,7 +54,7 @@ public class StartListenerSocketTest extends AbstractE2eSocketTest
             ResponseEntity_ResponseData_StartResponse.class
         );
         stompSession.subscribe("/user/queue/reply", stompHandler);
-        stompSession.send("/app/poker.start", testedPokerStartRequest);
+        stompSession.send("/app/poker/start", testedPokerStartRequest);
 
         // Assert
         completableFuture.join();

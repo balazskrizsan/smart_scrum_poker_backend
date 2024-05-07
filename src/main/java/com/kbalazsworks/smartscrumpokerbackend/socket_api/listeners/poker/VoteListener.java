@@ -14,7 +14,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.util.UUID;
@@ -26,19 +25,18 @@ import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDes
 @RequiredArgsConstructor
 public class VoteListener
 {
-    private final SimpMessagingTemplate template;
     private final VoteService voteService;
     private final NotificationService notificationService;
 
-    @MessageMapping("/poker.vote/{pokerIdSecure}/{ticketId}")
-    public void roundStopHandler(
+    @MessageMapping("/poker/vote/{pokerIdSecure}/{ticketId}")
+    public void voteListener(
         @Payload VoteRequest voteRequest,
         @DestinationVariable UUID pokerIdSecure,
         @DestinationVariable Long ticketId
     )
         throws ApiException, StoryPointException, AccountException
     {
-        log.info("SocketListener:/poker.vote/{}/{}: {}", pokerIdSecure, ticketId, voteRequest);
+        log.info("VoteListener:/poker/vote/{}/{}: {}", pokerIdSecure, ticketId, voteRequest);
 
         InsecureUser insecureUser = voteService.vote(RequestMapperService.mapToEntity(voteRequest));
 

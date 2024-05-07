@@ -19,11 +19,12 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class EndListenerSocketTest extends AbstractE2eSocketTest
+public class VoteStopListenerSocketTest extends AbstractE2eSocketTest
 {
     CompletableFuture<ResponseEntity_ResponseData_RoundEndResponse> responseFuture = new CompletableFuture<>();
 
@@ -37,7 +38,7 @@ public class EndListenerSocketTest extends AbstractE2eSocketTest
 
         UUID testedPokerIdSecret = PokerFakeBuilder.defaultIdSecure1;
         long testedTicketId = TicketFakeBuilder.defaultId2;
-        String testedDestination = STR."/app/poker.round.stop/\{testedPokerIdSecret}/\{testedTicketId}";
+        String testedDestination = STR."/app/poker/vote.stop/\{testedPokerIdSecret}/\{testedTicketId}";
         String testedSubscribeUrl = STR."/queue/reply-\{testedPokerIdSecret}";
 
         String expectedHttpStatus = HttpStatus.OK.getReasonPhrase();
@@ -62,8 +63,8 @@ public class EndListenerSocketTest extends AbstractE2eSocketTest
         );
         stompSession.subscribe(testedSubscribeUrl, stompHandler);
         stompSession.send(testedDestination, "{}");
-        responseFuture.join();
-        ResponseEntity_ResponseData_RoundEndResponse actual = responseFuture.get();
+
+        ResponseEntity_ResponseData_RoundEndResponse actual = responseFuture.get(3, TimeUnit.SECONDS);
 
         // Assert
         assertAll(

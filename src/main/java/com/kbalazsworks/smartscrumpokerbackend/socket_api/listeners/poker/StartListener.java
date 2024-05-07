@@ -28,15 +28,12 @@ public class StartListener
 {
     private final StartService startService;
 
-    @MessageMapping("/poker.start")
+    @MessageMapping("/poker/start")
     @SendToUser("/queue/reply")
-    public ResponseEntity<ResponseData<StartResponse>> startListener(
-        @Payload StartRequest request,
-        @Header("simpSessionId") String sessionId
-    )
+    public ResponseEntity<ResponseData<StartResponse>> startListener(@Payload StartRequest request)
         throws PokerException, ApiException, AccountException
     {
-        log.info("request/poker.start: {}", request);
+        log.info("StartListener:/poker/start: {}", request);
 
         StartPoker startPoker = RequestMapperService.mapToEntity(request);
 
