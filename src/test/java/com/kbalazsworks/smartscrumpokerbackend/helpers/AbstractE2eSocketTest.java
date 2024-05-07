@@ -2,9 +2,11 @@ package com.kbalazsworks.smartscrumpokerbackend.helpers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -17,6 +19,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+@Log4j2
 abstract public class AbstractE2eSocketTest extends AbstractIntegrationTest
 {
     @Autowired
@@ -56,7 +59,7 @@ abstract public class AbstractE2eSocketTest extends AbstractIntegrationTest
 
     protected StompSession getStompSession() throws Exception
     {
-        StandardWebSocketClient client = new StandardWebSocketClient();
+        var client = new StandardWebSocketClient();
         client.getUserProperties().clear();
         client.getUserProperties().put(
             "org.apache.tomcat.websocket.SSL_CONTEXT",
@@ -69,13 +72,18 @@ abstract public class AbstractE2eSocketTest extends AbstractIntegrationTest
         var converter = new MappingJackson2MessageConverter();
         converter.setObjectMapper(objectMapper);
 
-        WebSocketStompClient stompClient = new WebSocketStompClient(client);
+        var stompClient = new WebSocketStompClient(client);
         stompClient.setMessageConverter(converter);
 
         stompSession = stompClient.connectAsync(
             applicationProperties.getServerSocketFullHost(),
             new StompSessionHandlerAdapter()
             {
+                @Override
+                public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception)
+                {
+                    log.error(STR."StompSessionHandlerAdapter error: \{exception.getMessage()}", exception);
+                }
             }
         ).get(10, SECONDS);
 
