@@ -62,4 +62,7 @@ public class ApplicationProperties
     {
         return "password";
     }
+
+    @Value("${socket.is-enabled-socket-connect-and-disconnect-listeners}")
+    public boolean isEnabledSocketConnectAndDisconnectListeners;
 }

@@ -1,5 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.listeners.main;
 
+import com.kbalazsworks.smartscrumpokerbackend.config.ApplicationProperties;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.exceptions.SocketException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.SocketNotificationHandlerService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
@@ -18,6 +19,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 @Slf4j
 public class SocketDisconnectListener
 {
+    private final ApplicationProperties applicationProperties;
     private final SocketNotificationHandlerService socketNotificationHandlerService;
     private final SocketDisconnectedService socketDisconnectedService;
 
@@ -26,6 +28,13 @@ public class SocketDisconnectListener
     public void socketDisconnectListener(@NonNull SessionDisconnectEvent event)
         throws AccountException, SessionException, SocketException
     {
+        if (!applicationProperties.isEnabledSocketConnectAndDisconnectListeners())
+        {
+            log.warn("Disconnect listener disabled");
+
+            return;
+        }
+
         log.info("Socket connection closed: {}", event);
 
         DisconnectResponse response = socketDisconnectedService.disconnect(event.getMessage().getHeaders());
