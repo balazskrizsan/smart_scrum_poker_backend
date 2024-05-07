@@ -31,7 +31,7 @@ public class RoomStateListener
     private final SimpMessagingTemplate template;
     private final RoomStateService roomStateService;
 
-    @MessageMapping("/poker.room.state/{pokerIdSecure}/{insecureUserId}")
+    @MessageMapping("/poker/room.state/{pokerIdSecure}/{insecureUserId}")
     @SendToUser(value = "/queue/reply")
     public ResponseEntity<ResponseData<RoomStateResponse>> pokerRoomState(
         @Payload String message,
