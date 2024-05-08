@@ -22,6 +22,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static com.kbalazsworks.smartscrumpokerbackend.helpers.CustomAsserts.softPokerAssert;
 import static com.kbalazsworks.smartscrumpokerbackend.helpers.CustomAsserts.softTicketAssert;
+import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination.POKER_START;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -47,6 +48,7 @@ public class VoteStartListenerSocketTest extends AbstractE2eSocketTest
         Ticket expectedDbTicket0 = new TicketFakeBuilder().id(1L).pokerId(expectedDbPoker.id()).build();
         Ticket expectedDbTicket1 = new TicketFakeBuilder().id2(2L).pokerId2(expectedDbPoker.id()).build2();
         String expectedHttpStatus = HttpStatus.OK.getReasonPhrase();
+        String expectedDestination = POKER_START.getValue();
 
         // Act
         StompFrameHandler stompHandler = buildStompFrameHandler(
@@ -68,7 +70,8 @@ public class VoteStartListenerSocketTest extends AbstractE2eSocketTest
 
         assertAll(
             () -> assertThat(actualResponse.statusCode).isEqualTo(expectedHttpStatus),
-            () -> assertThat(actualResponse.body.data.poker()).isEqualTo(actualDbPoker),
+            () -> assertThat(actualResponse.body().socketResponseDestination).isEqualTo(expectedDestination),
+            () -> assertThat(actualResponse.body().data().poker()).isEqualTo(actualDbPoker),
             () -> softPokerAssert(actualDbPoker, expectedDbPoker),
             () -> softTicketAssert(actualDbTickets0, expectedDbTicket0),
             () -> softTicketAssert(actualDbTickets1, expectedDbTicket1)

@@ -23,6 +23,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination.SEND_POKER_VOTE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -46,7 +47,8 @@ public class VoteListenerSocketTest extends AbstractE2eSocketTest
         String testedSubscribeUrl = STR."/queue/reply-\{testedPokerIdSecret}";
 
         String expectedHttpStatus = HttpStatus.OK.getReasonPhrase();
-        VoteResponse expected = new VoteResponse(new InsecureUserFakeBuilder().build());
+        String expectedDestination = SEND_POKER_VOTE.getValue();
+        VoteResponse expectedData = new VoteResponse(new InsecureUserFakeBuilder().build());
 
         // Act
         StompFrameHandler stompHandler = buildStompFrameHandler(
@@ -61,7 +63,8 @@ public class VoteListenerSocketTest extends AbstractE2eSocketTest
         // Assert
         assertAll(
             () -> assertThat(actual.statusCode).isEqualTo(expectedHttpStatus),
-            () -> assertThat(actual.body().data()).isEqualTo(expected)
+            () -> assertThat(actual.body().data()).isEqualTo(expectedData),
+            () -> assertThat(actual.body().socketResponseDestination).isEqualTo(expectedDestination)
         );
     }
 

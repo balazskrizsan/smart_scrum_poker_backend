@@ -21,6 +21,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination.POKER_ROUND_STOP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -42,6 +43,7 @@ public class VoteStopListenerSocketTest extends AbstractE2eSocketTest
         String testedSubscribeUrl = STR."/queue/reply-\{testedPokerIdSecret}";
 
         String expectedHttpStatus = HttpStatus.OK.getReasonPhrase();
+        String expectedDestination = POKER_ROUND_STOP.getValue();
         VoteStopResponse expectedResponse = new VoteStopResponse(
             PokerFakeBuilder.defaultIdSecure1,
             TicketFakeBuilder.defaultId2,
@@ -69,7 +71,8 @@ public class VoteStopListenerSocketTest extends AbstractE2eSocketTest
         // Assert
         assertAll(
             () -> assertThat(actual.statusCode).isEqualTo(expectedHttpStatus),
-            () -> assertThat(actual.body().data()).isEqualTo(expectedResponse)
+            () -> assertThat(actual.body().data()).isEqualTo(expectedResponse),
+            () -> assertThat(actual.body().socketResponseDestination).isEqualTo(expectedDestination)
         );
     }
 
