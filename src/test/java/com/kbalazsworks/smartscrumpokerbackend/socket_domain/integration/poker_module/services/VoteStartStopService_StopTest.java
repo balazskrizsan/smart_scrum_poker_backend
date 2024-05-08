@@ -28,7 +28,7 @@ public class VoteStartStopService_StopTest extends AbstractIntegrationTest
     @Test
     @SqlPreset(presets = {Insert1Poker.class, Insert3TicketsAllInactive.class, Insert5VotesFor2Poker3Ticket.class})
     @SneakyThrows
-    public void stopAStopableRound_broadcastToRoom()
+    public void stopAStopableRound_broadcastToGame()
     {
         // Arrange
         UUID testedPokerIdSecret = PokerFakeBuilder.defaultIdSecure1;

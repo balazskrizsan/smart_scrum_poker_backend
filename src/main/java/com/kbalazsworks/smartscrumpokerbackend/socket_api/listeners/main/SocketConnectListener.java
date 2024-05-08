@@ -39,7 +39,7 @@ public class SocketConnectListener
 
         if (response.shouldSendNotification())
         {
-            socketNotificationHandlerService.notifyPokerRoomsWithNewSession(
+            socketNotificationHandlerService.notifyPokerGameWithNewSession(
                 response.insecureUserSession().insecureUserIdSecure()
             );
         }

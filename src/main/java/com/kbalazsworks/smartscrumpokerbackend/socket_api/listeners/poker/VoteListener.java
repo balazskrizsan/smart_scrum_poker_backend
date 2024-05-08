@@ -40,6 +40,6 @@ public class VoteListener
 
         InsecureUser insecureUser = voteService.vote(RequestMapperService.mapToEntity(voteRequest));
 
-        notificationService.notifyPokerRoom(pokerIdSecure, new VoteResponse(insecureUser), SEND_POKER_VOTE);
+        notificationService.notifyPokerGame(pokerIdSecure, new VoteResponse(insecureUser), SEND_POKER_VOTE);
     }
 }

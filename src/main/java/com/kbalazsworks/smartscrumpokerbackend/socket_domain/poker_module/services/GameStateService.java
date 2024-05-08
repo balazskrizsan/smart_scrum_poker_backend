@@ -1,6 +1,6 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services;
 
-import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.RoomStateResponse;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.GameStateResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserService;
@@ -9,7 +9,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.RoomStateRequest;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.GameStateRequest;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class RoomStateService
+public class GameStateService
 {
     PokerService pokerService;
     InsecureUserService insecureUserService;
@@ -31,10 +31,10 @@ public class RoomStateService
     TicketService ticketService;
     VoteService voteService;
 
-    public RoomStateResponse get(@NonNull RoomStateRequest roomStateRequest) throws PokerException, AccountException
+    public GameStateResponse get(@NonNull GameStateRequest gameStateRequest) throws PokerException, AccountException
     {
-        UUID pokerIdSecure = roomStateRequest.pokerIdSecure();
-        UUID insecureUserId = roomStateRequest.insecureUserId();
+        UUID pokerIdSecure = gameStateRequest.pokerIdSecure();
+        UUID insecureUserId = gameStateRequest.insecureUserId();
 
         InsecureUser currentInsecureUser = insecureUserService.findByIdSecure(insecureUserId);
         Poker poker = pokerService.findByIdSecure(pokerIdSecure);
@@ -42,7 +42,7 @@ public class RoomStateService
         List<Ticket> tickets = ticketService.searchByPokerId(poker.id());
 
         inGamePlayersService.onDuplicateKeyIgnoreAdd(
-            new InGamePlayer(insecureUserId, pokerIdSecure, roomStateRequest.now())
+            new InGamePlayer(insecureUserId, pokerIdSecure, gameStateRequest.now())
         );
 
         List<InGamePlayer> inGamePlayers = inGamePlayersService.searchUserSecureIdsByPokerIdSecure(pokerIdSecure);
@@ -57,6 +57,6 @@ public class RoomStateService
 
         List<InsecureUser> usersWithSession = insecureUserService.searchUsersWithActiveSession(inGameUsersIdSecures);
 
-        return new RoomStateResponse(poker, tickets, insecureUsers, votes, owner, currentInsecureUser, usersWithSession);
+        return new GameStateResponse(poker, tickets, insecureUsers, votes, owner, currentInsecureUser, usersWithSession);
     }
 }

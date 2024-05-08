@@ -16,7 +16,7 @@ public class NotificationService
 {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    public <T> void notifyPokerRoom(
+    public <T> void notifyPokerGame(
         @NonNull UUID pokerIdSecure,
         @NonNull T data,
         @NonNull SocketDestination socketDestination

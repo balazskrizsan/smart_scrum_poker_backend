@@ -28,26 +28,26 @@ public class SocketNotificationHandlerService
     private final NotificationService notificationService;
     private final InsecureUserService insecureUserService;
 
-    public void notifyPokerRoomsWithNewSession(@NonNull UUID insecureUserIdSecure) throws AccountException
+    public void notifyPokerGameWithNewSession(@NonNull UUID insecureUserIdSecure) throws AccountException
     {
-        notifyPokerRoom(
+        notifyPokerGame(
             insecureUserIdSecure,
             SESSION_CREATED_OR_UPDATED,
-            "Notify poker rooms closed session: {}, pokers: {}"
+            "Notify poker game closed session: {}, pokers: {}"
         );
     }
 
     // @todo test
-    public void notifyPokerRoomsWithLeavingSession(@NonNull UUID insecureUserIdSecure) throws AccountException
+    public void notifyPokerGameWithLeavingSession(@NonNull UUID insecureUserIdSecure) throws AccountException
     {
-        notifyPokerRoom(
+        notifyPokerGame(
             insecureUserIdSecure,
             SESSION_CLOSED,
-            "Notify poker rooms with new session: {}, pokers: {}"
+            "Notify poker game with new session: {}, pokers: {}"
         );
     }
 
-    private void notifyPokerRoom(
+    private void notifyPokerGame(
         @NonNull UUID insecureUserIdSecure,
         @NonNull SocketDestination socketDestination,
         @NonNull String logMessage
@@ -61,11 +61,11 @@ public class SocketNotificationHandlerService
         pokers.keySet().forEach(pokerIdSecure -> {
             try
             {
-                notificationService.notifyPokerRoom(pokerIdSecure, new SessionResponse(user), socketDestination);
+                notificationService.notifyPokerGame(pokerIdSecure, new SessionResponse(user), socketDestination);
             }
             catch (ApiException e)
             {
-                log.error(STR."NotifyPokerRooms error: \{e.getMessage()}", e);
+                log.error(STR."NotifyPokerGame error: \{e.getMessage()}", e);
             }
         });
     }

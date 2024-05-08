@@ -1,7 +1,7 @@
 package com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders;
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.RoomStateRequest;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.GameStateRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,14 +15,14 @@ import java.util.UUID;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RoomStateRequestFakeBuilder
+public class GameStateRequestFakeBuilder
 {
     UUID pokerIdSecure = PokerFakeBuilder.defaultIdSecure1;
     UUID insecureUserId = InsecureUserFakeBuilder.defaultIdSecure1;
     LocalDateTime now = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
 
-    public RoomStateRequest build()
+    public GameStateRequest build()
     {
-        return new RoomStateRequest(pokerIdSecure, insecureUserId, now);
+        return new GameStateRequest(pokerIdSecure, insecureUserId, now);
     }
 }

@@ -24,7 +24,7 @@ import java.util.UUID;
 import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination.SESSION_CREATED_OR_UPDATED;
 import static org.mockito.Mockito.verify;
 
-public class SocketNotificationHandlerService_notifyPokerRoomsWithNewSessionTest extends AbstractIntegrationTest
+public class SocketNotificationHandlerService_notifyPokerGamesWithNewSessionTest extends AbstractIntegrationTest
 {
     @Test
     @SqlPreset(presets = {
@@ -34,7 +34,7 @@ public class SocketNotificationHandlerService_notifyPokerRoomsWithNewSessionTest
         Insert3TicketsAllInactive.class
     })
     @SneakyThrows
-    public void newSessionNotifyPokerRoomsFromFilledDb_callsNotificationService()
+    public void newSessionNotifyPokerGamesFromFilledDb_callsNotificationService()
     {
         // Arrange
         UUID testedInsecureUserIdSecure = InsecureUserFakeBuilder.defaultIdSecure1;
@@ -50,7 +50,7 @@ public class SocketNotificationHandlerService_notifyPokerRoomsWithNewSessionTest
         // Act
         setOneTimeMock(NotificationService.class, mock);
         createInstance(SocketNotificationHandlerService.class)
-            .notifyPokerRoomsWithNewSession(testedInsecureUserIdSecure);
+            .notifyPokerGameWithNewSession(testedInsecureUserIdSecure);
 
         // Assert
         verify(mock).convertAndSend(expectedDestination, expectedData);

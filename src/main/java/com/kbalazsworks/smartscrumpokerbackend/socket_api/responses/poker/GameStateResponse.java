@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public record RoomStateResponse(
+public record GameStateResponse(
     Poker poker,
     List<Ticket> tickets,
     List<InsecureUser> inGameInsecureUsers,

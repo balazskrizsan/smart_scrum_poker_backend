@@ -5,6 +5,6 @@ import lombok.NonNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record RoomStateRequest(@NonNull UUID pokerIdSecure, @NonNull UUID insecureUserId, @NonNull LocalDateTime now)
+public record GameStateRequest(@NonNull UUID pokerIdSecure, @NonNull UUID insecureUserId, @NonNull LocalDateTime now)
 {
 }

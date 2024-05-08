@@ -41,7 +41,7 @@ public class SocketDisconnectListener
 
         if (response.shouldSendNotification())
         {
-            socketNotificationHandlerService.notifyPokerRoomsWithLeavingSession(
+            socketNotificationHandlerService.notifyPokerGameWithLeavingSession(
                 response.insecureUserSession().insecureUserIdSecure()
             );
         }

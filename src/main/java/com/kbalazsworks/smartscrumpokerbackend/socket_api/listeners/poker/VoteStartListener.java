@@ -34,6 +34,6 @@ public class VoteStartListener
 
         voteStartStopService.start(pokerIdSecure, ticketId);
 
-        notificationService.notifyPokerRoom(pokerIdSecure, new RoundStartResponse(ticketId), POKER_ROUND_START);
+        notificationService.notifyPokerGame(pokerIdSecure, new RoundStartResponse(ticketId), POKER_ROUND_START);
     }
 }

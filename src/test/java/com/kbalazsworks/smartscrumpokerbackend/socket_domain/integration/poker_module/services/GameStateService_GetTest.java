@@ -8,12 +8,12 @@ import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert5VotesFor2Poker3
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.PokerFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.RoomStateRequestFakeBuilder;
+import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.GameStateRequestFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
-import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.RoomStateResponse;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.RoomStateService;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.RoomStateRequest;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.GameStateResponse;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.GameStateService;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.GameStateRequest;
 import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RoomStateService_GetTest extends AbstractIntegrationTest
+public class GameStateService_GetTest extends AbstractIntegrationTest
 {
     @Test
     @SqlPreset(presets = {
@@ -33,12 +33,12 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
         Insert5VotesFor2Poker3Ticket.class
     })
     @SneakyThrows
-    public void RequestingARoomState_returnRoomStateAndSetTheInGamePlayer()
+    public void RequestingAGameState_returnGameStateAndSetTheInGamePlayer()
     {
         // Arrange
-        RoomStateRequest testedRoomStateRequest = new RoomStateRequestFakeBuilder().build();
+        GameStateRequest testedGameStateRequest = new GameStateRequestFakeBuilder().build();
 
-        RoomStateResponse expected = new RoomStateResponse(
+        GameStateResponse expected = new GameStateResponse(
             new PokerFakeBuilder().build(),
             new TicketFakeBuilder().build1to3AsList(),
             new InsecureUserFakeBuilder().buildAsList(),
@@ -61,7 +61,7 @@ public class RoomStateService_GetTest extends AbstractIntegrationTest
         );
 
         // Act
-        RoomStateResponse actual = createInstance(RoomStateService.class).get(testedRoomStateRequest);
+        GameStateResponse actual = createInstance(GameStateService.class).get(testedGameStateRequest);
 
         // Assert
         assertThat(actual).isEqualTo(expected);

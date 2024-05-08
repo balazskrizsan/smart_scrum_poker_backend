@@ -14,32 +14,32 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.UUID;
 
-import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination.POKER_ROOM_STATE;
+import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination.POKER_GAME_STATE;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class NotificationService_notifyPokerRoomTest extends AbstractTest
+public class NotificationService_notifyPokerGameTest extends AbstractTest
 {
     @Test
     @SneakyThrows
-    public void notifyPokerRoomWithSimpMessagingTemplate_callsTemplate()
+    public void notifyPokerGameWithSimpMessagingTemplate_callsTemplate()
     {
         // Arrange
         SimpMessagingTemplate mock = new SimpMessagingTemplateMocker().getMock();
 
         UUID testedPokerIdSecure = PokerFakeBuilder.defaultIdSecure1;
         String testedData = "test";
-        SocketDestination testedPokerRoomState = POKER_ROOM_STATE;
+        SocketDestination testedPokerGameState = POKER_GAME_STATE;
 
         String expectedDestination = STR."/queue/reply-\{PokerFakeBuilder.defaultIdSecure1}";
         ResponseEntity<ResponseData<String>> expectedData = new ResponseEntityBuilder<String>()
-            .socketDestination(POKER_ROOM_STATE)
+            .socketDestination(POKER_GAME_STATE)
             .data("test")
             .build();
 
         // Act
         createInstance(NotificationService.class, mock)
-            .notifyPokerRoom(testedPokerIdSecure, testedData, testedPokerRoomState);
+            .notifyPokerGame(testedPokerIdSecure, testedData, testedPokerGameState);
 
         // Assert
         verify(mock, times(1)).convertAndSend(expectedDestination, expectedData);

@@ -31,6 +31,6 @@ public class TicketCloseListener
     {
         log.info("TicketCloseListener:/poker/ticket.close/{}/{}", pokerIdSecure, ticketId);
 
-        notificationService.notifyPokerRoom(pokerIdSecure, new TicketClosed(ticketId), POKER_TICKET_CLOSE);
+        notificationService.notifyPokerGame(pokerIdSecure, new TicketClosed(ticketId), POKER_TICKET_CLOSE);
     }
 }
