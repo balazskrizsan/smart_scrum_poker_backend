@@ -1,9 +1,11 @@
 package com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders;
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.UUID;
 @Accessors(fluent = true)
 @Getter
 @Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TicketFakeBuilder
 {
     public static final long defaultId1 = 101001L;
@@ -27,31 +30,31 @@ public class TicketFakeBuilder
     public static final String defaultName1 = "ticket #1";
     public static final String defaultName2 = "ticket #2";
 
-    private long id = defaultId1;
-    private long id2 = defaultId2;
-    private long id3 = defaultId3;
-    private long id4 = defaultId4;
-    private long id5 = defaultId5;
-    private UUID idSecret = defaultIdSecure1;
-    private UUID idSecret2 = defaultIdSecure2;
-    private UUID idSecret3 = defaultIdSecure3;
-    private UUID idSecret4 = defaultIdSecure4;
-    private UUID idSecret5 = defaultIdSecure5;
-    private long pokerId = PokerFakeBuilder.defaultId1;
-    private long pokerId2 = PokerFakeBuilder.defaultId1;
-    private long pokerId3 = PokerFakeBuilder.defaultId1;
-    private long pokerId4 = PokerFakeBuilder.defaultId2;
-    private long pokerId5 = PokerFakeBuilder.defaultId2;
-    private String name = defaultName1;
-    private String name2 = defaultName2;
-    private String name3 = "ticket #3";
-    private String name4 = "ticket #4";
-    private String name5 = "ticket #5";
-    private boolean isActive = false;
-    private boolean isActive2 = false;
-    private boolean isActive3 = false;
-    private boolean isActive4 = false;
-    private boolean isActive5 = false;
+    long id = defaultId1;
+    long id2 = defaultId2;
+    long id3 = defaultId3;
+    long id4 = defaultId4;
+    long id5 = defaultId5;
+    UUID idSecret = defaultIdSecure1;
+    UUID idSecret2 = defaultIdSecure2;
+    UUID idSecret3 = defaultIdSecure3;
+    UUID idSecret4 = defaultIdSecure4;
+    UUID idSecret5 = defaultIdSecure5;
+    long pokerId = PokerFakeBuilder.defaultId1;
+    long pokerId2 = PokerFakeBuilder.defaultId1;
+    long pokerId3 = PokerFakeBuilder.defaultId1;
+    long pokerId4 = PokerFakeBuilder.defaultId2;
+    long pokerId5 = PokerFakeBuilder.defaultId2;
+    String name = defaultName1;
+    String name2 = defaultName2;
+    String name3 = "ticket #3";
+    String name4 = "ticket #4";
+    String name5 = "ticket #5";
+    boolean isActive = false;
+    boolean isActive2 = false;
+    boolean isActive3 = false;
+    boolean isActive4 = false;
+    boolean isActive5 = false;
 
     public List<Ticket> buildNoIdAsList()
     {

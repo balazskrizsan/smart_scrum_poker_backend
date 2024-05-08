@@ -2,9 +2,11 @@ package com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builde
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,6 +14,7 @@ import java.util.UUID;
 @Accessors(fluent = true)
 @Getter
 @Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class VoteFakeBuilder
 {
     public static final long defaultId = 103001L;
@@ -31,27 +34,27 @@ public class VoteFakeBuilder
     public static final short defaultCalculatedPoint = 5;
     public static final short defaultCalculatedPoint4 = 13;
 
-    private Long id = defaultId;
-    private Long id2 = defaultId2;
-    private Long id3 = defaultId3;
-    private Long id4 = defaultId4;
-    private Long id5 = defaultId5;
-    private Long ticketId = TicketFakeBuilder.defaultId1;
-    private Long ticketId2 = TicketFakeBuilder.defaultId1;
-    private Long ticketId3 = TicketFakeBuilder.defaultId2;
-    private Long ticketId4 = TicketFakeBuilder.defaultId2;
-    private Long ticketId5 = TicketFakeBuilder.defaultId3;
-    private short uncertainty = defaultUncertainty;
-    private short complexity = defaultComplexity;
-    private short effort = defaultEffort;
-    private short calculatedPoint = defaultCalculatedPoint;
-    private short calculatedPoint4 = defaultCalculatedPoint4;
-    private LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
-    private UUID createdBy = defaultCreatedBy;
-    private UUID createdBy2 = defaultCreatedBy2;
-    private UUID createdBy3 = defaultCreatedBy3;
-    private UUID createdBy4 = defaultCreatedBy4;
-    private UUID createdBy5 = defaultCreatedBy5;
+    Long id = defaultId;
+    Long id2 = defaultId2;
+    Long id3 = defaultId3;
+    Long id4 = defaultId4;
+    Long id5 = defaultId5;
+    Long ticketId = TicketFakeBuilder.defaultId1;
+    Long ticketId2 = TicketFakeBuilder.defaultId1;
+    Long ticketId3 = TicketFakeBuilder.defaultId2;
+    Long ticketId4 = TicketFakeBuilder.defaultId2;
+    Long ticketId5 = TicketFakeBuilder.defaultId3;
+    short uncertainty = defaultUncertainty;
+    short complexity = defaultComplexity;
+    short effort = defaultEffort;
+    short calculatedPoint = defaultCalculatedPoint;
+    short calculatedPoint4 = defaultCalculatedPoint4;
+    LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
+    UUID createdBy = defaultCreatedBy;
+    UUID createdBy2 = defaultCreatedBy2;
+    UUID createdBy3 = defaultCreatedBy3;
+    UUID createdBy4 = defaultCreatedBy4;
+    UUID createdBy5 = defaultCreatedBy5;
 
     public Vote build()
     {

@@ -22,16 +22,16 @@ public class InsecureUserFakeBuilder
     public static final UUID defaultIdSecure3 = UUID.fromString("10000000-0000-0000-0000-000000002003");
     public static final UUID defaultIdSecure4 = UUID.fromString("10000000-0000-0000-0000-000000002004");
 
-    private long id = defaultId1;
-    private long id2 = defaultId2;
-    private long id3 = defaultId3;
-    private UUID idSecure = defaultIdSecure1;
-    private UUID idSecure2 = defaultIdSecure2;
-    private UUID idSecure3 = defaultIdSecure3;
-    private String userName = "insecure user name";
-    private String userName2 = "insecure user name 2";
-    private String userName3 = "insecure user name 3";
-    private LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
+    long id = defaultId1;
+    long id2 = defaultId2;
+    long id3 = defaultId3;
+    UUID idSecure = defaultIdSecure1;
+    UUID idSecure2 = defaultIdSecure2;
+    UUID idSecure3 = defaultIdSecure3;
+    String userName = "insecure user name";
+    String userName2 = "insecure user name 2";
+    String userName3 = "insecure user name 3";
+    LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
 
     public InsecureUser build()
     {

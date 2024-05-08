@@ -2,9 +2,11 @@ package com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builde
 
 import com.kbalazsworks.smartscrumpokerbackend.helpers.account_module.fake_builders.InsecureUserFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,6 +14,7 @@ import java.util.UUID;
 @Accessors(fluent = true)
 @Getter
 @Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class PokerFakeBuilder
 {
     public static final long defaultId1 = 100001L;
@@ -21,15 +24,15 @@ public class PokerFakeBuilder
     public static final String defaultSprintName = "sprint #1";
     public static final String defaultSprintName2 = "sprint #2";
 
-    private long id = defaultId1;
-    private long id2 = defaultId2;
-    private UUID idSecure = defaultIdSecure1;
-    private UUID idSecure2 = defaultIdSecure2;
-    private String sprintName = defaultSprintName;
-    private String sprintName2 = defaultSprintName2;
-    private LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
-    private UUID createdBy = InsecureUserFakeBuilder.defaultIdSecure1;
-    private UUID createdBy2 = InsecureUserFakeBuilder.defaultIdSecure2;
+    long id = defaultId1;
+    long id2 = defaultId2;
+    UUID idSecure = defaultIdSecure1;
+    UUID idSecure2 = defaultIdSecure2;
+    String sprintName = defaultSprintName;
+    String sprintName2 = defaultSprintName2;
+    LocalDateTime createdAt = LocalDateTime.of(2020, 11, 22, 11, 22, 33);
+    UUID createdBy = InsecureUserFakeBuilder.defaultIdSecure1;
+    UUID createdBy2 = InsecureUserFakeBuilder.defaultIdSecure2;
 
     public Poker build()
     {
