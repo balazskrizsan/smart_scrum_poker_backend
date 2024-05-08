@@ -6,7 +6,9 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.enti
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.SessionException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserSessionsService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.value_objects.DisconnectResponse;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,11 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Log4j2
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SocketDisconnectedService
 {
-    private final InsecureUserSessionsService insecureUserSessionsService;
-    private final SocketConnectionHandlerService socketConnectionHandlerService;
+    InsecureUserSessionsService insecureUserSessionsService;
+    SocketConnectionHandlerService socketConnectionHandlerService;
 
     // @todo: test
     public DisconnectResponse disconnect(MessageHeaders headers) throws SessionException, SocketException

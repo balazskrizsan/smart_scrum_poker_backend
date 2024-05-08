@@ -3,8 +3,10 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.servi
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStop;
+import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -14,11 +16,12 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class VoteStartStopService
 {
-    private final TicketService ticketService;
-    private final VoteService voteService;
-    private final PokerService pokerService;
+    TicketService ticketService;
+    VoteService voteService;
+    PokerService pokerService;
 
     public void start(@NonNull UUID pokerIdSecure, long ticketId) throws PokerException
     {

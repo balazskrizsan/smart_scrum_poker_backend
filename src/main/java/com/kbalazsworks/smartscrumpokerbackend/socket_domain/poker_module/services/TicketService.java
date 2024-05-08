@@ -3,18 +3,21 @@ package com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.servi
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services.UuidService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.TicketRepository;
+import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TicketService
 {
-    private final UuidService uuidService;
-    private final TicketRepository ticketRepository;
+    UuidService uuidService;
+    TicketRepository ticketRepository;
 
     // @todo: unit test
     public void createAll(@NonNull List<Ticket> tickets)

@@ -8,8 +8,11 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.StartPokerResponse;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.jooq.Configuration;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +20,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class StartService
 {
-    private final PokerService pokerService;
-    private final InsecureUserService insecureUserService;
-    private final UuidService uuidService;
-    private final TicketService ticketService;
-    private final JooqService jooqService;
+    PokerService pokerService;
+    InsecureUserService insecureUserService;
+    UuidService uuidService;
+    TicketService ticketService;
+    JooqService jooqService;
 
     public StartPokerResponse start(@NonNull Poker poker, @NonNull List<Ticket> tickets) throws PokerException, AccountException
     {

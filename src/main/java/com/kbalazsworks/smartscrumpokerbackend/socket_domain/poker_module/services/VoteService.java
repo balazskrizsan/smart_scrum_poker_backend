@@ -7,8 +7,10 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.StoryPointException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.VoteRepository;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteValues;
+import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +19,12 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class VoteService
 {
-    private final InsecureUserService insecureUserService;
-    private final StoryPointCalculatorService storyPointCalculatorService;
-    private final VoteRepository voteRepository;
+    InsecureUserService insecureUserService;
+    StoryPointCalculatorService storyPointCalculatorService;
+    VoteRepository voteRepository;
 
     public InsecureUser vote(@NonNull Vote vote) throws StoryPointException, AccountException
     {

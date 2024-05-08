@@ -6,7 +6,9 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.SocketConnect
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services.InsecureUserSessionsService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.value_objects.ConnectResponse;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,12 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Log4j2
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SocketConnectedService
 {
-    private final SocketConnectionHandlerService socketConnectionHandlerService;
-    private final InsecureUserSessionsService insecureUserSessionsService;
-    private final LocalDateTimeFactory localDateTimeFactory;
+    SocketConnectionHandlerService socketConnectionHandlerService;
+    InsecureUserSessionsService insecureUserSessionsService;
+    LocalDateTimeFactory localDateTimeFactory;
 
     // @todo: test
     public ConnectResponse connect(MessageHeaders headers) throws SocketException
