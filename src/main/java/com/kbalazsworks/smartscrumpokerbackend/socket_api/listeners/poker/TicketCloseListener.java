@@ -7,13 +7,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.util.UUID;
 
-import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination.POKER_TICKET_CLOSED;
+import static com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination.POKER_TICKET_CLOSE;
 
 @Log4j2
 @Controller
@@ -23,16 +22,15 @@ public class TicketCloseListener
     private final SimpMessagingTemplate template;
     private final NotificationService notificationService;
 
-    @MessageMapping("/poker.ticket.close/{pokerIdSecure}/{ticketId}")
-    public void roundStartHandler(
-        @Payload String message,
+    @MessageMapping("/poker/ticket.close/{pokerIdSecure}/{ticketId}")
+    public void ticketCloseListener(
         @DestinationVariable UUID pokerIdSecure,
         @DestinationVariable Long ticketId
     )
         throws ApiException
     {
-        log.info("SocketListener:/poker.ticket.close/{}/{}", pokerIdSecure, ticketId);
+        log.info("TicketCloseListener:/poker/ticket.close/{}/{}", pokerIdSecure, ticketId);
 
-        notificationService.notifyPokerRoom(pokerIdSecure, new TicketClosed(ticketId), POKER_TICKET_CLOSED);
+        notificationService.notifyPokerRoom(pokerIdSecure, new TicketClosed(ticketId), POKER_TICKET_CLOSE);
     }
 }
