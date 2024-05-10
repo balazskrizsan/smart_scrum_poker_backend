@@ -34,12 +34,11 @@ public class GameStateListener
     @MessageMapping("/poker/game.state/{pokerIdSecure}/{insecureUserId}")
     @SendToUser(value = "/queue/reply")
     public ResponseEntity<ResponseData<GameStateResponse>> gameStateListener(
-        @Payload String message,
         @DestinationVariable UUID pokerIdSecure,
         @DestinationVariable UUID insecureUserId
     ) throws ApiException, PokerException, AccountException
     {
-        log.info("Listener:/poker/game.state/{}/{}: {}", pokerIdSecure, insecureUserId, message);
+        log.info("Listener:/poker/game.state/{}/{}", pokerIdSecure, insecureUserId);
         GameStateResponse gameStateResponse = gameStateService.get(
             new GameStateRequest(pokerIdSecure, insecureUserId, RequestMapperService.getNow())
         );
