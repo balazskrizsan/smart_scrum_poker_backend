@@ -24,7 +24,7 @@ public class InsecureUserCreateListener
 {
     private final InsecureUserService insecureUserService;
 
-    @MessageMapping("/account.insecure.user.create")
+    @MessageMapping("/account/insecure.user.create")
     @SendToUser("/queue/reply")
     public ResponseEntity<ResponseData<InsecureUser>> insecureUserCreateHandler(
         @Payload InsecureUserCreateRequest insecureUserCreateRequest
