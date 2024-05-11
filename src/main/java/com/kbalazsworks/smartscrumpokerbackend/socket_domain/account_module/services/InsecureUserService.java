@@ -1,8 +1,10 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUser;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.entities.InsecureUserSession;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.exceptions.AccountException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.repositories.InsecureUserRepository;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.common_module.services.UuidService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,17 +17,23 @@ import java.util.UUID;
 public class InsecureUserService
 {
     private final InsecureUserRepository insecureUserRepository;
+    private final InsecureUserSessionsService insecureUserSessionsService;
+    private final UuidService uuidService;
 
-    public InsecureUser create(@NonNull InsecureUser insecureUser) throws AccountException
+    public InsecureUser create(@NonNull InsecureUser insecureUser, UUID sessionId) throws AccountException
     {
-        var newUuid = UUID.randomUUID();
+        UUID newUuid = uuidService.getRandom();
 
-        return insecureUserRepository.create(new InsecureUser(
+        InsecureUser newUser = insecureUserRepository.create(new InsecureUser(
             null,
             newUuid,
             insecureUser.userName(),
             insecureUser.createdAt()
         ));
+
+        insecureUserSessionsService.add(new InsecureUserSession(newUser.idSecure(), sessionId, insecureUser.createdAt()));
+
+        return newUser;
     }
 
     public InsecureUser findByIdSecure(@NonNull UUID idSecure) throws AccountException
