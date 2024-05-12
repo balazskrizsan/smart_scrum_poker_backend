@@ -34,11 +34,7 @@ public class TicketService_DeleteTest extends AbstractIntegrationTest
         // Arrange
         long testedTicketId = TicketFakeBuilder.defaultId1;
         List<Ticket> expectedTickets = List.of(new TicketFakeBuilder().build2(), new TicketFakeBuilder().build3());
-        List<Vote> expectedVotes = List.of(
-            new VoteFakeBuilder().build3(),
-            new VoteFakeBuilder().build4(),
-            new VoteFakeBuilder().build5()
-        );
+        List<Vote> expectedVotes = new VoteFakeBuilder().build3to5();
 
         // Act
         createInstance(TicketService.class).delete(testedTicketId);

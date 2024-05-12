@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Accessors(fluent = true)
@@ -79,5 +80,14 @@ public class VoteFakeBuilder
     public Vote build5()
     {
         return new Vote(id5, ticketId5, uncertainty, complexity, effort, calculatedPoint, createdAt, createdBy5);
+    }
+
+    public List<Vote> build3to5()
+    {
+        return List.of(
+            new VoteFakeBuilder().build3(),
+            new VoteFakeBuilder().build4(),
+            new VoteFakeBuilder().build5()
+        );
     }
 }
