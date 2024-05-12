@@ -46,4 +46,12 @@ public class TicketRepository extends AbstractRepository
             .where(ticketTable.ID.eq(ticketId))
             .execute();
     }
+
+    public void delete(long ticketId)
+    {
+        getDSLContext()
+            .deleteFrom(ticketTable)
+            .where(ticketTable.ID.eq(ticketId))
+            .execute();
+    }
 }

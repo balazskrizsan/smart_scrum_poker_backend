@@ -46,4 +46,9 @@ public class TicketService
     {
         ticketRepository.deactivate(ticketId);
     }
+
+    public void delete(long ticketId)
+    {
+        ticketRepository.delete(ticketId);
+    }
 }
