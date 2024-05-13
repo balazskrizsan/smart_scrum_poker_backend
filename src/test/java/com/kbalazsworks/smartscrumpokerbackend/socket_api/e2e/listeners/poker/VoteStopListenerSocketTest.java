@@ -8,7 +8,8 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.TicketFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.VoteStopResponse;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStop;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStat;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VotesWithVoteStat;
 import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -47,14 +48,12 @@ public class VoteStopListenerSocketTest extends AbstractE2eSocketTest
         VoteStopResponse expectedResponse = new VoteStopResponse(
             PokerFakeBuilder.defaultIdSecure1,
             TicketFakeBuilder.defaultId2,
-            new VoteStop(
+            new VotesWithVoteStat(
                 Map.of(
                     VoteFakeBuilder.defaultCreatedBy3, new VoteFakeBuilder().build3(),
                     VoteFakeBuilder.defaultCreatedBy4, new VoteFakeBuilder().build4()
                 ),
-                9,
-                VoteFakeBuilder.defaultCalculatedPoint,
-                VoteFakeBuilder.defaultCalculatedPoint4
+                new VoteStat(9, VoteFakeBuilder.defaultCalculatedPoint, VoteFakeBuilder.defaultCalculatedPoint4)
             )
         );
 

@@ -6,7 +6,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestinatio
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.VoteStopResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.VoteStartStopService;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStop;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VotesWithVoteStat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -33,13 +33,13 @@ public class VoteStopListener
     {
         log.info("VoteStopListener:/poker/vote.stop/{}/{}", pokerIdSecure, ticketId);
 
-        VoteStop voteStop = voteStartStopService.stop(pokerIdSecure, ticketId);
+        VotesWithVoteStat votesWithVoteStat = voteStartStopService.stop(pokerIdSecure, ticketId);
 
         template.convertAndSend(
             STR."/queue/reply-\{pokerIdSecure}",
             new ResponseEntityBuilder<VoteStopResponse>()
                 .socketDestination(SocketDestination.POKER_ROUND_STOP)
-                .data(new VoteStopResponse(pokerIdSecure, ticketId, voteStop))
+                .data(new VoteStopResponse(pokerIdSecure, ticketId, votesWithVoteStat))
                 .build()
         );
     }

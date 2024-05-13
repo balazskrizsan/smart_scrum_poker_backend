@@ -1,7 +1,7 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_api.listeners.poker;
 
 import com.kbalazsworks.smartscrumpokerbackend.api.exceptions.ApiException;
-import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.TicketDeleted;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.TicketDeleteResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.services.NotificationService;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.TicketService;
 import lombok.AccessLevel;
@@ -36,6 +36,6 @@ public class TicketDeleteListener
 
         ticketService.delete(ticketId);
 
-        notificationService.notifyPokerGame(pokerIdSecure, new TicketDeleted(ticketId), POKER_TICKET_DELETE);
+        notificationService.notifyPokerGame(pokerIdSecure, new TicketDeleteResponse(ticketId), POKER_TICKET_DELETE);
     }
 }

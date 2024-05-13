@@ -10,7 +10,8 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.services.VoteStartStopService;
-import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStop;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStat;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VotesWithVoteStat;
 import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -34,18 +35,16 @@ public class VoteStartStopService_StopTest extends AbstractIntegrationTest
         UUID testedPokerIdSecret = PokerFakeBuilder.defaultIdSecure1;
         long testedTicketId = TicketFakeBuilder.defaultId2;
         var expectedTickets = new TicketFakeBuilder().build1to3AsList();
-        var expected = new VoteStop(
+        var expected = new VotesWithVoteStat(
             Map.of(
                 VoteFakeBuilder.defaultCreatedBy3, new VoteFakeBuilder().build3(),
                 VoteFakeBuilder.defaultCreatedBy4, new VoteFakeBuilder().build4()
             ),
-            9,
-            VoteFakeBuilder.defaultCalculatedPoint,
-            VoteFakeBuilder.defaultCalculatedPoint4
+            new VoteStat(9, VoteFakeBuilder.defaultCalculatedPoint, VoteFakeBuilder.defaultCalculatedPoint4)
         );
 
         // Act
-        VoteStop actual = createInstance(VoteStartStopService.class).stop(testedPokerIdSecret, testedTicketId);
+        VotesWithVoteStat actual = createInstance(VoteStartStopService.class).stop(testedPokerIdSecret, testedTicketId);
 
         // Assert
         List<Ticket> actualTicket = getDslContext().selectFrom(ticketTable).orderBy(ticketTable.ID.asc()).fetchInto(Ticket.class);

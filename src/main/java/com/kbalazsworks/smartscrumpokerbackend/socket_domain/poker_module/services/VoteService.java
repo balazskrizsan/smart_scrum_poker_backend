@@ -6,7 +6,9 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.serv
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.StoryPointException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.repositories.VoteRepository;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStat;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteValues;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VotesWithVoteStat;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -51,14 +55,33 @@ public class VoteService
     // @todo: rename to search
     public Map<Long, Map<UUID, Vote>> getVotesWithTicketGroupByTicketIds(@NonNull List<Long> ticketIds)
     {
-        return this.voteRepository.getVotesWithTicketGroupByTicketIds(ticketIds);
+        return voteRepository.getVotesWithTicketGroupByTicketIds(ticketIds);
     }
 
     // @todo: test
     public Map<UUID, Vote> searchVotesWithTicketGroupByTicketId(long ticketId)
     {
-        Map<Long, Map<UUID, Vote>> result = this.voteRepository.getVotesWithTicketGroupByTicketIds(List.of(ticketId));
+        Map<Long, Map<UUID, Vote>> result = voteRepository.getVotesWithTicketGroupByTicketIds(List.of(ticketId));
 
         return null == result ? Map.of() : result.get(ticketId);
+    }
+
+    public VotesWithVoteStat getStatByTicketId(long ticketId)
+    {
+        Map<UUID, Vote> votes = searchVotesWithTicketGroupByTicketId(ticketId);
+
+        return calculateStat(votes);
+    }
+
+    private VotesWithVoteStat calculateStat(@NonNull Map<UUID, Vote> votes)
+    {
+        Supplier<Stream<Vote>> valueStreamSupplier = () -> votes.values().stream();
+        Supplier<Stream<Short>> calculatedPointStreamSupplier = () -> valueStreamSupplier.get().map(Vote::calculatedPoint);
+
+        double avg = valueStreamSupplier.get().mapToDouble(Vote::calculatedPoint).average().orElseThrow();
+        short min = calculatedPointStreamSupplier.get().min(Short::compare).orElseThrow();
+        short max = calculatedPointStreamSupplier.get().max(Short::compare).orElseThrow();
+
+        return new VotesWithVoteStat(votes, new VoteStat(avg, min, max));
     }
 }

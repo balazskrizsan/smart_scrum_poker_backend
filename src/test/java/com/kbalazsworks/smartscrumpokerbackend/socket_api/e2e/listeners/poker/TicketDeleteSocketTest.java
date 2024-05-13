@@ -10,7 +10,7 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteRequestFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.requests.poker.VoteRequest;
-import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.TicketDeleted;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.TicketDeleteResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
@@ -56,7 +56,7 @@ public class TicketDeleteSocketTest extends AbstractE2eSocketTest
 
         String expectedHttpStatus = HttpStatus.OK.getReasonPhrase();
         String expectedDestination = POKER_TICKET_DELETE.getValue();
-        TicketDeleted expectedData = new TicketDeleted(TicketFakeBuilder.defaultId1);
+        TicketDeleteResponse expectedData = new TicketDeleteResponse(TicketFakeBuilder.defaultId1);
 
         List<Ticket> expectedTickets = List.of(new TicketFakeBuilder().build2(), new TicketFakeBuilder().build3());
         List<Vote> expectedVotes = new VoteFakeBuilder().build3to5();
@@ -94,7 +94,7 @@ public class TicketDeleteSocketTest extends AbstractE2eSocketTest
     }
 
     private record ResponseData_TicketDeleted(
-        TicketDeleted data,
+        TicketDeleteResponse data,
         Boolean success,
         int errorCode,
         String requestId,
