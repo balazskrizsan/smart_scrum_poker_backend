@@ -19,7 +19,6 @@ public class TicketService
     UuidService uuidService;
     TicketRepository ticketRepository;
 
-    // @todo: unit test
     public void createAll(@NonNull List<Ticket> tickets)
     {
         ticketRepository.createAll(
@@ -29,19 +28,16 @@ public class TicketService
         );
     }
 
-    // @todo: unit test
     public List<Ticket> searchByPokerId(@NonNull Long pokerId)
     {
         return ticketRepository.searchByPokerId(pokerId);
     }
 
-    // @todo: unit test
     public void activate(long ticketId)
     {
         ticketRepository.activate(ticketId);
     }
 
-    // @todo: unit test
     public void deactivate(Long ticketId)
     {
         ticketRepository.deactivate(ticketId);
