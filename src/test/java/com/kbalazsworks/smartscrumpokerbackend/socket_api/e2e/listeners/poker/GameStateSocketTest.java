@@ -12,6 +12,8 @@ import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builder
 import com.kbalazsworks.smartscrumpokerbackend.helpers.poker_module.fake_builders.VoteFakeBuilder;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.GameStateResponse;
 import com.kbalazsworks.smartscrumpokerbackend.socket_api.responses.poker.VoteNewJoinerResponse;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VoteStat;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VotesWithVoteStat;
 import com.kbalazsworks.smartscrumpokerbackend.test_aspects.SqlPreset;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompSession;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -80,7 +83,28 @@ public class GameStateSocketTest extends AbstractE2eSocketTest
             ),
             new InsecureUserFakeBuilder().build(),
             new InsecureUserFakeBuilder().build(),
-            new InsecureUserFakeBuilder().buildAsList()
+            new InsecureUserFakeBuilder().buildAsList(),
+            new HashMap<>()
+            {{
+                put(TicketFakeBuilder.defaultId1, new VotesWithVoteStat(
+                    Map.of(
+                        VoteFakeBuilder.defaultCreatedBy, new VoteFakeBuilder().build(),
+                        VoteFakeBuilder.defaultCreatedBy2, new VoteFakeBuilder().build2()
+                    ),
+                    new VoteStat(5, (short) 5, (short) 5)
+                ));
+                put(TicketFakeBuilder.defaultId2, new VotesWithVoteStat(
+                    Map.of(
+                        VoteFakeBuilder.defaultCreatedBy3, new VoteFakeBuilder().build3(),
+                        VoteFakeBuilder.defaultCreatedBy4, new VoteFakeBuilder().build4()
+                    ),
+                    new VoteStat(9, (short) 5, (short) 13)
+                ));
+                put(TicketFakeBuilder.defaultId3, new VotesWithVoteStat(
+                    Map.of(VoteFakeBuilder.defaultCreatedBy5, new VoteFakeBuilder().build5()),
+                    new VoteStat(5, (short) 5, (short) 5)
+                ));
+            }}
         );
 
         // Act

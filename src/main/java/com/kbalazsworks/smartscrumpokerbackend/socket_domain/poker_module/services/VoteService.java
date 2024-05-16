@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -71,6 +72,17 @@ public class VoteService
         Map<UUID, Vote> votes = searchVotesWithTicketGroupByTicketId(ticketId);
 
         return calculateStat(votes);
+    }
+
+    public Map<Long, VotesWithVoteStat> getStatByTicketIds(@NonNull List<Long> tickedIds)
+    {
+        Map<Long, Map<UUID, Vote>> votes = voteRepository.getVotesWithTicketGroupByTicketIds(tickedIds);
+
+        Map<Long, VotesWithVoteStat> votesWithVoteStats = new HashMap<>();
+
+        votes.forEach((key, voteMap) -> votesWithVoteStats.put(key, calculateStat(voteMap)));
+
+        return votesWithVoteStats;
     }
 
     private VotesWithVoteStat calculateStat(@NonNull Map<UUID, Vote> votes)

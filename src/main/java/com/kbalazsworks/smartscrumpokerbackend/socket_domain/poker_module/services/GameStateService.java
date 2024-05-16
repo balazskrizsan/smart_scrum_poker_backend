@@ -10,6 +10,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entiti
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.exceptions.PokerException;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.GameStateRequest;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VotesWithVoteStat;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -50,13 +51,24 @@ public class GameStateService
 
         List<InsecureUser> insecureUsers = insecureUserService.findByIdSecureList(inGameUsersIdSecures);
 
-        Map<Long, Map<UUID, Vote>> votes = voteService
-            .getVotesWithTicketGroupByTicketIds(tickets.stream().map(Ticket::id).toList());
+        List<Long> ticketIdList = tickets.stream().map(Ticket::id).toList();
+
+        Map<Long, Map<UUID, Vote>> votes = voteService.getVotesWithTicketGroupByTicketIds(ticketIdList);
+        Map<Long, VotesWithVoteStat> votesWithVoteStatList = voteService.getStatByTicketIds(ticketIdList);
 
         InsecureUser owner = insecureUserService.findByIdSecure(poker.createdBy());
 
         List<InsecureUser> usersWithSession = insecureUserService.searchUsersWithActiveSession(inGameUsersIdSecures);
 
-        return new GameStateResponse(poker, tickets, insecureUsers, votes, owner, currentInsecureUser, usersWithSession);
+        return new GameStateResponse(
+            poker,
+            tickets,
+            insecureUsers,
+            votes,
+            owner,
+            currentInsecureUser,
+            usersWithSession,
+            votesWithVoteStatList
+        );
     }
 }

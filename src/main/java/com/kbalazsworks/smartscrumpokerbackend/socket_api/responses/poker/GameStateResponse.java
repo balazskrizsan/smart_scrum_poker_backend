@@ -4,6 +4,7 @@ import com.kbalazsworks.smartscrumpokerbackend.socket_domain.account_module.enti
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Poker;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.entities.Vote;
+import com.kbalazsworks.smartscrumpokerbackend.socket_domain.poker_module.value_objects.VotesWithVoteStat;
 
 import java.util.List;
 import java.util.Map;
@@ -13,10 +14,11 @@ public record GameStateResponse(
     Poker poker,
     List<Ticket> tickets,
     List<InsecureUser> inGameInsecureUsers,
-    Map<Long, Map<UUID, Vote>> votes,
+    Map<Long, Map<UUID, Vote>> votes, // @todo: remove
     InsecureUser owner,
     InsecureUser currentInsecureUser,
-    List<InsecureUser> inGameInsecureUsersWithSession
+    List<InsecureUser> inGameInsecureUsersWithSession,
+    Map<Long, VotesWithVoteStat> votesWithVoteStatList
 )
 {
 }
