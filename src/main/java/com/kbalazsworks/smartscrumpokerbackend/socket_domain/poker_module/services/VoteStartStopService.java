@@ -28,6 +28,7 @@ public class VoteStartStopService
     public VotesWithVoteStat stop(@NonNull UUID pokerIdSecure, long ticketId) throws PokerException
     {
         pokerService.findByIdSecure(pokerIdSecure);
+        ticketService.deactivate(ticketId);
 
         return voteService.getStatByTicketId(ticketId);
     }

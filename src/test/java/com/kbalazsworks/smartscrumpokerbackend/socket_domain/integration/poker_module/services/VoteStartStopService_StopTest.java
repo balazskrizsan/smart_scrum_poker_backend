@@ -1,6 +1,7 @@
 package com.kbalazsworks.smartscrumpokerbackend.socket_domain.integration.poker_module.services;
 
 import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert1Poker;
+import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert3Tickets2Inactive1Active;
 import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert3TicketsAllInactive;
 import com.kbalazsworks.smartscrumpokerbackend.db_presets.Insert5VotesFor2Poker3Ticket;
 import com.kbalazsworks.smartscrumpokerbackend.helpers.AbstractIntegrationTest;
@@ -27,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class VoteStartStopService_StopTest extends AbstractIntegrationTest
 {
     @Test
-    @SqlPreset(presets = {Insert1Poker.class, Insert3TicketsAllInactive.class, Insert5VotesFor2Poker3Ticket.class})
+    @SqlPreset(presets = {Insert1Poker.class, Insert3Tickets2Inactive1Active.class, Insert5VotesFor2Poker3Ticket.class})
     @SneakyThrows
     public void stopAStopableRound_broadcastToGame()
     {
