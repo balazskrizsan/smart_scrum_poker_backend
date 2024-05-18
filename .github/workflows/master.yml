@@ -38,6 +38,9 @@ jobs:
       run: |
         echo "RELEASE_VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
 
+    - name: Print RELEASE_VERSION
+      run: echo $RELEASE_VERSION
+
 #    - name: Log in to Docker Hub
 #      uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
 #      with:
