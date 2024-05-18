@@ -37,5 +37,8 @@ jobs:
       - name: Print project version
         run: echo $PROJECT_VERSION
 
+      - name: Install dependencies
+        run: ./gradlew dependencies
+
       - name: Build with Gradle
         run: ./gradlew build
