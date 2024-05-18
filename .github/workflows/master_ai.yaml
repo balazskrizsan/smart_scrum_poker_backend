@@ -43,6 +43,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          dockerfile: /Dockerfile
           push: true
           tags: smart_scrum_poker_backend:${{ env.PROJECT_VERSION }}
 
