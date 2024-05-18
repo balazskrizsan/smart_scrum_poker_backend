@@ -2,6 +2,7 @@
 #  and checkout repo
 #  and setup java env
 #  and get the version from gradle version property
+#  and install dependencies with gradle
 #  and build the app with gradle on GHA server
 name: Java CI with Gradle
 
