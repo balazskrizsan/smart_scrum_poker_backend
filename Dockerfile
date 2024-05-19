@@ -24,6 +24,8 @@ RUN chmod +x ./gradlew
 
 COPY . .
 
+RUN chmod +x ./gradlew
+
 RUN ./gradlew build -x test
 
 FROM gradle:jdk21-alpine
