@@ -1,4 +1,4 @@
-FROM openjdk:21-jdk
+FROM gradle:jdk21-alpine as build
 
 ENV SERVER_ENV=DEV
 ENV SERVER_PORT=9999
@@ -15,10 +15,21 @@ ENV SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:46030/smartscrumpoker
 ENV SPRING_DATASOURCE_USERNAME=admin
 ENV SOCKET_IS_ENABLED_SOCKET_CONNECT_AND_DISCONNECT_LISTENERS=true
 
-EXPOSE 8080
+WORKDIR /app
 
-ARG JAR_FILE=build/libs/*.jar
+COPY gradlew .
+COPY gradle gradle
 
-ADD ${JAR_FILE} app.jar
+RUN chmod +x ./gradlew
+
+COPY . .
+
+RUN ./gradlew build -x test
+
+FROM gradle:jdk21-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/build/libs/*.jar app.jar
 
 ENTRYPOINT ["java", "--enable-preview", "-jar","/app.jar"]
