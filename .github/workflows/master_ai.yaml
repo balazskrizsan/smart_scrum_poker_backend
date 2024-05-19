@@ -40,5 +40,8 @@ jobs:
       - name: Install dependencies
         run: ./gradlew dependencies
 
+      - name: Apply Lombok plugin
+        run: ./gradlew lombok
+
       - name: Build with Gradle
         run: ./gradlew build
