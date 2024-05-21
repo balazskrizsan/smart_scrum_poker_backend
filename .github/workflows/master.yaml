@@ -1,16 +1,3 @@
-#I need a github action for java 21 distribution zulu and gradle:
-#  name: Java CI with Gradle native build
-#  and checkout repo
-#  and setup java env
-#  and get the version from gradle version property
-#  and create a psql gha service with version:16.2 password:admin_pass username:admin db:smartscrumpoker
-#  and install dependencies with gradle
-#  and build the app with gradle on GHA server
-#  and a step to print the output folder target
-#  and add actions/upload-artifact@v2
-#    with name jar-artifact
-#    with save only the full size jar file
-#    with retention-days: 7
 name: Java CI with Gradle native build
 
 on:
@@ -95,11 +82,9 @@ jobs:
         run: |
           cp ${{ github.workspace }}/build/libs/SmartScrumPokerBackend-${{ env.PROJECT_VERSION }}.jar ./SmartScrumPokerBackend-latest.jar
 
-
-      - name: Print workspace and home
+      - name: Print workspace & root
         run: |
           ls -l  ${{ github.workspace }}
-          ls -l  ./
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
