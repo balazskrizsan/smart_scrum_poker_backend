@@ -92,6 +92,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: .cicd/master-builds/Dockerfile
+          context: .cicd/master-build/Dockerfile
           push: true
           tags: kbalazsworks/smart_scrum_poker_backend:${{ env.PROJECT_VERSION }}, kbalazsworks/smart_scrum_poker_backend:latest
