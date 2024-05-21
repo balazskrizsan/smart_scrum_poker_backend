@@ -43,6 +43,7 @@ jobs:
         id: project_version
         run: |
           echo "PROJECT_VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
+          echo "COMMIT_SHA_SHORT=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
 
       - name: Print project version
         run: echo ${{ env.PROJECT_VERSION }}
@@ -91,4 +92,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: kbalazsworks/smart_scrum_poker_backend:${{ env.PROJECT_VERSION }}, kbalazsworks/smart_scrum_poker_backend:latest
+          tags: kbalazsworks/smart_scrum_poker_backend:${{ env.PROJECT_VERSION }}, kbalazsworks/smart_scrum_poker_backend:latest, kbalazsworks/smart_scrum_poker_backend:commit_sha_short_${{ env.COMMIT_SHA_SHORT }}
