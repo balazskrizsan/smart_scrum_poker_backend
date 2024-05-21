@@ -24,7 +24,7 @@ jobs:
         image: postgres:16.2
         env:
           POSTGRES_PASSWORD: admin_pass
-          POSTGRES_USER: username
+          POSTGRES_USER: admin
           POSTGRES_DB: smartscrumpoker
         ports:
           - 5432:5432
