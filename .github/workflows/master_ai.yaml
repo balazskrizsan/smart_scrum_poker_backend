@@ -7,8 +7,9 @@
 #  and install dependencies with gradle
 #  and build the app with gradle on GHA server
 #  and a step to print the output folder target
-#  and add actions/upload-artifact@v2 to save only the full .jar artifact
+#  and add actions/upload-artifact@v2
 #    with name jar-artifact
+#    with save only the full size jar file
 #    with retention-days: 7
 name: Java CI with Gradle native build
 
@@ -75,11 +76,11 @@ jobs:
         run: ./gradlew build
 
       - name: Print output folder target
-        run: ls -l build/libs
+        run: ls -l  ${{ github.workspace }}/build/libs
 
       - name: Upload .jar artifact
         uses: actions/upload-artifact@v2
         with:
           name: jar-artifact
-          path: build/libs/*.jar
+          path:  ${{ github.workspace }}/build/libs/SmartScrumPokerBackend-${{ env.PROJECT_VERSION }}.jar
           retention-days: 7
