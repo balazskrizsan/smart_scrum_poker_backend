@@ -84,3 +84,14 @@ jobs:
           name: jar-artifact
           path:  ${{ github.workspace }}/build/libs/SmartScrumPokerBackend-${{ env.PROJECT_VERSION }}.jar
           retention-days: 7
+
+      - name: Copy created .jar for docker
+        run: |
+          cp ${{ github.workspace }}/build/libs/SmartScrumPokerBackend-${{ env.PROJECT_VERSION }}.jar ./SmartScrumPokerBackend-latest.jar
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
