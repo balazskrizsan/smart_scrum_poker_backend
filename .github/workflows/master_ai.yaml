@@ -3,9 +3,10 @@
 #  and checkout repo
 #  and setup java env
 #  and get the version from gradle version property
-#  and create a psql gha service with version:16.2 password:passwords username:username db:smartscrumpoker
+#  and create a psql gha service with version:16.2 password:admin_pass username:admin db:smartscrumpoker
 #  and install dependencies with gradle
 #  and build the app with gradle on GHA server
+# and a step to print the output folder target
 name: Java CI with Gradle native build
 
 on:
@@ -69,3 +70,6 @@ jobs:
           SPRING_DATASOURCE_USERNAME: admin
           SOCKET_IS_ENABLED_SOCKET_CONNECT_AND_DISCONNECT_LISTENERS: false
         run: ./gradlew build
+
+      - name: Print output folder target
+        run: ls -l build/libs
