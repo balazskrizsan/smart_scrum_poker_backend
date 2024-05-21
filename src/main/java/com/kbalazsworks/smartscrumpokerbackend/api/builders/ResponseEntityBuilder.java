@@ -18,10 +18,11 @@ import java.util.Collections;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ResponseEntityBuilder<T>
 {
-    private T           data;
-    private int         errorCode  = 0;
-    private HttpStatus  statusCode = HttpStatus.OK;
-    private HttpHeaders headers    = new HttpHeaders();
+    T data;
+    int errorCode = 0;
+    HttpStatus statusCode = HttpStatus.OK;
+    HttpHeaders headers = new HttpHeaders();
+    SocketDestination socketDestination = null;
 
     public ResponseEntity<ResponseData<T>> build() throws ApiException
     {
@@ -32,7 +33,7 @@ public class ResponseEntityBuilder<T>
             throw new ApiException("Status code setup is needed for error response");
         }
 
-        ResponseData<T> responseData = new ResponseData<>(data, success, errorCode, "1");
+        ResponseData<T> responseData = new ResponseData<>(data, success, errorCode, "1", socketDestination.getValue());
 
         return new ResponseEntity<>(responseData, headers, statusCode);
     }
