@@ -2,6 +2,8 @@ package com.kbalazsworks.smartscrumpokerbackend.api.builders;
 
 import com.kbalazsworks.smartscrumpokerbackend.api.exceptions.ApiException;
 import com.kbalazsworks.smartscrumpokerbackend.api.value_objects.ResponseData;
+import com.kbalazsworks.smartscrumpokerbackend.socket_api.enums.SocketDestination;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
