@@ -94,4 +94,4 @@ jobs:
         with:
           context: ${{ github.workspace }}/cicd/master-builds/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: kbalazsworks/smart_scrum_poker_backend:${{ env.PROJECT_VERSION }}, kbalazsworks/smart_scrum_poker_backend:latest
