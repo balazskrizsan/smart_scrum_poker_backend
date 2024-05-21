@@ -17,21 +17,6 @@ ENV SOCKET_IS_ENABLED_SOCKET_CONNECT_AND_DISCONNECT_LISTENERS=true
 
 WORKDIR /app
 
-COPY gradlew .
-COPY gradle gradle
-
-RUN chmod +x ./gradlew
-
 COPY . .
 
-RUN chmod +x ./gradlew
-
-RUN ./gradlew build -x test
-
-FROM gradle:jdk21-alpine
-
-WORKDIR /app
-
-COPY --from=build /app/build/libs/*.jar app.jar
-
-ENTRYPOINT ["java", "--enable-preview", "-jar","/app.jar"]
+RUN gradle build -x test
