@@ -65,7 +65,7 @@ jobs:
           SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 10
           SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 10
           SPRING_DATASOURCE_PASSWORD: admin_pass
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:46030/smartscrumpoker
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/smartscrumpoker
           SPRING_DATASOURCE_USERNAME: admin
           SOCKET_IS_ENABLED_SOCKET_CONNECT_AND_DISCONNECT_LISTENERS: false
         run: ./gradlew build
