@@ -5,6 +5,7 @@ import com.kbalazsworks.smartscrumpokerbackend.api.value_objects.ResponseData;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.Collections;
 @Accessors(fluent = true)
 @Getter
 @Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ResponseEntityBuilder<T>
 {
     private T           data;
