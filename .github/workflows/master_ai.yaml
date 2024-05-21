@@ -89,6 +89,12 @@ jobs:
         run: |
           cp ${{ github.workspace }}/build/libs/SmartScrumPokerBackend-${{ env.PROJECT_VERSION }}.jar ./SmartScrumPokerBackend-latest.jar
 
+
+      - name: Print workspace and home
+        run: |
+          ls -l  ${{ github.workspace }}
+          ls -l  ./
+
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
