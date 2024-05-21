@@ -6,7 +6,10 @@
 #  and create a psql gha service with version:16.2 password:admin_pass username:admin db:smartscrumpoker
 #  and install dependencies with gradle
 #  and build the app with gradle on GHA server
-# and a step to print the output folder target
+#  and a step to print the output folder target
+#  and add actions/upload-artifact@v2 to save only the full .jar artifact
+#    with name jar-artifact
+#    with retention-days: 7
 name: Java CI with Gradle native build
 
 on:
@@ -73,3 +76,10 @@ jobs:
 
       - name: Print output folder target
         run: ls -l build/libs
+
+      - name: Upload .jar artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: jar-artifact
+          path: build/libs/*.jar
+          retention-days: 7
